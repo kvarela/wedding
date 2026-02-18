@@ -19,9 +19,5 @@
     "monorepo"
   ],
   "author": "Karim & Felicia",
-  "license": "MIT",
-  "dependencies": {
-    "reflect-metadata": "^0.2.2",
-    "typeorm-naming-strategies": "^4.1.0"
-  }
+  "license": "MIT"
 }
