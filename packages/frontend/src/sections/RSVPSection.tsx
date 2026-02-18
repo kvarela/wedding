@@ -1,6 +1,17 @@
-import { Box, Container, Heading, Text, VStack, Input, Button, Textarea } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  Heading,
+  Input,
+  Text,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react'
 import { useState } from 'react'
 import { Field } from '@chakra-ui/react'
+
+import { createRsvp } from '@/api/rsvp'
 
 const RSVPSection = () => {
   const [formData, setFormData] = useState({
@@ -11,27 +22,38 @@ const RSVPSection = () => {
     attending: true,
   })
   const [submitted, setSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // TODO: Integrate with backend API
-    console.log('RSVP Submission:', formData)
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000))
-    
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setFormData({
-        name: '',
-        email: '',
-        guests: '',
-        message: '',
-        attending: true,
+    setError(null)
+    setLoading(true)
+    try {
+      await createRsvp({
+        name: formData.name.trim(),
+        email: formData.email.trim(),
+        phone: '',
+        guests: parseInt(formData.guests, 10) || 1,
+        message: formData.message.trim() || undefined,
+        attendance: formData.attending ? 'YES' : 'NO',
       })
-    }, 3000)
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setFormData({
+          name: '',
+          email: '',
+          guests: '',
+          message: '',
+          attending: true,
+        })
+      }, 3000)
+    } catch (err: unknown) {
+      setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -188,6 +210,21 @@ const RSVPSection = () => {
                   />
                 </Field.Root>
 
+                {error && (
+                  <Box
+                    width="100%"
+                    p={3}
+                    borderRadius="md"
+                    bg="red.50"
+                    borderWidth="1px"
+                    borderColor="red.200"
+                  >
+                    <Text color="red.700" fontSize="sm">
+                      {error}
+                    </Text>
+                  </Box>
+                )}
+
                 <Button
                   type="submit"
                   width="100%"
@@ -202,6 +239,8 @@ const RSVPSection = () => {
                     bg: 'gray.700',
                   }}
                   transition="all 0.3s"
+                  loading={loading}
+                  disabled={loading}
                 >
                   Submit RSVP
                 </Button>
