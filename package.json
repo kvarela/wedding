@@ -1,0 +1,27 @@
+{
+  "name": "karim-felicia-wedding",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Wedding website monorepo for Karim & Felicia",
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "dev": "npm run dev:frontend & npm run dev:backend",
+    "dev:frontend": "npm run dev --workspace=@wedding/frontend",
+    "dev:backend": "npm run dev --workspace=@wedding/backend",
+    "build": "npm run build --workspaces",
+    "build:frontend": "npm run build --workspace=@wedding/frontend",
+    "build:backend": "npm run build --workspace=@wedding/backend"
+  },
+  "keywords": [
+    "wedding",
+    "monorepo"
+  ],
+  "author": "Karim & Felicia",
+  "license": "MIT",
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm-naming-strategies": "^4.1.0"
+  }
+}

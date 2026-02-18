@@ -1,0 +1,117 @@
+---
+alwaysApply: true
+---
+
+# Coding Standards
+
+## Code Formatting
+
+- Use Prettier for all code formatting
+
+## Naming Conventions
+
+### Variables and Functions
+
+- Use `camelCase` for variables and functions
+
+### Classes and Enums
+
+- Use `PascalCase` for classes and enums
+
+### Database Fields
+
+- Use `snake_case` for database fields (except camelCase for TypeORM entity fields)
+
+### Constants
+
+- Use `UPPER_CASE` for immutable constants (e.g., `BATCH_SIZE = 500`)
+
+## File Naming
+
+### General Files
+
+- Use dash-separated names (e.g., `user-service.ts`)
+
+### NestJS Files
+
+- Use specific patterns: `some-entity.entity.ts`, `some-entity.service.ts`, etc.
+
+## Import Organization
+
+Import order should follow this sequence:
+
+1. Third-party modules
+2. Local files from different paths
+3. Local files from the same folder or beneath
+4. Remove unused imports and avoid wildcard imports unless necessary
+
+## Documentation
+
+### Comments and Documentation
+
+- No enforced JSDoc or comments—add documentation only if needed
+- Use NestJS Swagger for API documentation
+- Do not write `//` comments. Only TSDoc is allowed
+- All code, comments, and documentation must use en-US English
+
+## Error Handling
+
+### Logging
+
+- Use a logger for all exception handling (never use `console`)
+- **Do not add informational logs** for normal operation flow (e.g., "Added X items", "Processing completed")
+- Only log errors, warnings, and critical debug information
+- Avoid logging success messages or routine operations
+
+### HTTP Responses
+
+- Return codes should match HTTP errors where appropriate
+
+## Testing
+
+### Test Requirements
+
+- All new code must include unit tests
+
+### Test File Naming
+
+- `*.spec.ts` for general tests
+- `*.controller.spec.ts` for API (Supertest)
+- `*.service.spec.ts` for service/logic
+
+### Test Utilities
+
+- Always use TestUtils for tests instead of redefining modules
+
+## Development Workflow
+
+### TODOs
+
+- TODOs in active changes must be resolved unless linked to a ClickUp ticket (e.g., `TODO [CU-123abc]: ...`)
+
+### Commit Messages
+
+- No strict commit message format, but be descriptive
+- No pre-commit action required (Husky is present but not enforced)
+
+## TypeScript Guidelines
+
+## TypeORM Usage
+
+- Use `relations: {}` when loading associations with TypeORM repositories; do not use array syntax such as `relations: []`
+
+### Type Assertions
+
+- `!` disallowed to be used as a type assertion. I.e. `option.value!` is bad, check existence differently
+- **`as any` is strictly prohibited** - use proper type definitions instead of bypassing type safety
+- **`as never` is strictly prohibited** - use proper type definitions instead of bypassing type safety
+- When mocking in tests, use specific types (e.g., `as MockType`) rather than `as any` or `as never`
+- If you encounter `as any` or `as never` in existing code, refactor to use proper types
+
+### Error Handling
+
+- Catch error types must be `unknown` (not `any` or `Error`). Example: `catch (error: unknown) { ... }`
+
+### Type Checking
+
+- Always run `npm run typecheck` from the project root after completing actions. If there are any errors, fix them
