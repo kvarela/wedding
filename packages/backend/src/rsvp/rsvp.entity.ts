@@ -1,25 +1,29 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm'
+import { RsvpAttendance } from './rsvp-attendance.enum'
 
 @Entity('rsvp')
 export class Rsvp {
   @PrimaryGeneratedColumn('uuid')
-  id: string;
+  id: string
 
   @Column()
-  name: string;
+  name: string
 
   @Column()
-  email: string;
+  email: string
 
-  @Column()
-  guests: number;
+  @Column({ type: 'varchar', length: 50, nullable: true })
+  phone: string | null
 
-  @Column({ nullable: true })
-  message: string;
+  @Column({ type: 'integer' })
+  numGuests: number
 
-  @Column({ default: true })
-  attending: boolean;
+  @Column({ type: 'text', nullable: true })
+  message: string
+
+  @Column({ type: 'enum', enum: RsvpAttendance, default: RsvpAttendance.YES })
+  attendance: RsvpAttendance
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt: Date
 }
