@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param } from '@nestjs/common'
+import { Controller, Get, Post, Body, Param, Inject } from '@nestjs/common'
 import { RsvpService, CreateRsvpDto } from './rsvp.service'
 
 @Controller('rsvp')
 export class RsvpController {
-  constructor(private readonly service: RsvpService) {}
+  constructor(
+    @Inject(RsvpService) private readonly service: RsvpService,
+  ) {}
 
   @Post()
   create(@Body() createRsvpDto: CreateRsvpDto) {
