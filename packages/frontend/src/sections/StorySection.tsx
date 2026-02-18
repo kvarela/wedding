@@ -9,29 +9,32 @@ interface TimelineItem {
 
 const timeline: TimelineItem[] = [
   {
-    year: '2020',
-    title: 'First Meeting',
-    description: 'Our paths crossed at a mutual friend\'s gathering in San Francisco. What started as a casual conversation turned into hours of talking about everything from travel to our dreams.',
+    year: 'February, 2020',
+    title: 'First Tequila Shot',
+    description:
+      'The spark started Lanea in Santa Monica at Superbowl party. We shared shots of Nosotros Tequila and wondered if it would be crazy for us to date',
   },
   {
-    year: '2021',
+    year: 'July, 2020',
     title: 'First Date',
-    description: 'Karim took Felicia to a hidden rooftop restaurant overlooking the bay. The evening ended with a promise to explore the world together.',
+    description:
+      "There were no restaurants open, so Karim invited Felicia over for a salmon dinner with unicorns and etched a spot in Felicia's heart",
   },
   {
-    year: '2023',
+    year: 'April, 2022',
     title: 'Moving In',
-    description: 'We decided to make our relationship official by moving in together. Our little apartment became our sanctuary, filled with love, laughter, and countless memories.',
+    description: 'We decided to make a home together in Venice.',
   },
   {
-    year: '2025',
+    year: 'March, 2023',
+    title: 'Luna Bean',
+    description: 'And then a miracle happened and Luna came to be.',
+  },
+  {
+    year: 'April, 2025',
     title: 'The Proposal',
-    description: 'During a sunset walk on the beach in Cabo San Lucas, Karim got down on one knee. Felicia said yes, and we knew this magical place would be where we\'d start our forever.',
-  },
-  {
-    year: '2026',
-    title: 'Our Wedding Day',
-    description: 'We return to Cabo San Lucas to celebrate our love with family and friends, creating memories that will last a lifetime.',
+    description:
+      "During a sunset cruise to the arches of Cabo San Lucas, Karim got down on one knee. Felicia said yes, and we knew this magical place would be where we'd start our forever.",
   },
 ]
 
@@ -49,7 +52,7 @@ const StorySection = () => {
           }
         })
       },
-      { threshold: 0.3 }
+      { threshold: 0.3 },
     )
 
     const items = sectionRef.current?.querySelectorAll('.timeline-item')
@@ -59,27 +62,15 @@ const StorySection = () => {
   }, [])
 
   return (
-    <Box
-      ref={sectionRef}
-      py={{ base: 16, md: 24 }}
-      bg="gray.50"
-    >
+    <Box ref={sectionRef} py={{ base: 16, md: 24 }} bg="gray.50">
       <Container maxW="container.lg">
         <VStack gap={16}>
           <VStack gap={4} textAlign="center">
-            <Heading
-              fontSize={{ base: '3xl', md: '5xl' }}
-              fontWeight="300"
-              color="gray.800"
-            >
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
               Our Story
             </Heading>
             <Box height="1px" width="100px" bg="gray.400" />
-            <Text
-              fontSize={{ base: 'md', md: 'lg' }}
-              color="gray.600"
-              maxW="2xl"
-            >
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
               Every love story is special, but ours is our favorite
             </Text>
           </VStack>
@@ -128,18 +119,10 @@ const StorySection = () => {
                     >
                       {item.year}
                     </Text>
-                    <Heading
-                      fontSize={{ base: 'xl', md: '2xl' }}
-                      fontWeight="400"
-                      color="gray.800"
-                    >
+                    <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color="gray.800">
                       {item.title}
                     </Heading>
-                    <Text
-                      fontSize={{ base: 'sm', md: 'md' }}
-                      color="gray.600"
-                      lineHeight="tall"
-                    >
+                    <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" lineHeight="tall">
                       {item.description}
                     </Text>
                   </VStack>
