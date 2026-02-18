@@ -9,7 +9,7 @@ import './App.css'
 
 function App() {
   return (
-    <Box>
+    <Box width="100%">
       <HeroSection />
       <StorySection />
       <EventSection />

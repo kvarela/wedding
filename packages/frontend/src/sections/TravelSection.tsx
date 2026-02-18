@@ -44,10 +44,11 @@ const travelDetails: TravelInfo[] = [
 const TravelSection = () => {
   return (
     <Box
+      width="100%"
       py={{ base: 16, md: 24 }}
       bg="white"
     >
-      <Container maxW="container.xl">
+      <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
             <Heading

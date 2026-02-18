@@ -21,6 +21,7 @@ const HeroSection = () => {
   return (
     <Box
       className="parallax-section"
+      width="100%"
       position="relative"
       height="100vh"
       display="flex"
@@ -50,7 +51,7 @@ const HeroSection = () => {
         opacity={0.55}
       />
 
-      <Container maxW="container.xl" position="relative" zIndex={1}>
+      <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }} position="relative" zIndex={1}>
         <VStack
           gap={8}
           textAlign="center"

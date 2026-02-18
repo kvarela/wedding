@@ -37,10 +37,11 @@ const RSVPSection = () => {
   return (
     <Box
       id="rsvp"
+      width="100%"
       py={{ base: 16, md: 24 }}
       bg="gray.50"
     >
-      <Container maxW="container.md">
+      <Container maxW="container.md" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
             <Heading

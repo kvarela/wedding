@@ -7,7 +7,7 @@ interface TimelineItem {
   description: string
 }
 
-const timeline: TimelineItem[] = [
+const TIMELINE: TimelineItem[] = [
   {
     year: 'February, 2020',
     title: 'First Tequila Shot',
@@ -62,8 +62,8 @@ const StorySection = () => {
   }, [])
 
   return (
-    <Box ref={sectionRef} py={{ base: 16, md: 24 }} bg="gray.50">
-      <Container maxW="container.lg">
+    <Box ref={sectionRef} width="100%" py={{ base: 16, md: 24 }} bg="gray.50">
+      <Container maxW="container.lg" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={16}>
           <VStack gap={4} textAlign="center">
             <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
@@ -88,7 +88,7 @@ const StorySection = () => {
               display={{ base: 'none', md: 'block' }}
             />
 
-            {timeline.map((item, index) => (
+            {TIMELINE.map((item, index) => (
               <Box
                 key={index}
                 className="timeline-item"
