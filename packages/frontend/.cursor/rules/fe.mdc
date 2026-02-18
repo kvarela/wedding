@@ -1,0 +1,71 @@
+---
+alwaysApply: true
+---
+
+# Cursor Rules
+
+## Core Technologies & Patterns
+
+- TypeScript with React 18 functional components
+- Chakra UI v2 component library with custom theme
+- React Router v5 for routing
+- React Query (TanStack Query v4) for API state management
+- Axios for HTTP requests
+
+## Code Style & Formatting
+
+- Follow existing Prettier config (100 char width, single quotes, semicolons)
+- Use TypeScript interfaces for component props. Please avoid using `any`
+- Prefer functional components with explicit prop types
+- Use `@/` path alias for absolute imports from `src/`
+- Simplify array/collection null/empty checks: use `!array?.length` instead of `!array || array.length === 0`
+- NEVER add inline comments that explain what code does. Instead, use more explicit and descriptive variable, function, and component names that make the code self-documenting.
+
+## Component Patterns
+
+- Extend Chakra UI components with custom props when needed
+- Use Chakra's responsive syntax (`base`, `md`, `lg` breakpoints)
+- Export components as default exports
+
+## API/Data Fetching
+
+- Use React Query hooks (`useQuery`, `useMutation`) from existing patterns in `src/api/`
+- Use Axios for custom HTTP requests when AbloAPI methods are not available
+- Follow axios wrapper patterns established in API files
+- Use `useQueryClient` for cache invalidation
+
+## State Management
+
+- Use React hooks (useState, useEffect, etc.)
+- Use React Query for server state
+- Use Context API for shared UI state when needed
+
+## Import Organization
+
+- Group imports in this order:
+  1. External libraries (React, Chakra UI, React Router, etc.)
+  2. Third-party packages (@tanstack/react-query, axios, etc.)
+  3. Internal absolute imports with `@/` alias (components, utils, api, etc.)
+  4. Internal relative imports (`./` and `../`)
+  5. Type-only imports (when importing types/interfaces only)
+- Separate groups with blank lines
+- Within each group, alphabetically sort imports
+- Use absolute imports (`@/`) for cross-directory imports instead of relative paths
+
+## Styling Conventions
+
+- Prefer Chakra's responsive prop syntax over custom CSS
+- Use theme tokens from `src/theme/` (colors, breakpoints, etc.)
+- Avoid inline style objects when Chakra props can be used
+
+## File Structure
+
+- Components go in `src/components/`
+- API hooks in `src/api/`
+- Utilities in `src/utils/`
+
+## TypeScript
+
+- Use explicit interfaces for component props
+- Avoid `any` types when possible
+- Use proper typing from Chakra UI and React
