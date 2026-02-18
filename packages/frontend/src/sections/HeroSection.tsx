@@ -1,6 +1,8 @@
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
 import { useEffect, useRef } from 'react'
 
+import proposalImage from '@/assets/proposal.jpg'
+
 const HeroSection = () => {
   const parallaxRef = useRef<HTMLDivElement>(null)
 
@@ -29,10 +31,25 @@ const HeroSection = () => {
       <Box
         ref={parallaxRef}
         className="parallax-bg"
-        bgGradient="linear(to-b, #1a202c, #2d3748)"
-        opacity={0.95}
+        position="absolute"
+        inset={0}
+        width="100%"
+        height="100%"
+        zIndex={0}
+        backgroundImage={`url(${proposalImage})`}
+        backgroundSize="cover"
+        backgroundPosition="center"
       />
-      
+      <Box
+        position="absolute"
+        inset={0}
+        width="100%"
+        height="100%"
+        zIndex={0}
+        bgGradient="linear(to-b, #1a202c, #2d3748)"
+        opacity={0.6}
+      />
+
       <Container maxW="container.xl" position="relative" zIndex={1}>
         <VStack gap={8} textAlign="center" color="white">
           <Heading
@@ -41,11 +58,15 @@ const HeroSection = () => {
             letterSpacing="wider"
             textTransform="uppercase"
           >
-            Karim <Text as="span" fontStyle="italic">&</Text> Felicia
+            Karim{' '}
+            <Text as="span" fontStyle="italic">
+              &
+            </Text>{' '}
+            Felicia
           </Heading>
-          
+
           <Box height="1px" width="200px" bg="white" opacity={0.5} />
-          
+
           <VStack gap={4}>
             <Text
               fontSize={{ base: 'xl', md: '2xl' }}
@@ -55,24 +76,16 @@ const HeroSection = () => {
             >
               are getting married
             </Text>
-            
-            <Text
-              fontSize={{ base: 'lg', md: 'xl' }}
-              fontWeight="300"
-              letterSpacing="wider"
-            >
+
+            <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="300" letterSpacing="wider">
               NOVEMBER 7, 2026
             </Text>
-            
-            <Text
-              fontSize={{ base: 'md', md: 'lg' }}
-              fontWeight="300"
-              opacity={0.9}
-            >
+
+            <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="300" opacity={0.9}>
               Viceroy Hotel • Cabo San Lucas, Mexico
             </Text>
           </VStack>
-          
+
           <Box
             as="button"
             mt={8}
