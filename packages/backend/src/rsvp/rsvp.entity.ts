@@ -6,10 +6,10 @@ export class Rsvp {
   @PrimaryGeneratedColumn('uuid')
   id: string
 
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   name: string
 
-  @Column()
+  @Column({ type: 'varchar', length: 255 })
   email: string
 
   @Column({ type: 'varchar', length: 50, nullable: true })

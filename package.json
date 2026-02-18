@@ -14,7 +14,14 @@
     "build:frontend": "npm run build --workspace=@wedding/frontend",
     "build:backend": "npm run build --workspace=@wedding/backend"
   },
-  "keywords": ["wedding", "monorepo"],
+  "keywords": [
+    "wedding",
+    "monorepo"
+  ],
   "author": "Karim & Felicia",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "reflect-metadata": "^0.2.2",
+    "typeorm-naming-strategies": "^4.1.0"
+  }
 }
