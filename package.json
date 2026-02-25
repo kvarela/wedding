@@ -7,17 +7,14 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "npm run dev:frontend & npm run dev:backend",
-    "dev:frontend": "npm run dev --workspace=@wedding/frontend",
-    "dev:backend": "npm run dev --workspace=@wedding/backend",
-    "build": "npm run build --workspaces",
-    "build:frontend": "npm run build --workspace=@wedding/frontend",
-    "build:backend": "npm run build --workspace=@wedding/backend"
+    "dev": "yarn dev:frontend & yarn dev:backend",
+    "dev:frontend": "yarn workspace @wedding/frontend dev",
+    "dev:backend": "yarn workspace @wedding/backend dev",
+    "build": "yarn workspaces run build",
+    "build:frontend": "yarn workspace @wedding/frontend build",
+    "build:backend": "yarn workspace @wedding/backend build"
   },
-  "keywords": [
-    "wedding",
-    "monorepo"
-  ],
+  "keywords": ["wedding", "monorepo"],
   "author": "Karim & Felicia",
   "license": "MIT"
 }

@@ -114,4 +114,4 @@ Import order should follow this sequence:
 
 ### Type Checking
 
-- Always run `npm run typecheck` from the project root after completing actions. If there are any errors, fix them
+- Always run `yarn run typecheck` from the project root after completing actions. If there are any errors, fix them
