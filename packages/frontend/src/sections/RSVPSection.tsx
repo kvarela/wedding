@@ -5,7 +5,7 @@ import { Field } from '@chakra-ui/react'
 import { createRsvp } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
-const MAX_GUESTS = 3
+const MAX_GUESTS_PARTY = 4
 const INPUT_PADDING_LEFT = 2
 
 const RSVPSection = () => {
@@ -23,7 +23,7 @@ const RSVPSection = () => {
   const [error, setError] = useState<string | null>(null)
 
   const updateGuestCount = (count: number) => {
-    const n = Math.min(MAX_GUESTS, Math.max(MIN_GUESTS, count))
+    const n = Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, count))
     setNumGuests(n)
     setGuestNames((prev) => {
       if (n > prev.length) {
@@ -134,9 +134,10 @@ const RSVPSection = () => {
                   <Input
                     type="number"
                     min={MIN_GUESTS}
-                    max={MAX_GUESTS}
+                    max={MAX_GUESTS_PARTY}
                     value={numGuests}
                     onChange={(e) => updateGuestCount(parseInt(e.target.value, 10) || 1)}
+                    onFocus={(e) => e.target.select()}
                     required
                     placeholder="Including yourself"
                     size="lg"

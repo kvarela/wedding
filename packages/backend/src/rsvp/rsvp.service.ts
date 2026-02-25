@@ -5,6 +5,7 @@ import { RsvpAttendance } from './rsvp-attendance.enum'
 import { Rsvp } from './rsvp.entity'
 
 export class CreateRsvpDto {
+  name: string
   email: string
   phone: string
   guestNames: string[]
@@ -25,7 +26,7 @@ export class RsvpService {
     if (!trimmedNames.length) {
       throw new BadRequestException('At least one guest name is required')
     }
-    const name = trimmedNames[0]
+    const name = createRsvpDto.name.trim()
     const email = createRsvpDto.email.trim()
     const phone = createRsvpDto.phone?.trim() || null
 
