@@ -7,7 +7,7 @@ alwaysApply: true
 ## Core Technologies & Patterns
 
 - TypeScript with React 18 functional components
-- Chakra UI v2 component library with custom theme
+- Chakra UI v3 component library with custom theme
 - React Router v5 for routing
 - React Query (TanStack Query v4) for API state management
 - Axios for HTTP requests
@@ -26,6 +26,7 @@ alwaysApply: true
 - Extend Chakra UI components with custom props when needed
 - Use Chakra's responsive syntax (`base`, `md`, `lg` breakpoints)
 - Export components as default exports
+- Name files like event-section.component.tsx (not EventSection.tsx)
 
 ## API/Data Fetching
 
@@ -63,6 +64,7 @@ alwaysApply: true
 - Components go in `src/components/`
 - API hooks in `src/api/`
 - Utilities in `src/utils/`
+- Interfaces should go in their own file (unless they are just component props)
 
 ## TypeScript
 
