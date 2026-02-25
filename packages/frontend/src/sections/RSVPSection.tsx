@@ -9,7 +9,7 @@ const MAX_GUESTS_PARTY = 4
 const INPUT_PADDING_LEFT = 2
 
 const RSVPSection = () => {
-  const [numGuests, setNumGuests] = useState(1)
+  const [guestCountInput, setGuestCountInput] = useState('1')
   const [guestNames, setGuestNames] = useState<string[]>([''])
   const [formData, setFormData] = useState({
     email: '',
@@ -22,15 +22,33 @@ const RSVPSection = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
 
-  const updateGuestCount = (count: number) => {
-    const n = Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, count))
-    setNumGuests(n)
+  const numGuests = (() => {
+    const parsed = parseInt(guestCountInput, 10)
+    if (Number.isNaN(parsed) || guestCountInput === '') return 1
+    return Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
+  })()
+
+  const handleGuestCountChange = (value: string) => {
+    setGuestCountInput(value)
+    const parsed = parseInt(value, 10)
+    const n = Number.isNaN(parsed) || value === ''
+      ? 1
+      : Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
     setGuestNames((prev) => {
       if (n > prev.length) {
         return [...prev, ...Array(n - prev.length).fill('')]
       }
       return prev.slice(0, n)
     })
+  }
+
+  const handleGuestCountBlur = () => {
+    if (guestCountInput === '' || Number.isNaN(parseInt(guestCountInput, 10))) {
+      setGuestCountInput('1')
+    } else {
+      const n = Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parseInt(guestCountInput, 10)))
+      setGuestCountInput(String(n))
+    }
   }
 
   const setGuestName = (index: number, value: string) => {
@@ -63,7 +81,7 @@ const RSVPSection = () => {
       setSubmitted(true)
       setTimeout(() => {
         setSubmitted(false)
-        setNumGuests(1)
+        setGuestCountInput('1')
         setGuestNames([''])
         setFormData({
           email: '',
@@ -135,8 +153,9 @@ const RSVPSection = () => {
                     type="number"
                     min={MIN_GUESTS}
                     max={MAX_GUESTS_PARTY}
-                    value={numGuests}
-                    onChange={(e) => updateGuestCount(parseInt(e.target.value, 10) || 1)}
+                    value={guestCountInput}
+                    onChange={(e) => handleGuestCountChange(e.target.value)}
+                    onBlur={handleGuestCountBlur}
                     onFocus={(e) => e.target.select()}
                     required
                     placeholder="Including yourself"
