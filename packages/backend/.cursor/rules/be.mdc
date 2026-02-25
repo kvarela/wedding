@@ -114,4 +114,4 @@ Import order should follow this sequence:
 
 ### Type Checking
 
-- Always run `npm run typecheck` from the project root after completing actions. If there are any errors, fix them
+- Always run the project's TypeScript type-checking or build script from the project root (see the root `package.json`) after completing actions, and fix any reported errors

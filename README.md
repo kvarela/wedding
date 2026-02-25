@@ -55,7 +55,7 @@ wedding/
 
 ### Prerequisites
 
-- Node.js 18+ and npm
+- Node.js 18+ and yarn
 - PostgreSQL 14+
 
 ### Installation
@@ -68,7 +68,7 @@ cd wedding
 
 2. Install dependencies:
 ```bash
-npm install
+yarn install
 ```
 
 3. Set up the database:
@@ -91,26 +91,26 @@ cp .env.example .env
 
 Run both frontend and backend:
 ```bash
-npm run dev
+yarn dev
 ```
 
 Or run them separately:
 
 Frontend (runs on http://localhost:3000):
 ```bash
-npm run dev:frontend
+yarn dev:frontend
 ```
 
 Backend (runs on http://localhost:3001):
 ```bash
-npm run dev:backend
+yarn dev:backend
 ```
 
 ### Build
 
 Build all packages:
 ```bash
-npm run build
+yarn build
 ```
 
 ## 🎯 Wedding Details
