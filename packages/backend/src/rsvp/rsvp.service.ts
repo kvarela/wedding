@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { RsvpAttendance } from './rsvp-attendance.enum'
@@ -8,7 +8,8 @@ export class CreateRsvpDto {
   name: string
   email: string
   phone: string
-  guests: number
+  guestNames: string[]
+  address: string
   message?: string
   attendance: RsvpAttendance
 }
@@ -21,10 +22,44 @@ export class RsvpService {
   ) {}
 
   async create(createRsvpDto: CreateRsvpDto): Promise<Rsvp> {
+    const trimmedNames = createRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
+    if (!trimmedNames.length) {
+      throw new BadRequestException('At least one guest name is required')
+    }
+    const name = createRsvpDto.name.trim()
+    const email = createRsvpDto.email.trim()
+    const phone = createRsvpDto.phone?.trim() || null
+
+    const qb = this.rsvpRepository
+      .createQueryBuilder('rsvp')
+      .where('rsvp.name = :name', { name })
+      .orWhere('rsvp.email = :email', { email })
+    if (phone) {
+      qb.orWhere('rsvp.phone = :phone', { phone })
+    }
+    const existing = await qb.getOne()
+
+    if (existing) {
+      existing.name = name
+      existing.email = email
+      existing.phone = phone
+      existing.address = createRsvpDto.address?.trim()
+      existing.message = createRsvpDto.message
+      existing.attendance = createRsvpDto.attendance
+      existing.numGuests = trimmedNames.length
+      existing.guestNames = trimmedNames
+      return this.rsvpRepository.save(existing)
+    }
+
     const rsvp = this.rsvpRepository.create({
-      ...createRsvpDto,
-      numGuests: createRsvpDto.guests,
+      name,
+      email,
+      phone,
+      address: createRsvpDto.address?.trim(),
+      message: createRsvpDto.message,
       attendance: createRsvpDto.attendance,
+      numGuests: trimmedNames.length,
+      guestNames: trimmedNames,
     })
     return this.rsvpRepository.save(rsvp)
   }
