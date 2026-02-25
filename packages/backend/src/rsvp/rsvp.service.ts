@@ -25,10 +25,35 @@ export class RsvpService {
     if (!trimmedNames.length) {
       throw new BadRequestException('At least one guest name is required')
     }
+    const name = trimmedNames[0]
+    const email = createRsvpDto.email.trim()
+    const phone = createRsvpDto.phone?.trim() || null
+
+    const qb = this.rsvpRepository
+      .createQueryBuilder('rsvp')
+      .where('rsvp.name = :name', { name })
+      .orWhere('rsvp.email = :email', { email })
+    if (phone) {
+      qb.orWhere('rsvp.phone = :phone', { phone })
+    }
+    const existing = await qb.getOne()
+
+    if (existing) {
+      existing.name = name
+      existing.email = email
+      existing.phone = phone
+      existing.address = createRsvpDto.address?.trim()
+      existing.message = createRsvpDto.message
+      existing.attendance = createRsvpDto.attendance
+      existing.numGuests = trimmedNames.length
+      existing.guestNames = trimmedNames
+      return this.rsvpRepository.save(existing)
+    }
+
     const rsvp = this.rsvpRepository.create({
-      name: trimmedNames[0],
-      email: createRsvpDto.email,
-      phone: createRsvpDto.phone,
+      name,
+      email,
+      phone,
       address: createRsvpDto.address?.trim(),
       message: createRsvpDto.message,
       attendance: createRsvpDto.attendance,

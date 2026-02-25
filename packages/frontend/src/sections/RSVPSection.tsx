@@ -1,13 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Heading,
-  Input,
-  Text,
-  Textarea,
-  VStack,
-} from '@chakra-ui/react'
+import { Box, Button, Container, Heading, Input, Text, Textarea, VStack } from '@chakra-ui/react'
 import { useState } from 'react'
 import { Field } from '@chakra-ui/react'
 
@@ -15,12 +6,14 @@ import { createRsvp } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
 const MAX_GUESTS = 3
+const INPUT_PADDING_LEFT = 2
 
 const RSVPSection = () => {
   const [numGuests, setNumGuests] = useState(1)
   const [guestNames, setGuestNames] = useState<string[]>([''])
   const [formData, setFormData] = useState({
     email: '',
+    phone: '',
     address: '',
     message: '',
     attending: true,
@@ -61,7 +54,7 @@ const RSVPSection = () => {
     try {
       await createRsvp({
         email: formData.email.trim(),
-        phone: '',
+        phone: formData.phone.trim(),
         guestNames: names,
         address: formData.address.trim(),
         message: formData.message.trim() || undefined,
@@ -74,11 +67,12 @@ const RSVPSection = () => {
         setGuestNames([''])
         setFormData({
           email: '',
+          phone: '',
           address: '',
           message: '',
           attending: true,
         })
-      }, 3000)
+      }, 8000)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
@@ -87,28 +81,15 @@ const RSVPSection = () => {
   }
 
   return (
-    <Box
-      id="rsvp"
-      width="100%"
-      py={{ base: 16, md: 24 }}
-      bg="gray.50"
-    >
+    <Box id="rsvp" width="100%" py={{ base: 16, md: 24 }} bg="gray.50">
       <Container maxW="container.md" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading
-              fontSize={{ base: '3xl', md: '5xl' }}
-              fontWeight="300"
-              color="gray.800"
-            >
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
               RSVP
             </Heading>
             <Box height="1px" width="100px" bg="gray.400" />
-            <Text
-              fontSize={{ base: 'md', md: 'lg' }}
-              color="gray.600"
-              maxW="2xl"
-            >
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
               Please let us know if you can join us
             </Text>
           </VStack>
@@ -148,7 +129,7 @@ const RSVPSection = () => {
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
-                    Number of Guests *
+                    Number of Guests (including yourself) *
                   </Field.Label>
                   <Input
                     type="number"
@@ -160,6 +141,7 @@ const RSVPSection = () => {
                     placeholder="Including yourself"
                     size="lg"
                     borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
                     _focus={{
                       borderColor: 'gray.600',
                       shadow: 'sm',
@@ -168,40 +150,43 @@ const RSVPSection = () => {
                 </Field.Root>
 
                 <VStack gap={4} width="100%">
-                  <Field.Label
-                    fontSize="sm"
-                    fontWeight="500"
-                    color="gray.700"
-                    textTransform="uppercase"
-                    letterSpacing="wide"
-                  >
-                    Names of Everyone Attending *
-                  </Field.Label>
-                  {guestNames.map((name, index) => (
-                    <Field.Root key={index} width="100%">
-                      <Field.Label
-                        fontSize="xs"
-                        fontWeight="500"
-                        color="gray.600"
-                        textTransform="uppercase"
-                        letterSpacing="wide"
-                      >
-                        Guest {index + 1} {index === 0 ? '(you)' : ''}
-                      </Field.Label>
-                      <Input
-                        value={name}
-                        onChange={(e) => setGuestName(index, e.target.value)}
-                        required
-                        placeholder="Full name"
-                        size="lg"
-                        borderColor="gray.300"
-                        _focus={{
-                          borderColor: 'gray.600',
-                          shadow: 'sm',
-                        }}
-                      />
-                    </Field.Root>
-                  ))}
+                  <Field.Root width="100%">
+                    <Field.Label
+                      fontSize="sm"
+                      fontWeight="500"
+                      color="gray.700"
+                      textTransform="uppercase"
+                      letterSpacing="wide"
+                    >
+                      Names of Everyone Attending *
+                    </Field.Label>
+                    {guestNames.map((name, index) => (
+                      <Field.Root key={index} width="100%">
+                        <Field.Label
+                          fontSize="xs"
+                          fontWeight="500"
+                          color="gray.600"
+                          textTransform="uppercase"
+                          letterSpacing="wide"
+                        >
+                          Guest {index + 1} {index === 0 ? '(you)' : ''}
+                        </Field.Label>
+                        <Input
+                          value={name}
+                          onChange={(e) => setGuestName(index, e.target.value)}
+                          required
+                          placeholder="Full name"
+                          size="lg"
+                          borderColor="gray.300"
+                          pl={INPUT_PADDING_LEFT}
+                          _focus={{
+                            borderColor: 'gray.600',
+                            shadow: 'sm',
+                          }}
+                        />
+                      </Field.Root>
+                    ))}
+                  </Field.Root>
                 </VStack>
 
                 <Field.Root width="100%">
@@ -222,6 +207,32 @@ const RSVPSection = () => {
                     placeholder="your.email@example.com"
                     size="lg"
                     borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
+                    _focus={{
+                      borderColor: 'gray.600',
+                      shadow: 'sm',
+                    }}
+                  />
+                </Field.Root>
+
+                <Field.Root width="100%">
+                  <Field.Label
+                    fontSize="sm"
+                    fontWeight="500"
+                    color="gray.700"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                  >
+                    Phone Number
+                  </Field.Label>
+                  <Input
+                    type="tel"
+                    value={formData.phone}
+                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+                    placeholder="Optional"
+                    size="lg"
+                    borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
                     _focus={{
                       borderColor: 'gray.600',
                       shadow: 'sm',
@@ -247,6 +258,7 @@ const RSVPSection = () => {
                     rows={3}
                     size="lg"
                     borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
                     _focus={{
                       borderColor: 'gray.600',
                       shadow: 'sm',
@@ -271,6 +283,7 @@ const RSVPSection = () => {
                     rows={4}
                     size="lg"
                     borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
                     _focus={{
                       borderColor: 'gray.600',
                       shadow: 'sm',
@@ -316,13 +329,9 @@ const RSVPSection = () => {
             </Box>
           )}
 
-          <Text
-            fontSize="sm"
-            color="gray.500"
-            textAlign="center"
-            maxW="lg"
-          >
-            Please RSVP by September 1st, 2026. If you have any questions, feel free to reach out to us directly.
+          <Text fontSize="sm" color="gray.500" textAlign="center" maxW="lg">
+            Please RSVP by September 1st, 2026. If you have any questions, feel free to reach out to
+            us directly.
           </Text>
         </VStack>
       </Container>

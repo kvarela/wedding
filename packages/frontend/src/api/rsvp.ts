@@ -34,7 +34,14 @@ export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpRespon
   })
   if (!res.ok) {
     const body = await res.text()
-    throw new Error(body || `RSVP failed (${res.status})`)
+    let message = body
+    try {
+      const parsed = JSON.parse(body) as { message?: string }
+      message = parsed.message ?? body
+    } catch {
+      // body is not JSON, use as-is
+    }
+    throw new Error(message || `RSVP failed (${res.status})`)
   }
   return res.json()
 }
