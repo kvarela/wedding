@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { RsvpAttendance } from './rsvp-attendance.enum'
 import { Rsvp } from './rsvp.entity'
 
 export class CreateRsvpDto {
-  name: string
   email: string
   phone: string
-  guests: number
+  guestNames: string[]
+  address: string
   message?: string
   attendance: RsvpAttendance
 }
@@ -21,10 +21,19 @@ export class RsvpService {
   ) {}
 
   async create(createRsvpDto: CreateRsvpDto): Promise<Rsvp> {
+    const trimmedNames = createRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
+    if (!trimmedNames.length) {
+      throw new BadRequestException('At least one guest name is required')
+    }
     const rsvp = this.rsvpRepository.create({
-      ...createRsvpDto,
-      numGuests: createRsvpDto.guests,
+      name: trimmedNames[0],
+      email: createRsvpDto.email,
+      phone: createRsvpDto.phone,
+      address: createRsvpDto.address?.trim(),
+      message: createRsvpDto.message,
       attendance: createRsvpDto.attendance,
+      numGuests: trimmedNames.length,
+      guestNames: trimmedNames,
     })
     return this.rsvpRepository.save(rsvp)
   }

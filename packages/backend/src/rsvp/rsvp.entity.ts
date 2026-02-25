@@ -18,6 +18,12 @@ export class Rsvp {
   @Column({ type: 'integer' })
   numGuests: number
 
+  @Column({ type: 'jsonb', default: '[]' })
+  guestNames: string[]
+
+  @Column({ type: 'text' })
+  address: string
+
   @Column({ type: 'text', nullable: true })
   message: string
 

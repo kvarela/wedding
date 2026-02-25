@@ -3,10 +3,10 @@ import { apiUrl } from './client'
 export type RsvpAttendance = 'YES' | 'NO' | 'MAYBE'
 
 export interface CreateRsvpPayload {
-  name: string
   email: string
   phone: string
-  guests: number
+  guestNames: string[]
+  address: string
   message?: string
   attendance: RsvpAttendance
 }
@@ -17,6 +17,8 @@ export interface RsvpResponse {
   email: string
   phone: string | null
   numGuests: number
+  guestNames: string[]
+  address: string
   message: string | null
   attendance: RsvpAttendance
   createdAt: string
