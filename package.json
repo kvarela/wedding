@@ -7,12 +7,15 @@
     "packages/*"
   ],
   "scripts": {
-    "dev": "yarn dev:frontend & yarn dev:backend",
+    "dev": "concurrently \"yarn dev:frontend\" \"yarn dev:backend\"",
     "dev:frontend": "yarn workspace @wedding/frontend dev",
     "dev:backend": "yarn workspace @wedding/backend dev",
     "build": "yarn workspaces run build",
     "build:frontend": "yarn workspace @wedding/frontend build",
     "build:backend": "yarn workspace @wedding/backend build"
+  },
+  "devDependencies": {
+    "concurrently": "^9.0.0"
   },
   "keywords": ["wedding", "monorepo"],
   "author": "Karim & Felicia",
