@@ -25,14 +25,14 @@ const events: Event[] = [
     title: 'Cocktail Hour',
     description:
       "Celebrate with signature cocktails, cigars, and hors d'oeuvres while the DJ warms up.",
-    location: 'Cielomar Rooftab @ Viceroy Hotel',
+    location: 'Cielomar Rooftop @ Viceroy Hotel',
   },
   {
     time: '7:00 PM',
     title: 'Reception & Dinner',
     description:
       'Celebrate with us with dinner, dancing, and memorable toasts. If you want to make a speech, this is your chance!',
-    location: 'Cielomar Rooftab @ Viceroy Hotel',
+    location: 'Cielomar Rooftop @ Viceroy Hotel',
   },
   {
     time: '10:00 PM',
