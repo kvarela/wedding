@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn } from 'typeorm'
 import { RsvpAttendance } from './rsvp-attendance.enum'
+import { RsvpMealChoice } from './rsvp-meal-choice.enum'
 
 @Entity('rsvp')
 export class Rsvp {
@@ -29,6 +30,9 @@ export class Rsvp {
 
   @Column({ type: 'enum', enum: RsvpAttendance, default: RsvpAttendance.YES })
   attendance: RsvpAttendance
+
+  @Column({ type: 'enum', enum: RsvpMealChoice, default: RsvpMealChoice.FISH })
+  mealChoice: RsvpMealChoice
 
   @CreateDateColumn()
   createdAt: Date

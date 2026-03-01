@@ -1,6 +1,7 @@
 import { apiUrl } from './client'
 
 export type RsvpAttendance = 'YES' | 'NO' | 'MAYBE'
+export type RsvpMealChoice = 'Steak' | 'Chicken' | 'Fish'
 
 export interface CreateRsvpPayload {
   email: string
@@ -9,6 +10,7 @@ export interface CreateRsvpPayload {
   address: string
   message?: string
   attendance: RsvpAttendance
+  mealChoice: RsvpMealChoice
 }
 
 export interface RsvpResponse {
@@ -21,6 +23,7 @@ export interface RsvpResponse {
   address: string
   message: string | null
   attendance: RsvpAttendance
+  mealChoice: RsvpMealChoice
   createdAt: string
 }
 

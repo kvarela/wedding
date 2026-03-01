@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 import { RsvpAttendance } from './rsvp-attendance.enum'
 import { Rsvp } from './rsvp.entity'
+import { RsvpMealChoice } from './rsvp-meal-choice.enum'
 
 export class CreateRsvpDto {
   name: string
@@ -12,6 +13,7 @@ export class CreateRsvpDto {
   address: string
   message?: string
   attendance: RsvpAttendance
+  mealChoice: RsvpMealChoice
 }
 
 @Injectable()
@@ -25,6 +27,12 @@ export class RsvpService {
     const trimmedNames = createRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
     if (!trimmedNames.length) {
       throw new BadRequestException('At least one guest name is required')
+    }
+    const mealChoice = createRsvpDto.mealChoice ?? RsvpMealChoice.FISH
+    if (!Object.values(RsvpMealChoice).includes(mealChoice)) {
+      throw new BadRequestException(
+        `Meal choice must be one of: ${Object.values(RsvpMealChoice).join(', ')}`,
+      )
     }
     const name = createRsvpDto.name.trim()
     const email = createRsvpDto.email.trim()
@@ -46,6 +54,7 @@ export class RsvpService {
       existing.address = createRsvpDto.address?.trim()
       existing.message = createRsvpDto.message
       existing.attendance = createRsvpDto.attendance
+      existing.mealChoice = mealChoice
       existing.numGuests = trimmedNames.length
       existing.guestNames = trimmedNames
       return this.rsvpRepository.save(existing)
@@ -58,6 +67,7 @@ export class RsvpService {
       address: createRsvpDto.address?.trim(),
       message: createRsvpDto.message,
       attendance: createRsvpDto.attendance,
+      mealChoice,
       numGuests: trimmedNames.length,
       guestNames: trimmedNames,
     })

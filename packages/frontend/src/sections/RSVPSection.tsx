@@ -2,21 +2,31 @@ import { Box, Button, Container, Heading, Input, Text, Textarea, VStack } from '
 import { useState } from 'react'
 import { Field } from '@chakra-ui/react'
 
-import { createRsvp } from '@/api/rsvp'
+import { createRsvp, type RsvpMealChoice } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
 const MAX_GUESTS_PARTY = 4
 const INPUT_PADDING_LEFT = 2
 
+interface RsvpFormData {
+  email: string
+  phone: string
+  address: string
+  message: string
+  attending: boolean
+  mealChoice: RsvpMealChoice
+}
+
 const RSVPSection = () => {
   const [guestCountInput, setGuestCountInput] = useState('1')
   const [guestNames, setGuestNames] = useState<string[]>([''])
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<RsvpFormData>({
     email: '',
     phone: '',
     address: '',
     message: '',
     attending: true,
+    mealChoice: 'Fish',
   })
   const [submitted, setSubmitted] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -77,6 +87,7 @@ const RSVPSection = () => {
         address: formData.address.trim(),
         message: formData.message.trim() || undefined,
         attendance: formData.attending ? 'YES' : 'NO',
+        mealChoice: formData.mealChoice,
       })
       setSubmitted(true)
       setTimeout(() => {
@@ -89,6 +100,7 @@ const RSVPSection = () => {
           address: '',
           message: '',
           attending: true,
+          mealChoice: 'Fish',
         })
       }, 8000)
     } catch (err: unknown) {
@@ -233,6 +245,39 @@ const RSVPSection = () => {
                       shadow: 'sm',
                     }}
                   />
+                </Field.Root>
+
+                <Field.Root width="100%">
+                  <Field.Label
+                    fontSize="sm"
+                    fontWeight="500"
+                    color="gray.700"
+                    textTransform="uppercase"
+                    letterSpacing="wide"
+                  >
+                    Meal Choice *
+                  </Field.Label>
+                  <Input
+                    as="select"
+                    value={formData.mealChoice}
+                    onChange={(e) =>
+                      setFormData({
+                        ...formData,
+                        mealChoice: e.target.value as RsvpMealChoice,
+                      })}
+                    required
+                    size="lg"
+                    borderColor="gray.300"
+                    pl={INPUT_PADDING_LEFT}
+                    _focus={{
+                      borderColor: 'gray.600',
+                      shadow: 'sm',
+                    }}
+                  >
+                    <option value="Fish">Fish</option>
+                    <option value="Chicken">Chicken</option>
+                    <option value="Steak">Steak</option>
+                  </Input>
                 </Field.Root>
 
                 <Field.Root width="100%">
