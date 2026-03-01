@@ -1,4 +1,4 @@
-import { Box, Button, Container, Heading, Input, Text, Textarea, VStack } from '@chakra-ui/react'
+import { Box, Button, Container, Heading, Input, NativeSelect, Text, Textarea, VStack } from '@chakra-ui/react'
 import { useState } from 'react'
 import { Field } from '@chakra-ui/react'
 
@@ -42,15 +42,6 @@ const RSVPSection = () => {
     })
   }
 
-  const handleGuestCountBlur = () => {
-    if (guestCountInput === '' || Number.isNaN(parseInt(guestCountInput, 10))) {
-      setGuestCountInput('1')
-    } else {
-      const n = Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parseInt(guestCountInput, 10)))
-      setGuestCountInput(String(n))
-    }
-  }
-
   const setGuestName = (index: number, value: string) => {
     setGuestNames((prev) => {
       const next = [...prev]
@@ -71,6 +62,7 @@ const RSVPSection = () => {
     }
     try {
       await createRsvp({
+        name: names[0],
         email: formData.email.trim(),
         phone: formData.phone.trim(),
         guestNames: names,
@@ -149,24 +141,25 @@ const RSVPSection = () => {
                   >
                     Number of Guests (including yourself) *
                   </Field.Label>
-                  <Input
-                    type="number"
-                    min={MIN_GUESTS}
-                    max={MAX_GUESTS_PARTY}
-                    value={guestCountInput}
-                    onChange={(e) => handleGuestCountChange(e.target.value)}
-                    onBlur={handleGuestCountBlur}
-                    onFocus={(e) => e.target.select()}
-                    required
-                    placeholder="Including yourself"
-                    size="lg"
-                    borderColor="gray.300"
-                    pl={INPUT_PADDING_LEFT}
-                    _focus={{
-                      borderColor: 'gray.600',
-                      shadow: 'sm',
-                    }}
-                  />
+                  <NativeSelect.Root size="lg">
+                    <NativeSelect.Field
+                      value={guestCountInput}
+                      onChange={(e) => handleGuestCountChange(e.target.value)}
+                      borderColor="gray.300"
+                      pl={INPUT_PADDING_LEFT}
+                      _focus={{
+                        borderColor: 'gray.600',
+                        shadow: 'sm',
+                      }}
+                    >
+                      {[1, 2, 3, 4].map((n) => (
+                        <option key={n} value={String(n)}>
+                          {n}
+                        </option>
+                      ))}
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                  </NativeSelect.Root>
                 </Field.Root>
 
                 <VStack gap={4} width="100%">
