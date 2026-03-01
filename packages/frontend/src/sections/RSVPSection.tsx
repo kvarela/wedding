@@ -13,12 +13,7 @@ import {
 import { useEffect, useState } from 'react'
 import { Field } from '@chakra-ui/react'
 
-import {
-  createRsvp,
-  getStoredRsvp,
-  storeRsvp,
-  updateRsvp,
-} from '@/api/rsvp'
+import { createRsvp, getStoredRsvp, storeRsvp, updateRsvp } from '@/api/rsvp'
 import { toaster } from '@/components/ui/toaster'
 import type { RsvpResponse } from '@/api/rsvp'
 
@@ -70,9 +65,10 @@ const RSVPSection = () => {
   const handleGuestCountChange = (value: string) => {
     setGuestCountInput(value)
     const parsed = parseInt(value, 10)
-    const n = Number.isNaN(parsed) || value === ''
-      ? 1
-      : Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
+    const n =
+      Number.isNaN(parsed) || value === ''
+        ? 1
+        : Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
     setGuestNames((prev) => {
       if (n > prev.length) {
         return [...prev, ...Array(n - prev.length).fill('')]
@@ -174,7 +170,12 @@ const RSVPSection = () => {
 
           {rsvp.phone && (
             <>
-              <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+              <Text
+                fontWeight="600"
+                color="gray.500"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
                 Phone
               </Text>
               <Text color="gray.800">{rsvp.phone}</Text>
@@ -195,7 +196,12 @@ const RSVPSection = () => {
 
           {rsvp.message && (
             <>
-              <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+              <Text
+                fontWeight="600"
+                color="gray.500"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
                 Message
               </Text>
               <Text color="gray.800" whiteSpace="pre-wrap">

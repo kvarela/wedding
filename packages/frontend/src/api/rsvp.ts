@@ -41,7 +41,10 @@ export function storeRsvp(rsvp: RsvpResponse): void {
   localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(rsvp))
 }
 
-async function rsvpFetch(url: string, options: { method: string; body?: string }): Promise<Response> {
+async function rsvpFetch(
+  url: string,
+  options: { method: string; body?: string },
+): Promise<Response> {
   return fetch(url, {
     ...options,
     headers: { 'Content-Type': 'application/json' },
