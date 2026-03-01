@@ -1,18 +1,10 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
+
+import { CreateRsvpDto } from './create-rsvp.dto'
 import { RsvpAttendance } from './rsvp-attendance.enum'
 import { Rsvp } from './rsvp.entity'
-
-export class CreateRsvpDto {
-  name: string
-  email: string
-  phone: string
-  guestNames: string[]
-  address: string
-  message?: string
-  attendance: RsvpAttendance
-}
 
 @Injectable()
 export class RsvpService {
@@ -21,11 +13,35 @@ export class RsvpService {
     private rsvpRepository: Repository<Rsvp>,
   ) {}
 
+  async update(id: string, updateRsvpDto: CreateRsvpDto): Promise<Rsvp> {
+    const rsvp = await this.rsvpRepository.findOne({ where: { id } })
+    if (!rsvp) {
+      throw new NotFoundException('RSVP not found')
+    }
+
+    const trimmedNames = updateRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
+    if (!trimmedNames.length) {
+      throw new BadRequestException('At least one guest name is required')
+    }
+
+    rsvp.name = updateRsvpDto.name.trim()
+    rsvp.email = updateRsvpDto.email.trim()
+    rsvp.phone = updateRsvpDto.phone?.trim() || null
+    rsvp.address = updateRsvpDto.address?.trim()
+    rsvp.message = updateRsvpDto.message
+    rsvp.attendance = updateRsvpDto.attendance
+    rsvp.numGuests = trimmedNames.length
+    rsvp.guestNames = trimmedNames
+
+    return this.rsvpRepository.save(rsvp)
+  }
+
   async create(createRsvpDto: CreateRsvpDto): Promise<Rsvp> {
     const trimmedNames = createRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
     if (!trimmedNames.length) {
       throw new BadRequestException('At least one guest name is required')
     }
+
     const name = createRsvpDto.name.trim()
     const email = createRsvpDto.email.trim()
     const phone = createRsvpDto.phone?.trim() || null

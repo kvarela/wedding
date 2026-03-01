@@ -1,5 +1,7 @@
-import { Controller, Get, Post, Body, Param, Inject } from '@nestjs/common'
-import { RsvpService, CreateRsvpDto } from './rsvp.service'
+import { Controller, Get, Patch, Post, Body, Param, Inject } from '@nestjs/common'
+
+import { CreateRsvpDto } from './create-rsvp.dto'
+import { RsvpService } from './rsvp.service'
 
 @Controller('rsvp')
 export class RsvpController {
@@ -10,6 +12,11 @@ export class RsvpController {
   @Post()
   create(@Body() createRsvpDto: CreateRsvpDto) {
     return this.service.create(createRsvpDto)
+  }
+
+  @Patch(':id')
+  update(@Param('id') id: string, @Body() updateRsvpDto: CreateRsvpDto) {
+    return this.service.update(id, updateRsvpDto)
   }
 
   @Get()
