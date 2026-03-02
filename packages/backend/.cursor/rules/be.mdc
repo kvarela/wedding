@@ -35,6 +35,8 @@ alwaysApply: true
 ### NestJS Files
 
 - Use specific patterns: `some-entity.entity.ts`, `some-entity.service.ts`, etc.
+- All interfaces and DTOs should be in their own files
+- Class validators should be used on all DTOs
 
 ## Import Organization
 

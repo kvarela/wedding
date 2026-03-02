@@ -1,11 +1,25 @@
-import { Box, Button, Container, Heading, Input, Text, Textarea, VStack } from '@chakra-ui/react'
-import { useState } from 'react'
-import { Field } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  Container,
+  Field,
+  Grid,
+  Heading,
+  Input,
+  NativeSelect,
+  Text,
+  Textarea,
+  VStack,
+} from '@chakra-ui/react'
+import { useEffect, useState } from 'react'
 
-import { createRsvp, type RsvpMealChoice } from '@/api/rsvp'
+import { createRsvp, getStoredRsvp, storeRsvp, updateRsvp } from '@/api/rsvp'
+import { toaster } from '@/components/ui/toaster'
+import type { RsvpMealChoice, RsvpResponse } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
 const MAX_GUESTS_PARTY = 4
+const TOAST_DURATION_MS = 10_000
 const INPUT_PADDING_LEFT = 2
 
 interface RsvpFormData {
@@ -28,9 +42,15 @@ const RSVPSection = () => {
     attending: true,
     mealChoice: 'Fish',
   })
-  const [submitted, setSubmitted] = useState(false)
+  const [storedRsvp, setStoredRsvp] = useState<RsvpResponse | null>(null)
+  const [editing, setEditing] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  useEffect(() => {
+    const rsvp = getStoredRsvp()
+    if (rsvp) setStoredRsvp(rsvp)
+  }, [])
 
   const numGuests = (() => {
     const parsed = parseInt(guestCountInput, 10)
@@ -38,27 +58,34 @@ const RSVPSection = () => {
     return Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
   })()
 
+  const showForm = !storedRsvp || editing
+
+  const populateFormFromRsvp = (rsvp: RsvpResponse) => {
+    setGuestCountInput(String(rsvp.numGuests))
+    setGuestNames(rsvp.guestNames.length ? rsvp.guestNames : [''])
+    setFormData({
+      email: rsvp.email,
+      phone: rsvp.phone ?? '',
+      address: rsvp.address,
+      message: rsvp.message ?? '',
+      attending: rsvp.attendance === 'YES',
+      mealChoice: rsvp.mealChoice,
+    })
+  }
+
   const handleGuestCountChange = (value: string) => {
     setGuestCountInput(value)
     const parsed = parseInt(value, 10)
-    const n = Number.isNaN(parsed) || value === ''
-      ? 1
-      : Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
+    const n =
+      Number.isNaN(parsed) || value === ''
+        ? 1
+        : Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parsed))
     setGuestNames((prev) => {
       if (n > prev.length) {
         return [...prev, ...Array(n - prev.length).fill('')]
       }
       return prev.slice(0, n)
     })
-  }
-
-  const handleGuestCountBlur = () => {
-    if (guestCountInput === '' || Number.isNaN(parseInt(guestCountInput, 10))) {
-      setGuestCountInput('1')
-    } else {
-      const n = Math.min(MAX_GUESTS_PARTY, Math.max(MIN_GUESTS, parseInt(guestCountInput, 10)))
-      setGuestCountInput(String(n))
-    }
   }
 
   const setGuestName = (index: number, value: string) => {
@@ -79,36 +106,136 @@ const RSVPSection = () => {
       setLoading(false)
       return
     }
+    const payload = {
+      name: names[0],
+      email: formData.email.trim(),
+      phone: formData.phone.trim(),
+      guestNames: names,
+      address: formData.address.trim(),
+      message: formData.message.trim() || undefined,
+      attendance: formData.attending ? ('YES' as const) : ('NO' as const),
+      mealChoice: formData.mealChoice,
+    }
+
     try {
-      await createRsvp({
-        email: formData.email.trim(),
-        phone: formData.phone.trim(),
-        guestNames: names,
-        address: formData.address.trim(),
-        message: formData.message.trim() || undefined,
-        attendance: formData.attending ? 'YES' : 'NO',
-        mealChoice: formData.mealChoice,
+      let response: RsvpResponse
+      if (storedRsvp && editing) {
+        response = await updateRsvp(storedRsvp.id, payload)
+      } else {
+        response = await createRsvp(payload)
+      }
+      storeRsvp(response)
+      setStoredRsvp(response)
+      setEditing(false)
+      toaster.create({
+        title: 'Thank you!',
+        description: "We've received your RSVP and can't wait to celebrate with you!",
+        type: 'success',
+        duration: TOAST_DURATION_MS,
       })
-      setSubmitted(true)
-      setTimeout(() => {
-        setSubmitted(false)
-        setGuestCountInput('1')
-        setGuestNames([''])
-        setFormData({
-          email: '',
-          phone: '',
-          address: '',
-          message: '',
-          attending: true,
-          mealChoice: 'Fish',
-        })
-      }, 8000)
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Something went wrong. Please try again.')
     } finally {
       setLoading(false)
     }
   }
+
+  const handleUpdateClick = () => {
+    if (storedRsvp) {
+      populateFormFromRsvp(storedRsvp)
+      setEditing(true)
+    }
+  }
+
+  const renderRsvpInfo = (rsvp: RsvpResponse) => (
+    <Box
+      width="100%"
+      p={8}
+      bg="white"
+      borderRadius="lg"
+      shadow="md"
+      borderWidth="1px"
+      borderColor="gray.200"
+    >
+      <VStack gap={6} align="stretch">
+        <Box textAlign="center" pb={4} borderBottomWidth="1px" borderColor="gray.100">
+          <Heading fontSize="xl" fontWeight="600" color="green.700" mb={2}>
+            Thank You!
+          </Heading>
+          <Text color="gray.600" fontSize="sm">
+            We've received your reservation. Here's what you submitted:
+          </Text>
+        </Box>
+        <Grid
+          templateColumns={{ base: '1fr', md: '140px 1fr' }}
+          gap={{ base: 1, md: 3 }}
+          fontSize="sm"
+        >
+          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+            Guests
+          </Text>
+          <Text color="gray.800">{rsvp.guestNames.join(', ')}</Text>
+
+          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+            Email
+          </Text>
+          <Text color="gray.800">{rsvp.email}</Text>
+
+          {rsvp.phone && (
+            <>
+              <Text
+                fontWeight="600"
+                color="gray.500"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
+                Phone
+              </Text>
+              <Text color="gray.800">{rsvp.phone}</Text>
+            </>
+          )}
+
+          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+            Address
+          </Text>
+          <Text color="gray.800" whiteSpace="pre-wrap">
+            {rsvp.address}
+          </Text>
+
+          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+            Attendance
+          </Text>
+          <Text color="gray.800">{rsvp.attendance === 'YES' ? 'Attending' : 'Not attending'}</Text>
+
+          {rsvp.message && (
+            <>
+              <Text
+                fontWeight="600"
+                color="gray.500"
+                textTransform="uppercase"
+                letterSpacing="wide"
+              >
+                Message
+              </Text>
+              <Text color="gray.800" whiteSpace="pre-wrap">
+                {rsvp.message}
+              </Text>
+            </>
+          )}
+        </Grid>
+        <Button
+          variant="outline"
+          size="lg"
+          onClick={handleUpdateClick}
+          borderColor="gray.400"
+          color="gray.700"
+          _hover={{ bg: 'gray.50', borderColor: 'gray.500' }}
+        >
+          Update Reservation
+        </Button>
+      </VStack>
+    </Box>
+  )
 
   return (
     <Box id="rsvp" width="100%" py={{ base: 16, md: 24 }} bg="gray.50">
@@ -124,23 +251,7 @@ const RSVPSection = () => {
             </Text>
           </VStack>
 
-          {submitted ? (
-            <Box
-              p={8}
-              bg="green.50"
-              borderRadius="lg"
-              borderWidth="2px"
-              borderColor="green.200"
-              textAlign="center"
-            >
-              <Heading fontSize="2xl" color="green.700" mb={2}>
-                Thank You!
-              </Heading>
-              <Text color="green.600">
-                We've received your RSVP and can't wait to celebrate with you!
-              </Text>
-            </Box>
-          ) : (
+          {showForm ? (
             <Box
               as="form"
               onSubmit={handleSubmit}
@@ -161,24 +272,25 @@ const RSVPSection = () => {
                   >
                     Number of Guests (including yourself) *
                   </Field.Label>
-                  <Input
-                    type="number"
-                    min={MIN_GUESTS}
-                    max={MAX_GUESTS_PARTY}
-                    value={guestCountInput}
-                    onChange={(e) => handleGuestCountChange(e.target.value)}
-                    onBlur={handleGuestCountBlur}
-                    onFocus={(e) => e.target.select()}
-                    required
-                    placeholder="Including yourself"
-                    size="lg"
-                    borderColor="gray.300"
-                    pl={INPUT_PADDING_LEFT}
-                    _focus={{
-                      borderColor: 'gray.600',
-                      shadow: 'sm',
-                    }}
-                  />
+                  <NativeSelect.Root size="lg">
+                    <NativeSelect.Field
+                      value={guestCountInput}
+                      onChange={(e) => handleGuestCountChange(e.target.value)}
+                      borderColor="gray.300"
+                      pl={INPUT_PADDING_LEFT}
+                      _focus={{
+                        borderColor: 'gray.600',
+                        shadow: 'sm',
+                      }}
+                    >
+                      {[1, 2, 3, 4].map((n) => (
+                        <option key={n} value={String(n)}>
+                          {n}
+                        </option>
+                      ))}
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                  </NativeSelect.Root>
                 </Field.Root>
 
                 <VStack gap={4} width="100%">
@@ -264,7 +376,8 @@ const RSVPSection = () => {
                       setFormData({
                         ...formData,
                         mealChoice: e.target.value as RsvpMealChoice,
-                      })}
+                      })
+                    }
                     required
                     size="lg"
                     borderColor="gray.300"
@@ -343,7 +456,9 @@ const RSVPSection = () => {
                   </Field.Label>
                   <Textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e: React.ChangeEvent<HTMLTextAreaElement>) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     placeholder="Any dietary restrictions or special requests?"
                     rows={4}
                     size="lg"
@@ -371,6 +486,16 @@ const RSVPSection = () => {
                   </Box>
                 )}
 
+                {storedRsvp && editing && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={() => setEditing(false)}
+                    color="gray.600"
+                  >
+                    Cancel
+                  </Button>
+                )}
                 <Button
                   type="submit"
                   width="100%"
@@ -388,10 +513,12 @@ const RSVPSection = () => {
                   loading={loading}
                   disabled={loading}
                 >
-                  Submit RSVP
+                  {storedRsvp && editing ? 'Update RSVP' : 'Submit RSVP'}
                 </Button>
               </VStack>
             </Box>
+          ) : (
+            storedRsvp && renderRsvpInfo(storedRsvp)
           )}
 
           <Text fontSize="sm" color="gray.500" textAlign="center" maxW="lg">

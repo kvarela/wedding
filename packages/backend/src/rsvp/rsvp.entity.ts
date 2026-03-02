@@ -13,8 +13,8 @@ export class Rsvp {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string
 
-  @Column({ type: 'varchar', length: 50, nullable: true, unique: true })
-  phone: string | null
+  @Column({ type: 'varchar', length: 50, unique: true })
+  phone: string
 
   @Column({ type: 'integer' })
   numGuests: number
