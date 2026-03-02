@@ -340,7 +340,12 @@ const RSVPSection = () => {
                       Names of Everyone Attending *
                     </Field.Label>
                     {guestNames.map((name, index) => (
-                      <Box key={index} width="100%">
+                      <Grid
+                        key={index}
+                        templateColumns={{ base: '1fr', md: '1fr minmax(140px, auto)' }}
+                        gap={3}
+                        alignItems="end"
+                      >
                         <Field.Root width="100%">
                           <Field.Label
                             fontSize="xs"
@@ -365,7 +370,7 @@ const RSVPSection = () => {
                             }}
                           />
                         </Field.Root>
-                        <Field.Root width="100%" mt={2}>
+                        <Field.Root width="100%">
                           <Field.Label
                             fontSize="xs"
                             fontWeight="500"
@@ -395,7 +400,7 @@ const RSVPSection = () => {
                             <NativeSelect.Indicator />
                           </NativeSelect.Root>
                         </Field.Root>
-                      </Box>
+                      </Grid>
                     ))}
                   </Field.Root>
                 </VStack>
