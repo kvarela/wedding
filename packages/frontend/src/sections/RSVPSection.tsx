@@ -28,7 +28,7 @@ interface RsvpFormData {
   address: string
   message: string
   attending: boolean
-  mealChoice: RsvpMealChoice
+  mealChoices: RsvpMealChoice[]
 }
 
 const RSVPSection = () => {
@@ -40,7 +40,7 @@ const RSVPSection = () => {
     address: '',
     message: '',
     attending: true,
-    mealChoice: 'Fish',
+    mealChoices: ['Fish'],
   })
   const [storedRsvp, setStoredRsvp] = useState<RsvpResponse | null>(null)
   const [editing, setEditing] = useState(false)
@@ -62,14 +62,18 @@ const RSVPSection = () => {
 
   const populateFormFromRsvp = (rsvp: RsvpResponse) => {
     setGuestCountInput(String(rsvp.numGuests))
-    setGuestNames(rsvp.guestNames.length ? rsvp.guestNames : [''])
+    const names = rsvp.guestNames?.length ? rsvp.guestNames : rsvp.guests?.map((g) => g.name) ?? ['']
+    setGuestNames(names.length ? names : [''])
+    const choices =
+      rsvp.guests?.map((g) => g.mealChoice) ??
+      (rsvp.guestNames?.length ? rsvp.guestNames.map(() => 'Fish' as RsvpMealChoice) : ['Fish'])
     setFormData({
       email: rsvp.email,
       phone: rsvp.phone ?? '',
       address: rsvp.address,
       message: rsvp.message ?? '',
       attending: rsvp.attendance === 'YES',
-      mealChoice: rsvp.mealChoice,
+      mealChoices: choices,
     })
   }
 
@@ -86,6 +90,16 @@ const RSVPSection = () => {
       }
       return prev.slice(0, n)
     })
+    setFormData((prev) => {
+      const choices = [...prev.mealChoices]
+      if (n > choices.length) {
+        return {
+          ...prev,
+          mealChoices: [...choices, ...Array(n - choices.length).fill('Fish')] as RsvpMealChoice[],
+        }
+      }
+      return { ...prev, mealChoices: choices.slice(0, n) }
+    })
   }
 
   const setGuestName = (index: number, value: string) => {
@@ -93,6 +107,14 @@ const RSVPSection = () => {
       const next = [...prev]
       next[index] = value
       return next
+    })
+  }
+
+  const setMealChoice = (index: number, value: RsvpMealChoice) => {
+    setFormData((prev) => {
+      const next = [...prev.mealChoices]
+      next[index] = value
+      return { ...prev, mealChoices: next }
     })
   }
 
@@ -106,15 +128,19 @@ const RSVPSection = () => {
       setLoading(false)
       return
     }
+    const mealChoices = formData.mealChoices.slice(0, numGuests)
+    while (mealChoices.length < numGuests) {
+      mealChoices.push('Fish')
+    }
     const payload = {
       name: names[0],
       email: formData.email.trim(),
       phone: formData.phone.trim(),
       guestNames: names,
+      mealChoices,
       address: formData.address.trim(),
       message: formData.message.trim() || undefined,
       attendance: formData.attending ? ('YES' as const) : ('NO' as const),
-      mealChoice: formData.mealChoice,
     }
 
     try {
@@ -206,6 +232,15 @@ const RSVPSection = () => {
             Attendance
           </Text>
           <Text color="gray.800">{rsvp.attendance === 'YES' ? 'Attending' : 'Not attending'}</Text>
+
+          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+            Meal Choices
+          </Text>
+          <Text color="gray.800">
+            {(rsvp.guests ?? rsvp.guestNames?.map((name) => ({ name, mealChoice: 'Fish' })) ?? [])
+              .map((g) => `${g.name}: ${g.mealChoice}`)
+              .join(', ')}
+          </Text>
 
           {rsvp.message && (
             <>
@@ -305,30 +340,62 @@ const RSVPSection = () => {
                       Names of Everyone Attending *
                     </Field.Label>
                     {guestNames.map((name, index) => (
-                      <Field.Root key={index} width="100%">
-                        <Field.Label
-                          fontSize="xs"
-                          fontWeight="500"
-                          color="gray.600"
-                          textTransform="uppercase"
-                          letterSpacing="wide"
-                        >
-                          Guest {index + 1} {index === 0 ? '(you)' : ''}
-                        </Field.Label>
-                        <Input
-                          value={name}
-                          onChange={(e) => setGuestName(index, e.target.value)}
-                          required
-                          placeholder="Full name"
-                          size="lg"
-                          borderColor="gray.300"
-                          pl={INPUT_PADDING_LEFT}
-                          _focus={{
-                            borderColor: 'gray.600',
-                            shadow: 'sm',
-                          }}
-                        />
-                      </Field.Root>
+                      <Box key={index} width="100%">
+                        <Field.Root width="100%">
+                          <Field.Label
+                            fontSize="xs"
+                            fontWeight="500"
+                            color="gray.600"
+                            textTransform="uppercase"
+                            letterSpacing="wide"
+                          >
+                            Guest {index + 1} {index === 0 ? '(you)' : ''}
+                          </Field.Label>
+                          <Input
+                            value={name}
+                            onChange={(e) => setGuestName(index, e.target.value)}
+                            required
+                            placeholder="Full name"
+                            size="lg"
+                            borderColor="gray.300"
+                            pl={INPUT_PADDING_LEFT}
+                            _focus={{
+                              borderColor: 'gray.600',
+                              shadow: 'sm',
+                            }}
+                          />
+                        </Field.Root>
+                        <Field.Root width="100%" mt={2}>
+                          <Field.Label
+                            fontSize="xs"
+                            fontWeight="500"
+                            color="gray.600"
+                            textTransform="uppercase"
+                            letterSpacing="wide"
+                          >
+                            Meal Choice *
+                          </Field.Label>
+                          <NativeSelect.Root size="lg">
+                            <NativeSelect.Field
+                              value={formData.mealChoices[index] ?? 'Fish'}
+                              onChange={(e) =>
+                                setMealChoice(index, e.target.value as RsvpMealChoice)
+                              }
+                              borderColor="gray.300"
+                              pl={INPUT_PADDING_LEFT}
+                              _focus={{
+                                borderColor: 'gray.600',
+                                shadow: 'sm',
+                              }}
+                            >
+                              <option value="Fish">Fish</option>
+                              <option value="Chicken">Chicken</option>
+                              <option value="Steak">Steak</option>
+                            </NativeSelect.Field>
+                            <NativeSelect.Indicator />
+                          </NativeSelect.Root>
+                        </Field.Root>
+                      </Box>
                     ))}
                   </Field.Root>
                 </VStack>
@@ -357,40 +424,6 @@ const RSVPSection = () => {
                       shadow: 'sm',
                     }}
                   />
-                </Field.Root>
-
-                <Field.Root width="100%" required>
-                  <Field.Label
-                    fontSize="sm"
-                    fontWeight="500"
-                    color="gray.700"
-                    textTransform="uppercase"
-                    letterSpacing="wide"
-                  >
-                    Meal Choice *
-                  </Field.Label>
-                  <NativeSelect.Root size="lg">
-                    <NativeSelect.Field
-                      value={formData.mealChoice}
-                      onChange={(e) =>
-                        setFormData({
-                          ...formData,
-                          mealChoice: e.target.value as RsvpMealChoice,
-                        })
-                      }
-                      borderColor="gray.300"
-                      pl={INPUT_PADDING_LEFT}
-                      _focus={{
-                        borderColor: 'gray.600',
-                        shadow: 'sm',
-                      }}
-                    >
-                      <option value="Fish">Fish</option>
-                      <option value="Chicken">Chicken</option>
-                      <option value="Steak">Steak</option>
-                    </NativeSelect.Field>
-                    <NativeSelect.Indicator />
-                  </NativeSelect.Root>
                 </Field.Root>
 
                 <Field.Root width="100%">

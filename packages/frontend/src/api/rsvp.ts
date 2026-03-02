@@ -3,15 +3,21 @@ import { apiUrl } from './client'
 export type RsvpAttendance = 'YES' | 'NO' | 'MAYBE'
 export type RsvpMealChoice = 'Steak' | 'Chicken' | 'Fish'
 
+export interface GuestResponse {
+  id: string
+  name: string
+  mealChoice: RsvpMealChoice
+}
+
 export interface CreateRsvpPayload {
   name: string
   email: string
   phone: string
   guestNames: string[]
+  mealChoices: RsvpMealChoice[]
   address: string
   message?: string
   attendance: RsvpAttendance
-  mealChoice: RsvpMealChoice
 }
 
 export interface RsvpResponse {
@@ -21,10 +27,10 @@ export interface RsvpResponse {
   phone: string | null
   numGuests: number
   guestNames: string[]
+  guests: GuestResponse[]
   address: string
   message: string | null
   attendance: RsvpAttendance
-  mealChoice: RsvpMealChoice
   createdAt: string
 }
 
@@ -65,6 +71,38 @@ function handleRsvpError(res: Response, body: string): never {
   throw new Error(message || `RSVP failed (${res.status})`)
 }
 
+function toRsvpResponse(party: {
+  id: string
+  name: string
+  email: string
+  phone: string | null
+  numGuests: number
+  address: string
+  message: string | null
+  attendance: string
+  createdAt: string
+  guests?: { id: string; name: string; mealChoice: string }[]
+}): RsvpResponse {
+  const guests = party.guests ?? []
+  return {
+    id: party.id,
+    name: party.name,
+    email: party.email,
+    phone: party.phone,
+    numGuests: party.numGuests,
+    guestNames: guests.map((g) => g.name),
+    guests: guests.map((g) => ({
+      id: g.id,
+      name: g.name,
+      mealChoice: g.mealChoice as RsvpMealChoice,
+    })),
+    address: party.address,
+    message: party.message,
+    attendance: party.attendance as RsvpAttendance,
+    createdAt: party.createdAt,
+  }
+}
+
 export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpResponse> {
   const res = await rsvpFetch(apiUrl('rsvp'), {
     method: 'POST',
@@ -74,7 +112,8 @@ export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpRespon
     const body = await res.text()
     handleRsvpError(res, body)
   }
-  return res.json()
+  const party = await res.json()
+  return toRsvpResponse(party)
 }
 
 export async function updateRsvp(id: string, payload: CreateRsvpPayload): Promise<RsvpResponse> {
@@ -86,5 +125,6 @@ export async function updateRsvp(id: string, payload: CreateRsvpPayload): Promis
     const body = await res.text()
     handleRsvpError(res, body)
   }
-  return res.json()
+  const party = await res.json()
+  return toRsvpResponse(party)
 }
