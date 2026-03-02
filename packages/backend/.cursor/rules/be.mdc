@@ -73,7 +73,7 @@ Import order should follow this sequence:
 
 ### Test Requirements
 
-- All new code must include unit tests
+- All new code or fixes must include unit tests
 
 ### Test File Naming
 
@@ -84,6 +84,7 @@ Import order should follow this sequence:
 ### Test Utilities
 
 - Always use TestUtils for tests instead of redefining modules
+- Only external services should mocked. Database CRUD should use test DB.
 
 ## Development Workflow
 

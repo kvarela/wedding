@@ -189,7 +189,7 @@ const RSVPSection = () => {
             Thank You!
           </Heading>
           <Text color="gray.600" fontSize="sm">
-            We've received your reservation. Here's what you submitted:
+            We&apos;ve received your reservation. Here&apos;s what you submitted:
           </Text>
         </Box>
         <Grid
