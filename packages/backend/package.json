@@ -6,6 +6,8 @@
     "dev": "tsx watch src/main.ts",
     "build": "tsc",
     "start": "node dist/main.js",
+    "lint": "eslint src",
+    "typecheck": "tsc --noEmit",
     "test": "NODE_ENV=test vitest run",
     "test:watch": "NODE_ENV=test vitest",
     "test:e2e": "NODE_ENV=test vitest run --config vitest.config.ts"
@@ -24,12 +26,15 @@
     "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {
+    "eslint": "^8.57.0",
     "@nestjs/cli": "^10.3.0",
     "@nestjs/testing": "^10.3.0",
     "@types/node": "^20.11.0",
     "@types/supertest": "^7.2.0",
     "pg-mem": "^3.0.14",
     "supertest": "^7.2.2",
+    "@typescript-eslint/eslint-plugin": "^8.15.0",
+    "@typescript-eslint/parser": "^8.15.0",
     "tsx": "^4.7.0",
     "typescript": "^5.3.3",
     "vitest": "^4.0.18"

@@ -38,7 +38,7 @@ const GallerySection = () => {
               color="gray.600"
               maxW="2xl"
             >
-              Moments we've shared together
+              Moments we&apos;ve shared together
             </Text>
           </VStack>
 
@@ -136,7 +136,7 @@ const GallerySection = () => {
             textAlign="center"
             fontStyle="italic"
           >
-            More photos coming soon! We can't wait to share memories from our special day.
+            More photos coming soon! We can&apos;t wait to share memories from our special day.
           </Text>
         </VStack>
       </Container>

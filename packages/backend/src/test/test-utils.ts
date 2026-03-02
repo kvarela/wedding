@@ -54,23 +54,38 @@ async function createTestDataSource(options: DataSourceOptions): Promise<DataSou
   return dataSource.initialize()
 }
 
+function getTestDataSourceOptions(): DataSourceOptions & { dataSourceFactory?: (options: DataSourceOptions) => Promise<DataSource> } {
+  const baseOptions: DataSourceOptions = {
+    type: 'postgres',
+    entities: [Party, Guest],
+    synchronize: true,
+    namingStrategy: new SnakeNamingStrategy(),
+  }
+
+  const dbUrl = process.env.DATABASE_URL_TEST
+  if (dbUrl) {
+    return { ...baseOptions, url: dbUrl }
+  }
+
+  return {
+    ...baseOptions,
+    dataSourceFactory: async (options) => {
+      if (!options) {
+        throw new Error('TypeORM options are required for test initialization')
+      }
+      return createTestDataSource(options as DataSourceOptions)
+    },
+  }
+}
+
 export async function createTestApp(): Promise<TestApp> {
+  const options = getTestDataSourceOptions()
+  const { dataSourceFactory, ...ormOptions } = options
   const moduleFixture: TestingModule = await Test.createTestingModule({
     imports: [
       TypeOrmModule.forRootAsync({
-        useFactory: () =>
-          ({
-            type: 'postgres',
-            entities: [Party, Guest],
-            synchronize: true,
-            namingStrategy: new SnakeNamingStrategy(),
-          }) satisfies DataSourceOptions,
-        dataSourceFactory: async (options) => {
-          if (!options) {
-            throw new Error('TypeORM options are required for test initialization')
-          }
-          return createTestDataSource(options as DataSourceOptions)
-        },
+        useFactory: () => ormOptions,
+        ...(dataSourceFactory && { dataSourceFactory }),
       }),
       RsvpModule,
     ],
