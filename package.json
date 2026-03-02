@@ -12,12 +12,18 @@
     "dev:backend": "yarn workspace @wedding/backend dev",
     "build": "yarn workspaces run build",
     "build:frontend": "yarn workspace @wedding/frontend build",
-    "build:backend": "yarn workspace @wedding/backend build"
+    "build:backend": "yarn workspace @wedding/backend build",
+    "install": "yarn install && concurrently \"yarn install:frontend\" \"yarn install:backend\"",
+    "install:frontend": "yarn workspace @wedding/frontend install",
+    "install:backend": "yarn workspace @wedding/backend install"
   },
   "devDependencies": {
     "concurrently": "^9.0.0"
   },
-  "keywords": ["wedding", "monorepo"],
+  "keywords": [
+    "wedding",
+    "monorepo"
+  ],
   "author": "Karim & Felicia",
   "license": "MIT"
 }
