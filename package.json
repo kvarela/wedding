@@ -13,7 +13,7 @@
     "build": "yarn workspaces run build",
     "build:frontend": "yarn workspace @wedding/frontend build",
     "build:backend": "yarn workspace @wedding/backend build",
-    "install": "yarn install && concurrently \"yarn install:frontend\" \"yarn install:backend\"",
+    "install": "yarn install && yarn install:frontend && yarn install:backend",
     "install:frontend": "yarn workspace @wedding/frontend install",
     "install:backend": "yarn workspace @wedding/backend install"
   },
