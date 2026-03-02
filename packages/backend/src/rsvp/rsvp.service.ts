@@ -43,9 +43,10 @@ export class RsvpService {
       throw new BadRequestException('At least one guest name is required')
     }
     const mealChoice = createRsvpDto.mealChoice ?? RsvpMealChoice.FISH
-    if (!Object.values(RsvpMealChoice).includes(mealChoice)) {
+    const validMealChoices = Object.values(RsvpMealChoice)
+    if (!validMealChoices.includes(mealChoice)) {
       throw new BadRequestException(
-        `Meal choice must be one of: ${Object.values(RsvpMealChoice).join(', ')}`,
+        `Meal choice must be one of: ${validMealChoices.join(', ')}`,
       )
     }
     const name = createRsvpDto.name.trim()
