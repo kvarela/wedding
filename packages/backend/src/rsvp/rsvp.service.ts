@@ -2,11 +2,13 @@ import { BadRequestException, Injectable, NotFoundException } from '@nestjs/comm
 import { InjectRepository } from '@nestjs/typeorm'
 import { Repository } from 'typeorm'
 
+import { CreateRsvpDto } from './create-rsvp.dto'
 import { Guest } from './guest.entity'
 import { Party } from './party.entity'
 import { RsvpAttendance } from './rsvp-attendance.enum'
 import { RsvpMealChoice } from './rsvp-meal-choice.enum'
-import { CreateRsvpDto } from './create-rsvp.dto'
+import { RsvpResponse } from './rsvp-response.interface'
+import { RsvpStatsResponse } from './rsvp-stats-response.interface'
 
 @Injectable()
 export class RsvpService {
@@ -17,7 +19,7 @@ export class RsvpService {
     private guestRepo: Repository<Guest>,
   ) {}
 
-  async update(id: string, updateRsvpDto: CreateRsvpDto): Promise<Party> {
+  async update(id: string, updateRsvpDto: CreateRsvpDto): Promise<RsvpResponse> {
     const party = await this.partyRepo.findOne({
       where: { id },
       relations: { guests: true },
@@ -51,13 +53,14 @@ export class RsvpService {
     )
     await this.guestRepo.save(guests)
 
-    return this.partyRepo.findOneOrFail({
+    const updated = await this.partyRepo.findOneOrFail({
       where: { id: party.id },
       relations: { guests: true },
     })
+    return this.toRsvpResponse(updated)
   }
 
-  async create(createRsvpDto: CreateRsvpDto): Promise<Party> {
+  async create(createRsvpDto: CreateRsvpDto): Promise<RsvpResponse> {
     const trimmedNames = createRsvpDto.guestNames.map((n) => n.trim()).filter(Boolean)
     if (!trimmedNames.length) {
       throw new BadRequestException('At least one guest name is required')
@@ -101,20 +104,22 @@ export class RsvpService {
     )
     await this.guestRepo.save(guests)
 
-    return this.partyRepo.findOneOrFail({
+    const created = await this.partyRepo.findOneOrFail({
       where: { id: savedParty.id },
       relations: { guests: true },
     })
+    return this.toRsvpResponse(created)
   }
 
-  async findAll(): Promise<Party[]> {
-    return this.partyRepo.find({
+  async findAll(): Promise<RsvpResponse[]> {
+    const parties = await this.partyRepo.find({
       relations: { guests: true },
       order: { createdAt: 'DESC' },
     })
+    return parties.map((p) => this.toRsvpResponse(p))
   }
 
-  async findOne(id: string): Promise<Party> {
+  async findOne(id: string): Promise<RsvpResponse> {
     const party = await this.partyRepo.findOne({
       where: { id },
       relations: { guests: true },
@@ -122,10 +127,10 @@ export class RsvpService {
     if (!party) {
       throw new NotFoundException('RSVP not found')
     }
-    return party
+    return this.toRsvpResponse(party)
   }
 
-  async getStats() {
+  async getStats(): Promise<RsvpStatsResponse> {
     const total = await this.partyRepo.count()
     const attending = await this.partyRepo.count({
       where: { attendance: RsvpAttendance.YES },
@@ -143,6 +148,26 @@ export class RsvpService {
       attending,
       declined: total - attending,
       totalGuests: parseInt(totalGuests?.sum || '0'),
+    }
+  }
+
+  private toRsvpResponse(party: Party): RsvpResponse {
+    return {
+      id: party.id,
+      name: party.name,
+      email: party.email,
+      phone: party.phone,
+      numGuests: party.numGuests,
+      guests: (party.guests ?? []).map((g) => ({
+        id: g.id,
+        name: g.name,
+        mealChoice: g.mealChoice,
+        partyId: g.partyId,
+      })),
+      address: party.address,
+      message: party.message ?? null,
+      attendance: party.attendance,
+      createdAt: party.createdAt.toISOString(),
     }
   }
 
