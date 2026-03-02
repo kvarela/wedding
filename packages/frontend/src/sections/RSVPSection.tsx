@@ -359,7 +359,7 @@ const RSVPSection = () => {
                   />
                 </Field.Root>
 
-                <Field.Root width="100%">
+                <Field.Root width="100%" required>
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
@@ -369,28 +369,28 @@ const RSVPSection = () => {
                   >
                     Meal Choice *
                   </Field.Label>
-                  <Input
-                    as="select"
-                    value={formData.mealChoice}
-                    onChange={(e) =>
-                      setFormData({
-                        ...formData,
-                        mealChoice: e.target.value as RsvpMealChoice,
-                      })
-                    }
-                    required
-                    size="lg"
-                    borderColor="gray.300"
-                    pl={INPUT_PADDING_LEFT}
-                    _focus={{
-                      borderColor: 'gray.600',
-                      shadow: 'sm',
-                    }}
-                  >
-                    <option value="Fish">Fish</option>
-                    <option value="Chicken">Chicken</option>
-                    <option value="Steak">Steak</option>
-                  </Input>
+                  <NativeSelect.Root size="lg">
+                    <NativeSelect.Field
+                      value={formData.mealChoice}
+                      onChange={(e) =>
+                        setFormData({
+                          ...formData,
+                          mealChoice: e.target.value as RsvpMealChoice,
+                        })
+                      }
+                      borderColor="gray.300"
+                      pl={INPUT_PADDING_LEFT}
+                      _focus={{
+                        borderColor: 'gray.600',
+                        shadow: 'sm',
+                      }}
+                    >
+                      <option value="Fish">Fish</option>
+                      <option value="Chicken">Chicken</option>
+                      <option value="Steak">Steak</option>
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                  </NativeSelect.Root>
                 </Field.Root>
 
                 <Field.Root width="100%">
