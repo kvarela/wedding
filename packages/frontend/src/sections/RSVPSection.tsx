@@ -439,13 +439,14 @@ const RSVPSection = () => {
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
-                    Phone Number
+                    Phone Number *
                   </Field.Label>
                   <Input
                     type="tel"
                     value={formData.phone}
                     onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                    placeholder="Optional"
+                    placeholder="Your phone number"
+                    required
                     size="lg"
                     borderColor="gray.300"
                     pl={INPUT_PADDING_LEFT}
