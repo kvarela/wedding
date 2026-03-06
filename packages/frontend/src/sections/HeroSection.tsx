@@ -1,6 +1,6 @@
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
 
-import proposalImage from '@/assets/proposal.jpg'
+import heroImage from '@/assets/hero.png'
 import { weddingColors } from '@/theme/colors'
 
 const HeroSection = () => {
@@ -20,7 +20,7 @@ const HeroSection = () => {
         width="100%"
         height="100%"
         zIndex={0}
-        backgroundImage={`url(${proposalImage})`}
+        backgroundImage={`url(${heroImage})`}
         backgroundSize="cover"
         backgroundPosition="center"
         filter="grayscale(100%)"
