@@ -3,17 +3,15 @@ import type { BoxProps } from '@chakra-ui/react'
 
 import monogramUrl from '@/assets/monogram.png'
 
-interface MonogramProps extends Omit<BoxProps, 'as' | 'src'> {
-  alt?: string
+interface MonogramProps extends Omit<BoxProps, 'as'> {
   glow?: boolean
 }
 
-const Monogram = ({ alt = 'FK monogram', glow = true, ...props }: MonogramProps) => {
+const Monogram = ({ glow = true, ...props }: MonogramProps) => {
   return (
     <Box
       as="img"
-      src={monogramUrl}
-      alt={alt}
+      backgroundImage={monogramUrl}
       userSelect="none"
       filter={
         glow
@@ -26,4 +24,3 @@ const Monogram = ({ alt = 'FK monogram', glow = true, ...props }: MonogramProps)
 }
 
 export default Monogram
-

@@ -37,7 +37,6 @@ const NavigationHeader = () => {
         <HStack height="100%" justify="space-between" gap={6}>
           <Box
             as="button"
-            type="button"
             onClick={() => scrollToSection('home')}
             aria-label="Go to homepage"
             display="inline-flex"
@@ -75,4 +74,3 @@ const NavigationHeader = () => {
 
 export { HEADER_HEIGHT_PX }
 export default NavigationHeader
-
