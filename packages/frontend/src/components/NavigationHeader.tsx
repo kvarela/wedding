@@ -43,9 +43,12 @@ const NavigationHeader = () => {
             alignItems="center"
             justifyContent="center"
             outline="none"
+            flexShrink={0}
+            width={{ base: '102px', md: '114px' }}
+            height={{ base: '102px', md: '114px' }}
             _focusVisible={{ boxShadow: '0 0 0 3px rgba(232,211,162,0.35)' }}
           >
-            <Monogram boxSize={{ base: '102px', md: '114px' }} glow />
+            <Monogram glow />
           </Box>
 
           <HStack gap={{ base: 4, md: 8 }} flexWrap="wrap" justify="flex-end">
