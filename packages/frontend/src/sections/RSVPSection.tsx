@@ -174,6 +174,23 @@ const RSVPSection = () => {
     }
   }
 
+  const renderDressCode = () => (
+    <Box textAlign="center" pb={4}>
+      <Heading
+        as="h3"
+        color={weddingColors.primaryGold}
+        fontWeight="600"
+        fontSize={{ base: 'xl', md: '2xl' }}
+        mb={2}
+      >
+        Dress Code
+      </Heading>
+      <Text fontSize={{ base: 'xs', md: 'sm' }} color="gray.200" maxW="xl" marginInline="auto">
+        In the spirit of Cuban Jazz Glamour, we invite you to wear Black and/or Gold
+      </Text>
+    </Box>
+  )
+
   const renderRsvpInfo = (rsvp: RsvpResponse) => (
     <Box
       width="100%"
@@ -193,6 +210,7 @@ const RSVPSection = () => {
             We&apos;ve received your reservation. Here&apos;s what you submitted:
           </Text>
         </Box>
+        {renderDressCode()}
         <Grid
           templateColumns={{ base: '1fr', md: '140px 1fr' }}
           gap={{ base: 1, md: 3 }}
@@ -274,18 +292,6 @@ const RSVPSection = () => {
               RSVP
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
-              Please let us know if you can join us
-            </Text>
-          </VStack>
-
-          <VStack gap={2} textAlign="center">
-            <Heading as="h3" size="sm" color={weddingColors.primaryGold} fontWeight="500">
-              Dress Code
-            </Heading>
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="xl">
-              Please wear either/or Black and Gold in the spirit of Cuban Jazz and Havana Nights.
-            </Text>
           </VStack>
 
           {showForm ? (
@@ -301,6 +307,7 @@ const RSVPSection = () => {
               borderColor={weddingColors.primaryGold}
             >
               <VStack gap={6}>
+                {renderDressCode()}
                 <Field.Root width="100%">
                   <Field.Label
                     fontSize="sm"
