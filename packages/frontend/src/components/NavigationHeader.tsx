@@ -3,7 +3,7 @@ import { Box, Container, HStack, Link } from '@chakra-ui/react'
 import Monogram from '@/components/Monogram'
 import { weddingColors } from '@/theme/colors'
 
-const HEADER_HEIGHT_PX = 132
+const HEADER_HEIGHT_PX = 160
 
 const navItems = [
   { label: 'Our Story', targetId: 'our-story' },
@@ -30,9 +30,8 @@ const NavigationHeader = () => {
       right={0}
       zIndex={100}
       height={`${HEADER_HEIGHT_PX}px`}
-      bg={weddingColors.charcoal}
-      borderBottomWidth="1px"
-      borderColor="rgba(184,150,74,0.35)"
+      background={`linear-gradient(to bottom, ${weddingColors.charcoal} 0%, ${weddingColors.charcoal} 18%, rgba(31,31,31,0.85) 45%, rgba(31,31,31,0.4) 70%, transparent 100%)`}
+      borderBottomWidth="0"
     >
       <Container maxW="container.xl" marginInline="auto" height="100%" px={{ base: 4, md: 6 }}>
         <HStack height="100%" justify="space-between" gap={6}>
