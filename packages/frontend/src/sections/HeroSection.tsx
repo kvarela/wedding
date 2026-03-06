@@ -44,6 +44,7 @@ const HeroSection = () => {
         >
           <Heading
             fontSize={{ base: '4xl', md: '6xl', lg: '8xl' }}
+            fontFamily="'Cormorant Garamond', serif"
             fontWeight="600"
             letterSpacing="wider"
             textTransform="uppercase"
@@ -69,6 +70,7 @@ const HeroSection = () => {
 
             <Text
               fontSize={{ base: 'lg', md: 'xl' }}
+              fontFamily="'Cormorant Garamond', serif"
               fontWeight="600"
               letterSpacing="wider"
               color={weddingColors.primaryGold}
@@ -76,7 +78,7 @@ const HeroSection = () => {
               NOVEMBER 7, 2026
             </Text>
 
-            <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="500" opacity={0.95}>
+            <Text fontSize={{ base: 'md', md: 'lg' }} fontFamily="'Cormorant Garamond', serif" fontWeight="500" opacity={0.95}>
               Viceroy Hotel • San Jose Del Cabo, Mexico
             </Text>
           </VStack>

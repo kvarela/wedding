@@ -570,11 +570,6 @@ const RSVPSection = () => {
           ) : (
             storedRsvp && renderRsvpInfo(storedRsvp)
           )}
-
-          <Text fontSize="sm" color="gray.400" textAlign="center" maxW="lg">
-            Please RSVP by September 1st, 2026. If you have any questions, feel free to reach out to
-            us directly.
-          </Text>
         </VStack>
       </Container>
     </Box>
