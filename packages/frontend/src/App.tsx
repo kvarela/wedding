@@ -1,5 +1,7 @@
 import { Box } from '@chakra-ui/react'
 
+import NavigationHeader from '@/components/NavigationHeader'
+import SectionDivider from '@/components/SectionDivider'
 import { Toaster } from '@/components/ui/toaster'
 import ImageSplash from '@/components/ImageSplash'
 import beachSunset from '@/assets/beach-sunset.png'
@@ -17,14 +19,17 @@ function App() {
   return (
     <Box width="100%">
       <Toaster />
+      <NavigationHeader />
       <HeroSection />
       <StorySection />
+      <SectionDivider />
       <ImageSplash
         imageUrl={beachSunset}
         backgroundSize="100% auto"
         backgroundPosition="center 65%"
       />
       <EventSection />
+      <SectionDivider />
       <ImageSplash imageUrl={familyBaby} />
       <RSVPSection />
       <ImageSplash imageUrl={santorini} backgroundPosition="center 90%" />

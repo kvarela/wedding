@@ -1,11 +1,13 @@
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
 
 import heroImage from '@/assets/hero.png'
+import { HEADER_HEIGHT_PX } from '@/components/NavigationHeader'
 import { weddingColors } from '@/theme/colors'
 
 const HeroSection = () => {
   return (
     <Box
+      id="home"
       width="100%"
       position="relative"
       height="100vh"
@@ -23,7 +25,7 @@ const HeroSection = () => {
         backgroundImage={`url(${heroImage})`}
         backgroundSize="cover"
         backgroundPosition="center"
-        filter="grayscale(100%)"
+        filter="saturate(0.9)"
       />
       <Box
         position="absolute"
@@ -32,80 +34,51 @@ const HeroSection = () => {
         height="100%"
         zIndex={0}
         bg="black"
-        opacity={0.55}
+        opacity={0.45}
       />
 
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }} position="relative" zIndex={1}>
         <VStack
           gap={8}
           textAlign="center"
-          color="white"
-          textShadow="0 2px 8px rgba(0,0,0,0.8), 0 0 24px rgba(0,0,0,0.5)"
+          color={weddingColors.warmIvory}
+          textShadow="0 2px 10px rgba(0,0,0,0.75), 0 0 28px rgba(0,0,0,0.45)"
+          pt={`${HEADER_HEIGHT_PX}px`}
         >
-          <Heading
-            fontSize={{ base: '4xl', md: '6xl', lg: '8xl' }}
-            fontFamily="'Cormorant Garamond', serif"
-            fontWeight="600"
-            letterSpacing="wider"
-            textTransform="uppercase"
-          >
-            Karim{' '}
-            <Text as="span" fontStyle="italic">
-              &
-            </Text>{' '}
-            Felicia
-          </Heading>
-
-          <Box height="1px" width="200px" bg={weddingColors.primaryGold} opacity={0.9} />
-
-          <VStack gap={4}>
-            <Text
-              fontSize={{ base: 'xl', md: '2xl' }}
+          <VStack gap={3}>
+            <Heading
+              fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }}
               fontFamily="'Cormorant Garamond', serif"
-              fontWeight="600"
+              fontWeight="500"
               letterSpacing="wide"
             >
-              are getting married
-            </Text>
+              Felicia{' '}
+              <Text as="span" fontStyle="italic" fontWeight="400">
+                &
+              </Text>{' '}
+              Karim
+            </Heading>
 
             <Text
               fontSize={{ base: 'lg', md: 'xl' }}
               fontFamily="'Cormorant Garamond', serif"
               fontWeight="600"
               letterSpacing="wider"
-              color={weddingColors.primaryGold}
+              color={weddingColors.champagneGold}
             >
-              NOVEMBER 7, 2026
+              November 7, 2026
             </Text>
 
-            <Text fontSize={{ base: 'md', md: 'lg' }} fontFamily="'Cormorant Garamond', serif" fontWeight="500" opacity={0.95}>
-              Viceroy Hotel • San Jose Del Cabo, Mexico
+            <Text
+              fontSize={{ base: 'md', md: 'lg' }}
+              fontFamily="'Cormorant Garamond', serif"
+              fontWeight="500"
+              letterSpacing="wide"
+              opacity={0.98}
+            >
+              Viceroy Los Cabos
             </Text>
           </VStack>
-
-          <Box
-            as="button"
-            mt={8}
-            px={8}
-            py={3}
-            border="1px solid"
-            borderColor={weddingColors.primaryGold}
-            color="white"
-            fontSize="sm"
-            fontWeight="600"
-            letterSpacing="wider"
-            textTransform="uppercase"
-            transition="all 0.3s"
-            _hover={{
-              bg: weddingColors.primaryGold,
-              color: 'black',
-            }}
-            onClick={() => {
-              document.getElementById('rsvp')?.scrollIntoView({ behavior: 'smooth' })
-            }}
-          >
-            RSVP Now
-          </Box>
         </VStack>
       </Container>
     </Box>
