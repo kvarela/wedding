@@ -1,6 +1,6 @@
 # Karim & Felicia Wedding Website 💍
 
-A modern, elegant wedding website featuring a single-page application with parallax effects, built as a monorepo.
+A modern, elegant wedding website featuring a single-page application, built as a monorepo.
 
 ## 🎨 Features
 
@@ -117,16 +117,12 @@ yarn build
 
 - **Couple:** Karim & Felicia
 - **Date:** November 7, 2026
-- **Venue:** Viceroy Hotel, Cabo San Lucas, Mexico
+- **Venue:** Viceroy Hotel, San Jose Del Cabo, Mexico
 - **Theme:** Minimalist Luxury / Beach Elegance
 
 ## 📱 Mobile-First Design
 
 The website is built with a mobile-first approach, ensuring a beautiful experience across all devices with responsive breakpoints and touch-friendly interactions.
-
-## ✨ Parallax Effects
-
-Smooth parallax scrolling effects enhance the luxury aesthetic and create an immersive user experience.
 
 ## 🔐 API Endpoints
 

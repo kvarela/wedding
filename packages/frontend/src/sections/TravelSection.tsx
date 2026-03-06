@@ -1,5 +1,7 @@
 import { Box, Container, Heading, Text, VStack, SimpleGrid, Card, Link } from '@chakra-ui/react'
 
+import { weddingColors } from '@/theme/colors'
+
 interface TravelInfo {
   icon: string
   title: string
@@ -49,16 +51,16 @@ const TRAVEL_DETAILS: TravelInfo[] = [
 
 const TravelSection = () => {
   return (
-    <Box width="100%" py={{ base: 16, md: 24 }} bg="white">
+    <Box width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
               Travel & Stay
             </Heading>
-            <Box height="1px" width="100px" bg="gray.400" />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
-              Everything you need to know for your trip to Cabo San Lucas
+            <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
+              Everything you need to know for your trip to San Jose Del Cabo
             </Text>
           </VStack>
 
@@ -69,35 +71,35 @@ const TravelSection = () => {
                 p={6}
                 borderRadius="lg"
                 borderWidth="1px"
-                borderColor="gray.200"
-                bg="gray.50"
+                borderColor={weddingColors.primaryGold}
+                bg={weddingColors.charcoal}
                 transition="all 0.3s"
                 _hover={{
                   transform: 'translateY(-4px)',
                   shadow: 'lg',
-                  borderColor: 'gray.300',
+                  borderColor: weddingColors.primaryGold,
                 }}
               >
                 <VStack gap={4} align="start">
                   <Text fontSize="4xl">{detail.icon}</Text>
 
-                  <Heading fontSize="xl" fontWeight="500" color="gray.800">
+                  <Heading fontSize="xl" fontWeight="500" color={weddingColors.primaryGold}>
                     {detail.title}
                   </Heading>
 
-                  <Text fontSize="sm" color="gray.600" lineHeight="tall">
+                  <Text fontSize="sm" color="gray.200" lineHeight="tall">
                     {detail.description}
                   </Text>
 
                   {detail.link && (
                     <Link
                       href={detail.link}
-                      color="gray.700"
+                      color={weddingColors.primaryGold}
                       fontSize="sm"
                       fontWeight="500"
                       textDecoration="underline"
                       _hover={{
-                        color: 'gray.900',
+                        color: weddingColors.champagneGold,
                       }}
                       target="_blank"
                     >
@@ -109,23 +111,32 @@ const TravelSection = () => {
             ))}
           </SimpleGrid>
 
-          <Box mt={8} p={8} bg="gray.100" borderRadius="lg" width="100%" textAlign="center">
+          <Box
+            mt={8}
+            p={8}
+            bg={weddingColors.charcoal}
+            borderRadius="lg"
+            width="100%"
+            textAlign="center"
+            borderWidth="1px"
+            borderColor={weddingColors.primaryGold}
+          >
             <VStack gap={4}>
-              <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color="gray.800">
-                Viceroy Hotel, Cabo San Lucas
+              <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color={weddingColors.primaryGold}>
+                Viceroy Hotel, San Jose Del Cabo
               </Heading>
-              <Text fontSize="md" color="gray.600">
-                Camino Viejo a San Jose Km 2, Cabo San Lucas, 23450, Mexico
+              <Text fontSize="md" color="gray.200">
+                Camino Viejo a San Jose Km 2, San Jose Del Cabo, 23450, Mexico
               </Text>
               <Link
-                href="https://maps.google.com/?q=Viceroy+Hotel+Cabo+San+Lucas"
-                color="gray.700"
+                href="https://maps.google.com/?q=Viceroy+Hotel+San+Jose+Del+Cabo"
+                color={weddingColors.primaryGold}
                 fontSize="sm"
                 fontWeight="500"
                 textDecoration="underline"
                 mt={2}
                 _hover={{
-                  color: 'gray.900',
+                  color: weddingColors.champagneGold,
                 }}
                 target="_blank"
               >

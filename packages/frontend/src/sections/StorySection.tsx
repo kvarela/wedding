@@ -1,6 +1,8 @@
 import { Box, Container, Heading, Text, VStack, HStack } from '@chakra-ui/react'
 import { useEffect, useRef, useState } from 'react'
 
+import { weddingColors } from '@/theme/colors'
+
 interface TimelineItem {
   year: string
   title: string
@@ -62,15 +64,15 @@ const StorySection = () => {
   }, [])
 
   return (
-    <Box ref={sectionRef} width="100%" py={{ base: 16, md: 24 }} bg="gray.50">
+    <Box ref={sectionRef} width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
       <Container maxW="container.lg" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={16}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
               Our Story
             </Heading>
-            <Box height="1px" width="100px" bg="gray.400" />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
+            <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
               Every love story is special, but ours is our favorite
             </Text>
           </VStack>
@@ -83,7 +85,8 @@ const StorySection = () => {
               top={0}
               bottom={0}
               width="2px"
-              bg="gray.300"
+              bg={weddingColors.primaryGold}
+              opacity={0.4}
               transform="translateX(-50%)"
               display={{ base: 'none', md: 'block' }}
             />
@@ -114,15 +117,15 @@ const StorySection = () => {
                     <Text
                       fontSize="3xl"
                       fontFamily="'Cormorant Garamond', serif"
-                      color="gray.700"
+                      color={weddingColors.primaryGold}
                       fontWeight="500"
                     >
                       {item.year}
                     </Text>
-                    <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color="gray.800">
+                    <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color="white">
                       {item.title}
                     </Heading>
-                    <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.600" lineHeight="tall">
+                    <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.200" lineHeight="tall">
                       {item.description}
                     </Text>
                   </VStack>
@@ -132,9 +135,9 @@ const StorySection = () => {
                     width="16px"
                     height="16px"
                     borderRadius="full"
-                    bg="gray.700"
+                    bg={weddingColors.primaryGold}
                     border="4px solid"
-                    borderColor="gray.50"
+                    borderColor={weddingColors.charcoal}
                     flexShrink={0}
                     zIndex={1}
                     display={{ base: 'none', md: 'block' }}

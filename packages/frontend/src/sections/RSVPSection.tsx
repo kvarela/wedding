@@ -15,6 +15,7 @@ import { useEffect, useState } from 'react'
 
 import { createRsvp, getStoredRsvp, storeRsvp, updateRsvp } from '@/api/rsvp'
 import { toaster } from '@/components/ui/toaster'
+import { weddingColors } from '@/theme/colors'
 import type { RsvpMealChoice, RsvpResponse } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
@@ -177,18 +178,18 @@ const RSVPSection = () => {
     <Box
       width="100%"
       p={8}
-      bg="white"
+      bg={weddingColors.charcoal}
       borderRadius="lg"
       shadow="md"
       borderWidth="1px"
-      borderColor="gray.200"
+      borderColor={weddingColors.primaryGold}
     >
       <VStack gap={6} align="stretch">
         <Box textAlign="center" pb={4} borderBottomWidth="1px" borderColor="gray.100">
-          <Heading fontSize="xl" fontWeight="600" color="green.700" mb={2}>
+          <Heading fontSize="xl" fontWeight="600" color={weddingColors.primaryGold} mb={2}>
             Thank You!
           </Heading>
-          <Text color="gray.600" fontSize="sm">
+          <Text color="gray.200" fontSize="sm">
             We&apos;ve received your reservation. Here&apos;s what you submitted:
           </Text>
         </Box>
@@ -197,46 +198,43 @@ const RSVPSection = () => {
           gap={{ base: 1, md: 3 }}
           fontSize="sm"
         >
-          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+          <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
             Guests
           </Text>
-          <Text color="gray.800">{rsvp.guestNames.join(', ')}</Text>
+          <Text color="gray.100">{rsvp.guestNames.join(', ')}</Text>
 
-          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+          <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
             Email
           </Text>
-          <Text color="gray.800">{rsvp.email}</Text>
+          <Text color="gray.100">{rsvp.email}</Text>
 
           {rsvp.phone && (
             <>
-              <Text
-                fontWeight="600"
-                color="gray.500"
-                textTransform="uppercase"
-                letterSpacing="wide"
-              >
+              <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
                 Phone
               </Text>
-              <Text color="gray.800">{rsvp.phone}</Text>
+              <Text color="gray.100">{rsvp.phone}</Text>
             </>
           )}
 
-          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+          <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
             Address
           </Text>
-          <Text color="gray.800" whiteSpace="pre-wrap">
+          <Text color="gray.100" whiteSpace="pre-wrap">
             {rsvp.address}
           </Text>
 
-          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+          <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
             Attendance
           </Text>
-          <Text color="gray.800">{rsvp.attendance === 'YES' ? 'Attending' : 'Not attending'}</Text>
+          <Text color="gray.100">
+            {rsvp.attendance === 'YES' ? 'Attending' : 'Not attending'}
+          </Text>
 
-          <Text fontWeight="600" color="gray.500" textTransform="uppercase" letterSpacing="wide">
+          <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
             Meal Choices
           </Text>
-          <Text color="gray.800">
+          <Text color="gray.100">
             {(rsvp.guests ?? rsvp.guestNames?.map((name) => ({ name, mealChoice: 'Fish' })) ?? [])
               .map((g) => `${g.name}: ${g.mealChoice}`)
               .join(', ')}
@@ -244,15 +242,10 @@ const RSVPSection = () => {
 
           {rsvp.message && (
             <>
-              <Text
-                fontWeight="600"
-                color="gray.500"
-                textTransform="uppercase"
-                letterSpacing="wide"
-              >
+              <Text fontWeight="600" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="wide">
                 Message
               </Text>
-              <Text color="gray.800" whiteSpace="pre-wrap">
+              <Text color="gray.100" whiteSpace="pre-wrap">
                 {rsvp.message}
               </Text>
             </>
@@ -262,9 +255,9 @@ const RSVPSection = () => {
           variant="outline"
           size="lg"
           onClick={handleUpdateClick}
-          borderColor="gray.400"
-          color="gray.700"
-          _hover={{ bg: 'gray.50', borderColor: 'gray.500' }}
+          borderColor={weddingColors.primaryGold}
+          color={weddingColors.primaryGold}
+          _hover={{ bg: weddingColors.charcoal, borderColor: weddingColors.primaryGold }}
         >
           Update Reservation
         </Button>
@@ -273,15 +266,15 @@ const RSVPSection = () => {
   )
 
   return (
-    <Box id="rsvp" width="100%" py={{ base: 16, md: 24 }} bg="gray.50">
+    <Box id="rsvp" width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
       <Container maxW="container.md" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
               RSVP
             </Heading>
-            <Box height="1px" width="100px" bg="gray.400" />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
+            <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
               Please let us know if you can join us
             </Text>
           </VStack>
@@ -292,9 +285,11 @@ const RSVPSection = () => {
               onSubmit={handleSubmit}
               width="100%"
               p={8}
-              bg="white"
+              bg={weddingColors.charcoal}
               borderRadius="lg"
               shadow="md"
+              borderWidth="1px"
+              borderColor={weddingColors.primaryGold}
             >
               <VStack gap={6}>
                 <Field.Root width="100%">
@@ -530,7 +525,7 @@ const RSVPSection = () => {
                     variant="ghost"
                     size="sm"
                     onClick={() => setEditing(false)}
-                    color="gray.600"
+                    color="gray.300"
                   >
                     Cancel
                   </Button>
@@ -539,14 +534,14 @@ const RSVPSection = () => {
                   type="submit"
                   width="100%"
                   size="lg"
-                  bg="gray.800"
-                  color="white"
+                  bg={weddingColors.primaryGold}
+                  color="black"
                   fontSize="sm"
                   letterSpacing="wider"
                   textTransform="uppercase"
                   py={6}
                   _hover={{
-                    bg: 'gray.700',
+                    bg: '#b8962f',
                   }}
                   transition="all 0.3s"
                   loading={loading}
@@ -560,7 +555,7 @@ const RSVPSection = () => {
             storedRsvp && renderRsvpInfo(storedRsvp)
           )}
 
-          <Text fontSize="sm" color="gray.500" textAlign="center" maxW="lg">
+          <Text fontSize="sm" color="gray.400" textAlign="center" maxW="lg">
             Please RSVP by September 1st, 2026. If you have any questions, feel free to reach out to
             us directly.
           </Text>

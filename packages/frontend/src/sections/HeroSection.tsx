@@ -1,26 +1,11 @@
 import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
-import { useEffect, useRef } from 'react'
 
 import proposalImage from '@/assets/proposal.jpg'
+import { weddingColors } from '@/theme/colors'
 
 const HeroSection = () => {
-  const parallaxRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = () => {
-      if (parallaxRef.current) {
-        const scrolled = window.scrollY
-        parallaxRef.current.style.transform = `translateY(${scrolled * 0.5}px)`
-      }
-    }
-
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
-  }, [])
-
   return (
     <Box
-      className="parallax-section"
       width="100%"
       position="relative"
       height="100vh"
@@ -30,8 +15,6 @@ const HeroSection = () => {
       overflow="hidden"
     >
       <Box
-        ref={parallaxRef}
-        className="parallax-bg"
         position="absolute"
         inset={0}
         width="100%"
@@ -40,6 +23,7 @@ const HeroSection = () => {
         backgroundImage={`url(${proposalImage})`}
         backgroundSize="cover"
         backgroundPosition="center"
+        filter="grayscale(100%)"
       />
       <Box
         position="absolute"
@@ -71,7 +55,7 @@ const HeroSection = () => {
             Felicia
           </Heading>
 
-          <Box height="1px" width="200px" bg="white" opacity={0.7} />
+          <Box height="1px" width="200px" bg={weddingColors.primaryGold} opacity={0.9} />
 
           <VStack gap={4}>
             <Text
@@ -83,12 +67,17 @@ const HeroSection = () => {
               are getting married
             </Text>
 
-            <Text fontSize={{ base: 'lg', md: 'xl' }} fontWeight="600" letterSpacing="wider">
+            <Text
+              fontSize={{ base: 'lg', md: 'xl' }}
+              fontWeight="600"
+              letterSpacing="wider"
+              color={weddingColors.primaryGold}
+            >
               NOVEMBER 7, 2026
             </Text>
 
             <Text fontSize={{ base: 'md', md: 'lg' }} fontWeight="500" opacity={0.95}>
-              Viceroy Hotel • Cabo San Lucas, Mexico
+              Viceroy Hotel • San Jose Del Cabo, Mexico
             </Text>
           </VStack>
 
@@ -98,7 +87,7 @@ const HeroSection = () => {
             px={8}
             py={3}
             border="1px solid"
-            borderColor="white"
+            borderColor={weddingColors.primaryGold}
             color="white"
             fontSize="sm"
             fontWeight="600"
@@ -106,8 +95,8 @@ const HeroSection = () => {
             textTransform="uppercase"
             transition="all 0.3s"
             _hover={{
-              bg: 'white',
-              color: 'gray.900',
+              bg: weddingColors.primaryGold,
+              color: 'black',
             }}
             onClick={() => {
               document.getElementById('rsvp')?.scrollIntoView({ behavior: 'smooth' })

@@ -1,5 +1,7 @@
 import { Box, Container, Heading, Text, VStack, SimpleGrid, Card } from '@chakra-ui/react'
 
+import { weddingColors } from '@/theme/colors'
+
 interface Event {
   time: string
   title: string
@@ -44,15 +46,15 @@ const events: Event[] = [
 
 const EventSection = () => {
   return (
-    <Box width="100%" py={{ base: 16, md: 24 }} bg="white" position="relative">
+    <Box width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal} position="relative">
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color="gray.800">
+            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
               Schedule
             </Heading>
-            <Box height="1px" width="100px" bg="gray.400" />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.600" maxW="2xl">
+            <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
               Friday, November 7th, 2026
             </Text>
           </VStack>
@@ -64,36 +66,36 @@ const EventSection = () => {
                 p={6}
                 borderRadius="lg"
                 borderWidth="1px"
-                borderColor="gray.200"
-                bg="white"
+                borderColor={weddingColors.primaryGold}
+                bg={weddingColors.charcoal}
                 transition="all 0.3s"
                 _hover={{
                   transform: 'translateY(-8px)',
                   shadow: 'xl',
-                  borderColor: 'gray.400',
+                  borderColor: weddingColors.primaryGold,
                 }}
               >
                 <VStack gap={4} align="start" height="100%">
                   <Text
                     fontSize="2xl"
                     fontFamily="'Cormorant Garamond', serif"
-                    color="gray.700"
+                    color={weddingColors.primaryGold}
                     fontWeight="500"
                   >
                     {event.time}
                   </Text>
 
                   <VStack gap={2} align="start" flex={1}>
-                    <Heading fontSize="xl" fontWeight="500" color="gray.800">
+                    <Heading fontSize="xl" fontWeight="500" color="white">
                       {event.title}
                     </Heading>
 
-                    <Text fontSize="sm" color="gray.600" lineHeight="tall">
+                    <Text fontSize="sm" color="gray.200" lineHeight="tall">
                       {event.description}
                     </Text>
                   </VStack>
 
-                  <Text fontSize="sm" color="gray.500" fontStyle="italic">
+                  <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
                     📍 {event.location}
                   </Text>
                 </VStack>
@@ -102,13 +104,13 @@ const EventSection = () => {
           </SimpleGrid>
 
           <VStack gap={4} mt={8} textAlign="center">
-            <Text fontSize="md" color="gray.700" fontWeight="500">
+            <Text fontSize="md" color={weddingColors.primaryGold} fontWeight="500">
               Dress Code
             </Text>
-            <Text fontSize="lg" fontFamily="'Cormorant Garamond', serif" color="gray.600">
+            <Text fontSize="lg" fontFamily="'Cormorant Garamond', serif" color="gray.200">
               Formal Beach Attire
             </Text>
-            <Text fontSize="sm" color="gray.500" maxW="xl">
+            <Text fontSize="sm" color="gray.400" maxW="xl">
               Think elegant and comfortable. Light fabrics, flowing dresses, and light-colored suits
               are perfect for our beach celebration.
             </Text>
