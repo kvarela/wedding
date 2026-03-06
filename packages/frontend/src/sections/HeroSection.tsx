@@ -48,7 +48,7 @@ const HeroSection = () => {
           <VStack gap={3}>
             <Heading
               fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }}
-              fontFamily="'Cormorant Garamond', serif"
+              fontFamily="'Cinzel Decorative', serif"
               fontWeight="500"
               letterSpacing="wide"
             >
@@ -61,17 +61,18 @@ const HeroSection = () => {
 
             <Text
               fontSize={{ base: 'lg', md: 'xl' }}
-              fontFamily="'Cormorant Garamond', serif"
+              fontFamily="'Cinzel Decorative', serif"
               fontWeight="600"
               letterSpacing="wider"
               color={weddingColors.champagneGold}
+              mt="20px"
             >
               November 7, 2026
             </Text>
 
             <Text
               fontSize={{ base: 'md', md: 'lg' }}
-              fontFamily="'Cormorant Garamond', serif"
+              fontFamily="'Cinzel Decorative', serif"
               fontWeight="500"
               letterSpacing="wide"
               opacity={0.98}
