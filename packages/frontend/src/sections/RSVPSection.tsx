@@ -279,6 +279,15 @@ const RSVPSection = () => {
             </Text>
           </VStack>
 
+          <VStack gap={2} textAlign="center">
+            <Heading as="h3" size="sm" color={weddingColors.primaryGold} fontWeight="500">
+              Dress Code
+            </Heading>
+            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="xl">
+              Please wear either/or Black and Gold in the spirit of Cuban Jazz and Havana Nights.
+            </Text>
+          </VStack>
+
           {showForm ? (
             <Box
               as="form"

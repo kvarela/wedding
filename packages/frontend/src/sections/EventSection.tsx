@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Text, VStack, SimpleGrid, Card } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack, Card } from '@chakra-ui/react'
 
 import { weddingColors } from '@/theme/colors'
 
@@ -7,20 +7,23 @@ interface Event {
   title: string
   description: string
   location: string
+  date: 'nov6' | 'nov7'
 }
 
 const events: Event[] = [
   {
-    time: '4:00 PM',
+    time: '5:00 PM',
     title: 'Welcome Reception',
     description: 'Join us for refreshments and mingling as our guests arrive.',
     location: 'Kiddie Pool @ Viceroy Hotel',
+    date: 'nov6',
   },
   {
     time: '5:30 PM',
     title: 'Ceremony',
     description: 'We exchange our vows overlooking the beautiful Pacific Ocean.',
     location: 'Kiddie Pool @ Viceroy Hotel',
+    date: 'nov7',
   },
   {
     time: '6:00 PM',
@@ -28,6 +31,7 @@ const events: Event[] = [
     description:
       "Celebrate with signature cocktails, cigars, and hors d'oeuvres while the DJ warms up.",
     location: 'Cielomar Rooftop @ Viceroy Hotel',
+    date: 'nov7',
   },
   {
     time: '7:00 PM',
@@ -35,14 +39,21 @@ const events: Event[] = [
     description:
       'Celebrate with us with dinner, dancing, and memorable toasts. If you want to make a speech, this is your chance!',
     location: 'Cielomar Rooftop @ Viceroy Hotel',
+    date: 'nov7',
   },
   {
     time: '10:00 PM',
     title: 'After Party',
     description: 'Continue the celebration, if you dare.',
     location: 'Awacate Bar @ Viceroy Hotel',
+    date: 'nov7',
   },
 ]
+
+const eventsByDate = {
+  nov6: events.filter((e) => e.date === 'nov6'),
+  nov7: events.filter((e) => e.date === 'nov7'),
+}
 
 const EventSection = () => {
   return (
@@ -55,65 +66,120 @@ const EventSection = () => {
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
             <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
-              Friday, November 7th, 2026
+              November 6th & 7th, 2026
             </Text>
           </VStack>
 
-          <SimpleGrid columns={{ base: 1, md: 2, lg: 3 }} gap={8} width="100%">
-            {events.map((event, index) => (
-              <Card.Root
-                key={index}
-                p={6}
-                borderRadius="lg"
-                borderWidth="1px"
-                borderColor={weddingColors.primaryGold}
-                bg={weddingColors.charcoal}
-                transition="all 0.3s"
-                _hover={{
-                  transform: 'translateY(-8px)',
-                  shadow: 'xl',
-                  borderColor: weddingColors.primaryGold,
-                }}
+          <VStack gap={12} width="100%" align="stretch">
+            <VStack gap={6} width="100%" align="stretch">
+              <Heading
+                as="h2"
+                size="lg"
+                fontWeight="400"
+                color={weddingColors.primaryGold}
+                textAlign="center"
               >
-                <VStack gap={4} align="start" height="100%">
-                  <Text
-                    fontSize="2xl"
-                    fontFamily="'Cormorant Garamond', serif"
-                    color={weddingColors.primaryGold}
-                    fontWeight="500"
+                Thursday, November 6th, 2026
+              </Heading>
+              <VStack gap={4} width="100%" align="stretch">
+                {eventsByDate.nov6.map((event, index) => (
+                  <Card.Root
+                    key={index}
+                    p={6}
+                    borderRadius="lg"
+                    borderWidth="1px"
+                    borderColor={weddingColors.primaryGold}
+                    bg={weddingColors.charcoal}
+                    transition="all 0.3s"
+                    _hover={{
+                      transform: 'translateY(-8px)',
+                      shadow: 'xl',
+                      borderColor: weddingColors.primaryGold,
+                    }}
                   >
-                    {event.time}
-                  </Text>
+                    <VStack gap={4} align="start" height="100%">
+                      <Text
+                        fontSize="2xl"
+                        fontFamily="'Cormorant Garamond', serif"
+                        color={weddingColors.primaryGold}
+                        fontWeight="500"
+                      >
+                        {event.time}
+                      </Text>
 
-                  <VStack gap={2} align="start" flex={1}>
-                    <Heading fontSize="xl" fontWeight="500" color="white">
-                      {event.title}
-                    </Heading>
+                      <VStack gap={2} align="start" flex={1}>
+                        <Heading fontSize="xl" fontWeight="500" color="white">
+                          {event.title}
+                        </Heading>
 
-                    <Text fontSize="sm" color="gray.200" lineHeight="tall">
-                      {event.description}
-                    </Text>
-                  </VStack>
+                        <Text fontSize="sm" color="gray.200" lineHeight="tall">
+                          {event.description}
+                        </Text>
+                      </VStack>
 
-                  <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
-                    📍 {event.location}
-                  </Text>
-                </VStack>
-              </Card.Root>
-            ))}
-          </SimpleGrid>
+                      <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
+                        📍 {event.location}
+                      </Text>
+                    </VStack>
+                  </Card.Root>
+                ))}
+              </VStack>
+            </VStack>
 
-          <VStack gap={4} mt={8} textAlign="center">
-            <Text fontSize="md" color={weddingColors.primaryGold} fontWeight="500">
-              Dress Code
-            </Text>
-            <Text fontSize="lg" fontFamily="'Cormorant Garamond', serif" color="gray.200">
-              Formal Beach Attire
-            </Text>
-            <Text fontSize="sm" color="gray.400" maxW="xl">
-              Think elegant and comfortable. Light fabrics, flowing dresses, and light-colored suits
-              are perfect for our beach celebration.
-            </Text>
+            <VStack gap={6} width="100%" align="stretch">
+              <Heading
+                as="h2"
+                size="lg"
+                fontWeight="400"
+                color={weddingColors.primaryGold}
+                textAlign="center"
+              >
+                Friday, November 7th, 2026
+              </Heading>
+              <VStack gap={4} width="100%" align="stretch">
+                {eventsByDate.nov7.map((event, index) => (
+                  <Card.Root
+                    key={index}
+                    p={6}
+                    borderRadius="lg"
+                    borderWidth="1px"
+                    borderColor={weddingColors.primaryGold}
+                    bg={weddingColors.charcoal}
+                    transition="all 0.3s"
+                    _hover={{
+                      transform: 'translateY(-8px)',
+                      shadow: 'xl',
+                      borderColor: weddingColors.primaryGold,
+                    }}
+                  >
+                    <VStack gap={4} align="start" height="100%">
+                      <Text
+                        fontSize="2xl"
+                        fontFamily="'Cormorant Garamond', serif"
+                        color={weddingColors.primaryGold}
+                        fontWeight="500"
+                      >
+                        {event.time}
+                      </Text>
+
+                      <VStack gap={2} align="start" flex={1}>
+                        <Heading fontSize="xl" fontWeight="500" color="white">
+                          {event.title}
+                        </Heading>
+
+                        <Text fontSize="sm" color="gray.200" lineHeight="tall">
+                          {event.description}
+                        </Text>
+                      </VStack>
+
+                      <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
+                        📍 {event.location}
+                      </Text>
+                    </VStack>
+                  </Card.Root>
+                ))}
+              </VStack>
+            </VStack>
           </VStack>
         </VStack>
       </Container>
