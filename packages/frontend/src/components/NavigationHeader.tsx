@@ -6,10 +6,10 @@ import { weddingColors } from '@/theme/colors'
 const HEADER_HEIGHT_PX = 160
 
 const navItems = [
-  { label: 'Our Story', targetId: 'our-story' },
-  { label: 'Travel', targetId: 'travel' },
-  { label: 'Schedule', targetId: 'schedule' },
-  { label: 'RSVP', targetId: 'rsvp' },
+  // { label: 'Our Story', targetId: 'our-story' },
+  // { label: 'Travel', targetId: 'travel' },
+  // { label: 'Schedule', targetId: 'schedule' },
+  // { label: 'RSVP', targetId: 'rsvp' },
 ]
 
 const scrollToSection = (targetId: string) => {
