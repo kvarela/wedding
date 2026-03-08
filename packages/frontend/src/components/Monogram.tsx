@@ -1,4 +1,4 @@
-import { Box } from '@chakra-ui/react'
+import { Image } from '@chakra-ui/react'
 import type { BoxProps } from '@chakra-ui/react'
 
 import monogramUrl from '@/assets/monogram.png'
@@ -10,8 +10,7 @@ interface MonogramProps extends Omit<BoxProps, 'as' | 'src'> {
 
 const Monogram = ({ alt = 'FK monogram', glow = true, ...props }: MonogramProps) => {
   return (
-    <Box
-      as="img"
+    <Image
       src={monogramUrl}
       alt={alt}
       userSelect="none"
@@ -26,4 +25,3 @@ const Monogram = ({ alt = 'FK monogram', glow = true, ...props }: MonogramProps)
 }
 
 export default Monogram
-
