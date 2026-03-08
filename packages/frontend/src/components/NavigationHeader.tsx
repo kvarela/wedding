@@ -5,7 +5,7 @@ import { weddingColors } from '@/theme/colors'
 
 const HEADER_HEIGHT_PX = 160
 
-const navItems = [
+const navItems: { label: string; targetId: string }[] = [
   // { label: 'Our Story', targetId: 'our-story' },
   // { label: 'Travel', targetId: 'travel' },
   // { label: 'Schedule', targetId: 'schedule' },
