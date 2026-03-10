@@ -10,6 +10,7 @@ import santorini from '@/assets/santorini.png'
 import HeroSection from './sections/HeroSection'
 import StorySection from './sections/StorySection'
 import EventSection from './sections/EventSection'
+import DressCodeSection from './sections/DressCodeSection'
 import RSVPSection from './sections/RSVPSection'
 import TravelSection from './sections/TravelSection'
 import FooterSection from './sections/FooterSection'
@@ -31,6 +32,7 @@ function App() {
       <EventSection />
       <SectionDivider />
       <ImageSplash imageUrl={familyBaby} />
+      <DressCodeSection />
       <RSVPSection />
       <ImageSplash imageUrl={santorini} backgroundPosition="center 90%" />
       <TravelSection />
