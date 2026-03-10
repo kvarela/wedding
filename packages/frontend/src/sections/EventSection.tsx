@@ -57,7 +57,7 @@ const eventsByDate = {
 
 const EventSection = () => {
   return (
-    <Box width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal} position="relative">
+    <Box id="itinerary" width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal} position="relative">
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">

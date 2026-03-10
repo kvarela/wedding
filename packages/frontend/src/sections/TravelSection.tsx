@@ -51,7 +51,7 @@ const TRAVEL_DETAILS: TravelInfo[] = [
 
 const TravelSection = () => {
   return (
-    <Box width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
+    <Box id="travel" width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
