@@ -64,7 +64,7 @@ const StorySection = () => {
   }, [])
 
   return (
-    <Box ref={sectionRef} width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
+    <Box ref={sectionRef} id="story" width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal}>
       <Container maxW="container.lg" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={16}>
           <VStack gap={4} textAlign="center">

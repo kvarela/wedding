@@ -8,12 +8,10 @@ const HEADER_HEIGHT_PX = 160
 
 const MENU_ITEMS: { label: string; targetId: string }[] = [
   { label: 'Home', targetId: 'home' },
-  { label: 'Itinerary', targetId: 'itinerary' },
-  { label: 'Hotels', targetId: 'travel' },
-  { label: 'Dress Code', targetId: 'travel' },
-  { label: 'Transportation', targetId: 'travel' },
-  { label: 'Q + A', targetId: 'travel' },
+  { label: 'Our Story', targetId: 'story' },
+  { label: 'Schedule', targetId: 'itinerary' },
   { label: 'RSVP', targetId: 'rsvp' },
+  { label: 'Travel & Stay', targetId: 'travel' },
 ]
 
 const scrollToSection = (targetId: string) => {
@@ -109,12 +107,11 @@ const NavigationHeader = () => {
                 type="button"
                 onClick={() => handleMenuLinkClick(item.targetId)}
                 fontFamily="'Cormorant Garamond', serif"
-                fontSize={{ base: 'xl', md: '2xl' }}
-                fontWeight="400"
-                letterSpacing="0.2em"
-                color={weddingColors.menuText}
+                fontSize={{ base: '3xl', md: '5xl' }}
+                fontWeight="300"
+                color={weddingColors.primaryGold}
                 textDecoration="none"
-                _hover={{ color: weddingColors.charcoal, textDecoration: 'none' }}
+                _hover={{ color: weddingColors.darkAntiqueGold, textDecoration: 'none' }}
               >
                 {item.label}
               </Link>
