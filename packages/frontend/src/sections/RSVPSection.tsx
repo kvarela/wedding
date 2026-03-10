@@ -312,7 +312,7 @@ const RSVPSection = () => {
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
-                    color="gray.700"
+                    color="white"
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
@@ -322,15 +322,17 @@ const RSVPSection = () => {
                     <NativeSelect.Field
                       value={guestCountInput}
                       onChange={(e) => handleGuestCountChange(e.target.value)}
-                      borderColor="gray.300"
+                      color="white"
+                      bg={weddingColors.charcoal}
+                      borderColor="gray.500"
                       pl={INPUT_PADDING_LEFT}
                       _focus={{
-                        borderColor: 'gray.600',
+                        borderColor: 'gray.400',
                         shadow: 'sm',
                       }}
                     >
                       {[1, 2, 3, 4].map((n) => (
-                        <option key={n} value={String(n)}>
+                        <option key={n} value={String(n)} style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>
                           {n}
                         </option>
                       ))}
@@ -344,7 +346,7 @@ const RSVPSection = () => {
                     <Field.Label
                       fontSize="sm"
                       fontWeight="500"
-                      color="gray.700"
+                      color="white"
                       textTransform="uppercase"
                       letterSpacing="wide"
                     >
@@ -361,7 +363,7 @@ const RSVPSection = () => {
                           <Field.Label
                             fontSize="xs"
                             fontWeight="500"
-                            color="gray.600"
+                            color="white"
                             textTransform="uppercase"
                             letterSpacing="wide"
                           >
@@ -373,10 +375,12 @@ const RSVPSection = () => {
                             required
                             placeholder="Full name"
                             size="lg"
-                            borderColor="gray.300"
+                            color="white"
+                            borderColor="gray.500"
                             pl={INPUT_PADDING_LEFT}
+                            _placeholder={{ color: 'gray.400' }}
                             _focus={{
-                              borderColor: 'gray.600',
+                              borderColor: 'gray.400',
                               shadow: 'sm',
                             }}
                           />
@@ -385,7 +389,7 @@ const RSVPSection = () => {
                           <Field.Label
                             fontSize="xs"
                             fontWeight="500"
-                            color="gray.600"
+                            color="white"
                             textTransform="uppercase"
                             letterSpacing="wide"
                           >
@@ -397,16 +401,18 @@ const RSVPSection = () => {
                               onChange={(e) =>
                                 setMealChoice(index, e.target.value as RsvpMealChoice)
                               }
-                              borderColor="gray.300"
+                              color="white"
+                              bg={weddingColors.charcoal}
+                              borderColor="gray.500"
                               pl={INPUT_PADDING_LEFT}
                               _focus={{
-                                borderColor: 'gray.600',
+                                borderColor: 'gray.400',
                                 shadow: 'sm',
                               }}
                             >
-                              <option value="Fish">Fish</option>
-                              <option value="Chicken">Chicken</option>
-                              <option value="Steak">Steak</option>
+                              <option value="Fish" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Fish</option>
+                              <option value="Chicken" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Chicken</option>
+                              <option value="Steak" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Steak</option>
                             </NativeSelect.Field>
                             <NativeSelect.Indicator />
                           </NativeSelect.Root>
@@ -420,7 +426,7 @@ const RSVPSection = () => {
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
-                    color="gray.700"
+                    color="white"
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
@@ -433,10 +439,12 @@ const RSVPSection = () => {
                     required
                     placeholder="your.email@example.com"
                     size="lg"
-                    borderColor="gray.300"
+                    color="white"
+                    borderColor="gray.500"
                     pl={INPUT_PADDING_LEFT}
+                    _placeholder={{ color: 'gray.400' }}
                     _focus={{
-                      borderColor: 'gray.600',
+                      borderColor: 'gray.400',
                       shadow: 'sm',
                     }}
                   />
@@ -446,7 +454,7 @@ const RSVPSection = () => {
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
-                    color="gray.700"
+                    color="white"
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
@@ -459,10 +467,12 @@ const RSVPSection = () => {
                     placeholder="Your phone number"
                     required
                     size="lg"
-                    borderColor="gray.300"
+                    color="white"
+                    borderColor="gray.500"
                     pl={INPUT_PADDING_LEFT}
+                    _placeholder={{ color: 'gray.400' }}
                     _focus={{
-                      borderColor: 'gray.600',
+                      borderColor: 'gray.400',
                       shadow: 'sm',
                     }}
                   />
@@ -472,7 +482,7 @@ const RSVPSection = () => {
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
-                    color="gray.700"
+                    color="white"
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
@@ -482,13 +492,14 @@ const RSVPSection = () => {
                     value={formData.address}
                     onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     required
-                    placeholder="Where should we send your physical invitation?"
                     rows={3}
                     size="lg"
-                    borderColor="gray.300"
+                    color="white"
+                    borderColor="gray.500"
                     pl={INPUT_PADDING_LEFT}
+                    _placeholder={{ color: 'gray.400' }}
                     _focus={{
-                      borderColor: 'gray.600',
+                      borderColor: 'gray.400',
                       shadow: 'sm',
                     }}
                   />
@@ -498,7 +509,7 @@ const RSVPSection = () => {
                   <Field.Label
                     fontSize="sm"
                     fontWeight="500"
-                    color="gray.700"
+                    color="white"
                     textTransform="uppercase"
                     letterSpacing="wide"
                   >
@@ -512,10 +523,12 @@ const RSVPSection = () => {
                     placeholder="Any dietary restrictions or special requests?"
                     rows={4}
                     size="lg"
-                    borderColor="gray.300"
+                    color="white"
+                    borderColor="gray.500"
                     pl={INPUT_PADDING_LEFT}
+                    _placeholder={{ color: 'gray.400' }}
                     _focus={{
-                      borderColor: 'gray.600',
+                      borderColor: 'gray.400',
                       shadow: 'sm',
                     }}
                   />
