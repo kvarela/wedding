@@ -1,5 +1,6 @@
-import { Box, Container, Grid, Heading, Text, VStack } from '@chakra-ui/react'
+import { Box, Container, Heading, Image, Text, VStack } from '@chakra-ui/react'
 
+import havanaNightsReception from '@/assets/havana-nights-reception.png'
 import { weddingColors } from '@/theme/colors'
 
 const DressCodeSection = () => {
@@ -22,35 +23,26 @@ const DressCodeSection = () => {
             maxW="xl"
             marginInline="auto"
           >
-            In the spirit of Cuban Jazz Glamour, we invite you to wear Black and/or Gold
+            In the spirit of Havana Nights, we invite all our guests to wear black and gold.
           </Text>
 
-          <Grid
-            templateColumns={{ base: '1fr', md: 'repeat(3, 1fr)' }}
-            gap={{ base: 4, md: 6 }}
+          <Box
             width="100%"
-            maxW="4xl"
+            maxW="md"
             marginInline="auto"
             mt={8}
+            aspectRatio="3/4"
+            borderRadius="md"
+            overflow="hidden"
           >
-            {[1, 2, 3].map((i) => (
-              <Box
-                key={i}
-                aspectRatio="3/4"
-                bg="gray.700"
-                borderRadius="md"
-                borderWidth="1px"
-                borderColor="gray.600"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-              >
-                <Text fontSize="sm" color="gray.500">
-                  Image {i}
-                </Text>
-              </Box>
-            ))}
-          </Grid>
+            <Image
+              src={havanaNightsReception}
+              alt="Havana Nights reception with candlelit tables and golden ambiance"
+              width="100%"
+              height="100%"
+              objectFit="cover"
+            />
+          </Box>
         </VStack>
       </Container>
     </Box>
