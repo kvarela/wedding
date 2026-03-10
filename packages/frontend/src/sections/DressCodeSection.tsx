@@ -28,11 +28,8 @@ const DressCodeSection = () => {
 
           <Box
             width="100%"
-            maxW="md"
-            marginInline="auto"
             mt={8}
-            aspectRatio="3/4"
-            borderRadius="md"
+            height={{ base: '40vh', md: '55vh' }}
             overflow="hidden"
           >
             <Image
