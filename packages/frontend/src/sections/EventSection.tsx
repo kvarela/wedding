@@ -15,14 +15,14 @@ const events: Event[] = [
     time: '5:00 PM',
     title: 'Welcome Reception',
     description: 'Join us for refreshments and mingling as our guests arrive.',
-    location: 'Kiddie Pool @ Viceroy Hotel',
+    location: 'Family Pool @ Viceroy Hotel',
     date: 'nov6',
   },
   {
     time: '5:30 PM',
     title: 'Ceremony',
     description: 'We exchange our vows overlooking the beautiful Pacific Ocean.',
-    location: 'Kiddie Pool @ Viceroy Hotel',
+    location: 'Family Pool @ Viceroy Hotel',
     date: 'nov7',
   },
   {
@@ -62,12 +62,9 @@ const EventSection = () => {
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
             <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
-              Schedule
+              Itinerary
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
-              November 6th & 7th, 2026
-            </Text>
           </VStack>
 
           <VStack gap={12} width="100%" align="stretch">

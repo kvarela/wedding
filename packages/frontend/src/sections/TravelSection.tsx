@@ -122,9 +122,17 @@ const TravelSection = () => {
             borderColor={weddingColors.primaryGold}
           >
             <VStack gap={4}>
-              <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color={weddingColors.primaryGold}>
-                Viceroy Hotel, San Jose Del Cabo
-              </Heading>
+              <Link
+                href="https://www.viceroyhotelsandresorts.com/los-cabos"
+                target="_blank"
+                rel="noopener noreferrer"
+                textDecoration="none"
+                _hover={{ color: weddingColors.champagneGold }}
+              >
+                <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color={weddingColors.primaryGold}>
+                  Viceroy Hotel, San Jose Del Cabo
+                </Heading>
+              </Link>
               <Text fontSize="md" color="gray.200">
                 Camino Viejo a San Jose Km 2, San Jose Del Cabo, 23450, Mexico
               </Text>

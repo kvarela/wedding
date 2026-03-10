@@ -9,7 +9,7 @@ const HEADER_HEIGHT_PX = 160
 const MENU_ITEMS: { label: string; targetId: string }[] = [
   { label: 'Home', targetId: 'home' },
   { label: 'Our Story', targetId: 'story' },
-  { label: 'Schedule', targetId: 'itinerary' },
+  { label: 'Itinerary', targetId: 'itinerary' },
   { label: 'Dress Code', targetId: 'dress-code' },
   { label: 'RSVP', targetId: 'rsvp' },
   { label: 'Travel & Stay', targetId: 'travel' },
