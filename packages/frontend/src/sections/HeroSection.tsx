@@ -88,6 +88,9 @@ const HeroSection = () => {
               onClick={scrollToRsvp}
               mt={6}
               size="lg"
+              px={10}
+              py={4}
+              minWidth="200px"
               fontFamily="'Cinzel Decorative', serif"
               letterSpacing="wide"
               fontWeight="600"
