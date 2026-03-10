@@ -88,12 +88,14 @@ const HeroSection = () => {
               onClick={scrollToRsvp}
               mt={6}
               size="lg"
-              px={10}
-              py={4}
-              minWidth="200px"
-              fontFamily="'Cinzel Decorative', serif"
-              letterSpacing="wide"
-              fontWeight="600"
+              px={8}
+              py="20px"
+              minWidth="130px"
+              borderRadius={0}
+              fontSize="xl"
+              fontFamily="'Cormorant Garamond', serif"
+              letterSpacing="0.15em"
+              fontWeight="300"
               bg={weddingColors.primaryGold}
               color={weddingColors.charcoal}
               boxShadow="0 4px 20px rgba(0,0,0,0.5)"
@@ -102,6 +104,10 @@ const HeroSection = () => {
                 bg: weddingColors.champagneGold,
                 color: weddingColors.charcoal,
                 boxShadow: '0 4px 24px rgba(184,150,74,0.5)',
+                fontWeight: '600',
+              }}
+              _active={{
+                fontWeight: '600',
               }}
             >
               RSVP
