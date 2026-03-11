@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Box, Container, Heading, Text, VStack, Card, Dialog } from '@chakra-ui/react'
+import { Box, Container, Heading, Link, Text, VStack, Card, Dialog } from '@chakra-ui/react'
 
 import { weddingColors } from '@/theme/colors'
 
@@ -10,6 +10,11 @@ interface Event {
   location: string
   date: 'nov5' | 'nov6' | 'nov7'
   modalContent?: string
+  locationUrl?: string
+  locationVenue?: string
+  locationVenueUrl?: string
+  locationAddress?: string
+  locationAddressUrl?: string
 }
 
 const events: Event[] = [
@@ -32,10 +37,15 @@ const events: Event[] = [
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.',
   },
   {
-    time: '5:00 PM',
+    time: '6:00 PM',
     title: 'Welcome Party',
     description: 'Join us for refreshments and mingling as our guests arrive.',
-    location: 'TBD',
+    location: 'Jardin Secreto, Jose Maria Morelos 103, Gallery District, Centro, 23400 San Jose del Cabo',
+    locationVenue: 'Jardin Secreto',
+    locationVenueUrl: 'https://www.facebook.com/urbancuisinegarden/',
+    locationAddress: 'Jose Maria Morelos 103, Gallery District, Centro, 23400 San Jose del Cabo',
+    locationAddressUrl:
+      'https://www.google.com/maps/search/?api=1&query=Jose+Maria+Morelos+103,+Gallery+District,+Centro,+23400+San+Jose+del+Cabo',
     date: 'nov6',
   },
   {
@@ -117,9 +127,75 @@ const EventCard = ({
             {event.description}
           </Text>
         </VStack>
-        <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
-          📍 {event.location}
-        </Text>
+        {event.locationVenue != null && event.locationAddress != null ? (
+          <VStack gap={1} align="start">
+            {event.locationVenueUrl ? (
+              <Link
+                href={event.locationVenueUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                fontSize="sm"
+                color={weddingColors.primaryGold}
+                fontStyle="italic"
+                textDecoration="underline"
+                textUnderlineOffset="2px"
+                _hover={{
+                fontWeight: 'bold',
+                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+              }}
+              >
+                📍 {event.locationVenue}
+              </Link>
+            ) : (
+              <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
+                📍 {event.locationVenue}
+              </Text>
+            )}
+            {event.locationAddressUrl ? (
+              <Link
+                href={event.locationAddressUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                fontSize="sm"
+                color={weddingColors.primaryGold}
+                fontStyle="italic"
+                textDecoration="underline"
+                textUnderlineOffset="2px"
+                _hover={{
+                fontWeight: 'bold',
+                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+              }}
+              >
+                {event.locationAddress}
+              </Link>
+            ) : (
+              <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
+                {event.locationAddress}
+              </Text>
+            )}
+          </VStack>
+        ) : event.locationUrl ? (
+          <Link
+            href={event.locationUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            fontSize="sm"
+            color={weddingColors.primaryGold}
+            fontStyle="italic"
+            textDecoration="underline"
+            textUnderlineOffset="2px"
+            _hover={{
+                fontWeight: 'bold',
+                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+              }}
+          >
+            📍 {event.location}
+          </Link>
+        ) : (
+          <Text fontSize="sm" color={weddingColors.primaryGold} fontStyle="italic">
+            📍 {event.location}
+          </Text>
+        )}
       </VStack>
     </Card.Root>
   )
