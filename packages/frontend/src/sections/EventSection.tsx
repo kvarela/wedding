@@ -39,7 +39,8 @@ const events: Event[] = [
   {
     time: '6:00 PM',
     title: 'Welcome Party',
-    description: 'Join us for refreshments and mingling as our guests arrive.',
+    description:
+      'Join us for welcome drinks and bites as we kick off the wedding festivities and gather with friends and family.',
     location: 'Jardin Secreto, Jose Maria Morelos 103, Gallery District, Centro, 23400 San Jose del Cabo',
     locationVenue: 'Jardin Secreto',
     locationVenueUrl: 'https://www.facebook.com/urbancuisinegarden/',
