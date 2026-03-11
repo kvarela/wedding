@@ -57,9 +57,9 @@ const HeroSection = () => {
               letterSpacing="wide"
             >
               Felicia{' '}
-              <Text as="span" fontStyle="italic" fontWeight="400">
+              <Text as="span" fontStyle="italic" fontWeight="400" marginLeft="-0.2em" marginRight="0.4em">
                 &
-              </Text>{' '}
+              </Text>
               Karim
             </Heading>
 
