@@ -17,7 +17,7 @@ function buildPayload(overrides: Partial<CreateRsvpDto> = {}): CreateRsvpDto {
     email: 'karim@example.com',
     phone: '+15550000001',
     guestNames: ['Karim'],
-    mealChoices: [RsvpMealChoice.FISH],
+    mealChoices: [RsvpMealChoice.FILET_MIGNON],
     address: '123 Wedding Ave',
     message: 'Happy to celebrate',
     attendance: RsvpAttendance.YES,
@@ -25,7 +25,7 @@ function buildPayload(overrides: Partial<CreateRsvpDto> = {}): CreateRsvpDto {
   }
   if (!('mealChoices' in overrides) && 'guestNames' in overrides) {
     const trimmedCount = base.guestNames.map((n) => n.trim()).filter(Boolean).length
-    base.mealChoices = Array(trimmedCount).fill(RsvpMealChoice.FISH)
+    base.mealChoices = Array(trimmedCount).fill(RsvpMealChoice.FILET_MIGNON)
   }
   return base
 }
@@ -96,7 +96,7 @@ describe('RsvpController (e2e)', () => {
           email: 'dbcheck@example.com',
           phone: '+15550000010',
           guestNames: ['Alice', 'Bob'],
-          mealChoices: [RsvpMealChoice.STEAK, RsvpMealChoice.CHICKEN],
+          mealChoices: [RsvpMealChoice.FILET_MIGNON, RsvpMealChoice.GRILLED_SEABASS],
           address: '456 Test St',
           attendance: RsvpAttendance.YES,
         }),
@@ -117,8 +117,8 @@ describe('RsvpController (e2e)', () => {
     expect(guestsInDb).toHaveLength(2)
     expect(guestsInDb.map((g) => g.name)).toEqual(['Alice', 'Bob'])
     expect(guestsInDb.map((g) => g.mealChoice)).toEqual([
-      RsvpMealChoice.STEAK,
-      RsvpMealChoice.CHICKEN,
+      RsvpMealChoice.FILET_MIGNON,
+      RsvpMealChoice.GRILLED_SEABASS,
     ])
   })
 
@@ -227,7 +227,7 @@ describe('RsvpController (e2e)', () => {
           email: 'invalid@example.com',
           phone: '+15550000007',
           guestNames: [' ', ''],
-          mealChoices: [RsvpMealChoice.FISH],
+          mealChoices: [RsvpMealChoice.FILET_MIGNON],
         }),
       )
       .expect(400)

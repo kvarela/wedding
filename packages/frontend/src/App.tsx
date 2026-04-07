@@ -1,4 +1,5 @@
 import { Box } from '@chakra-ui/react'
+import { useState } from 'react'
 
 import NavigationHeader from '@/components/NavigationHeader'
 import SectionDivider from '@/components/SectionDivider'
@@ -17,25 +18,30 @@ import FooterSection from './sections/FooterSection'
 import './App.css'
 
 function App() {
+  const [menuOpen, setMenuOpen] = useState(false)
+
   return (
     <Box width="100%">
       <Toaster />
-      <NavigationHeader />
+      <NavigationHeader menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} onCloseMenu={() => setMenuOpen(false)} />
       <HeroSection />
       <StorySection />
-      <SectionDivider />
+      <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <ImageSplash
         imageUrl={beachSunset}
         backgroundSize="100% auto"
         backgroundPosition="center 65%"
       />
       <EventSection />
-      <SectionDivider />
+      <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <ImageSplash imageUrl={familyBaby} />
       <DressCodeSection />
+      <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <RSVPSection />
+      <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <ImageSplash imageUrl={santorini} backgroundPosition="center 90%" />
       <TravelSection />
+      <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <FooterSection />
     </Box>
   )

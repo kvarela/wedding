@@ -1,7 +1,7 @@
 import { apiUrl } from './client'
 
 export type RsvpAttendance = 'YES' | 'NO' | 'MAYBE'
-export type RsvpMealChoice = 'Steak' | 'Chicken' | 'Fish'
+export type RsvpMealChoice = 'Filet Mignon' | 'Grilled Seabass'
 
 export interface GuestResponse {
   id: string

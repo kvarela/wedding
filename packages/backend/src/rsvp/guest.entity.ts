@@ -17,7 +17,7 @@ export class Guest {
   @Column({ type: 'varchar', length: 255 })
   name: string
 
-  @Column({ type: 'enum', enum: RsvpMealChoice, default: RsvpMealChoice.FISH })
+  @Column({ type: 'enum', enum: RsvpMealChoice, default: RsvpMealChoice.FILET_MIGNON })
   mealChoice: RsvpMealChoice
 
   @Column({ type: 'uuid' })

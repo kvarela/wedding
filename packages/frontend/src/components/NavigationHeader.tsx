@@ -1,5 +1,4 @@
 import { Box, Container, HStack, Link, VStack } from '@chakra-ui/react'
-import { useState } from 'react'
 
 import Monogram from '@/components/Monogram'
 import { weddingColors } from '@/theme/colors'
@@ -23,11 +22,15 @@ const scrollToSection = (targetId: string) => {
   document.getElementById(targetId)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-const NavigationHeader = () => {
-  const [menuOpen, setMenuOpen] = useState(false)
+interface NavigationHeaderProps {
+  menuOpen: boolean
+  onOpenMenu: () => void
+  onCloseMenu: () => void
+}
 
+const NavigationHeader = ({ menuOpen, onOpenMenu, onCloseMenu }: NavigationHeaderProps) => {
   const handleMenuLinkClick = (targetId: string) => {
-    setMenuOpen(false)
+    onCloseMenu()
     scrollToSection(targetId)
   }
 
@@ -48,7 +51,7 @@ const NavigationHeader = () => {
           <HStack height="100%" justify="space-between" gap={6}>
             <Box
               as="button"
-              onClick={() => setMenuOpen(true)}
+              onClick={onOpenMenu}
               aria-label="Open menu"
               display="inline-flex"
               alignItems="center"
@@ -83,7 +86,7 @@ const NavigationHeader = () => {
             position="absolute"
             top={6}
             left={6}
-            onClick={() => setMenuOpen(false)}
+            onClick={onCloseMenu}
             aria-label="Close menu"
             color={weddingColors.menuText}
             fontSize="2xl"

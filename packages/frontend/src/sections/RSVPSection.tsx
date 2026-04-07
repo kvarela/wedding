@@ -23,6 +23,14 @@ const MAX_GUESTS_PARTY = 4
 const TOAST_DURATION_MS = 10_000
 const INPUT_PADDING_LEFT = 2
 
+const RSVP_MEAL_OPTIONS = ['Filet Mignon', 'Grilled Seabass'] as const satisfies readonly RsvpMealChoice[]
+
+const DEFAULT_MEAL_CHOICE: RsvpMealChoice = 'Filet Mignon'
+
+function normalizeMealChoice(raw: string): RsvpMealChoice {
+  return (RSVP_MEAL_OPTIONS as readonly string[]).includes(raw) ? (raw as RsvpMealChoice) : DEFAULT_MEAL_CHOICE
+}
+
 interface RsvpFormData {
   email: string
   phone: string
@@ -41,7 +49,7 @@ const RSVPSection = () => {
     address: '',
     message: '',
     attending: true,
-    mealChoices: ['Fish'],
+    mealChoices: [DEFAULT_MEAL_CHOICE],
   })
   const [storedRsvp, setStoredRsvp] = useState<RsvpResponse | null>(null)
   const [editing, setEditing] = useState(false)
@@ -66,8 +74,10 @@ const RSVPSection = () => {
     const names = rsvp.guestNames?.length ? rsvp.guestNames : rsvp.guests?.map((g) => g.name) ?? ['']
     setGuestNames(names.length ? names : [''])
     const choices =
-      rsvp.guests?.map((g) => g.mealChoice) ??
-      (rsvp.guestNames?.length ? rsvp.guestNames.map(() => 'Fish' as RsvpMealChoice) : ['Fish'])
+      rsvp.guests?.map((g) => normalizeMealChoice(g.mealChoice)) ??
+      (rsvp.guestNames?.length
+        ? rsvp.guestNames.map(() => DEFAULT_MEAL_CHOICE)
+        : [DEFAULT_MEAL_CHOICE])
     setFormData({
       email: rsvp.email,
       phone: rsvp.phone ?? '',
@@ -96,7 +106,7 @@ const RSVPSection = () => {
       if (n > choices.length) {
         return {
           ...prev,
-          mealChoices: [...choices, ...Array(n - choices.length).fill('Fish')] as RsvpMealChoice[],
+          mealChoices: [...choices, ...Array(n - choices.length).fill(DEFAULT_MEAL_CHOICE)],
         }
       }
       return { ...prev, mealChoices: choices.slice(0, n) }
@@ -131,7 +141,7 @@ const RSVPSection = () => {
     }
     const mealChoices = formData.mealChoices.slice(0, numGuests)
     while (mealChoices.length < numGuests) {
-      mealChoices.push('Fish')
+      mealChoices.push(DEFAULT_MEAL_CHOICE)
     }
     const payload = {
       name: names[0],
@@ -235,7 +245,9 @@ const RSVPSection = () => {
             Meal Choices
           </Text>
           <Text color="gray.100">
-            {(rsvp.guests ?? rsvp.guestNames?.map((name) => ({ name, mealChoice: 'Fish' })) ?? [])
+            {(rsvp.guests ??
+              rsvp.guestNames?.map((name) => ({ name, mealChoice: DEFAULT_MEAL_CHOICE })) ??
+              [])
               .map((g) => `${g.name}: ${g.mealChoice}`)
               .join(', ')}
           </Text>
@@ -378,7 +390,7 @@ const RSVPSection = () => {
                           </Field.Label>
                           <NativeSelect.Root size="lg">
                             <NativeSelect.Field
-                              value={formData.mealChoices[index] ?? 'Fish'}
+                              value={formData.mealChoices[index] ?? DEFAULT_MEAL_CHOICE}
                               onChange={(e) =>
                                 setMealChoice(index, e.target.value as RsvpMealChoice)
                               }
@@ -391,9 +403,15 @@ const RSVPSection = () => {
                                 shadow: 'sm',
                               }}
                             >
-                              <option value="Fish" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Fish</option>
-                              <option value="Chicken" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Chicken</option>
-                              <option value="Steak" style={{ backgroundColor: '#1F1F1F', color: '#fff' }}>Steak</option>
+                              {RSVP_MEAL_OPTIONS.map((option) => (
+                                <option
+                                  key={option}
+                                  value={option}
+                                  style={{ backgroundColor: '#1F1F1F', color: '#fff' }}
+                                >
+                                  {option}
+                                </option>
+                              ))}
                             </NativeSelect.Field>
                             <NativeSelect.Indicator />
                           </NativeSelect.Root>

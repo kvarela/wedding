@@ -1,5 +1,4 @@
 export enum RsvpMealChoice {
-  STEAK = 'Steak',
-  CHICKEN = 'Chicken',
-  FISH = 'Fish',
+  FILET_MIGNON = 'Filet Mignon',
+  GRILLED_SEABASS = 'Grilled Seabass',
 }

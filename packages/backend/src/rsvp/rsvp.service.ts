@@ -47,7 +47,7 @@ export class RsvpService {
     const guests = trimmedNames.map((name, i) =>
       this.guestRepo.create({
         name,
-        mealChoice: updateRsvpDto.mealChoices[i] ?? RsvpMealChoice.FISH,
+        mealChoice: updateRsvpDto.mealChoices[i] ?? RsvpMealChoice.FILET_MIGNON,
         partyId: party.id,
       }),
     )
@@ -98,7 +98,7 @@ export class RsvpService {
     const guests = trimmedNames.map((name, i) =>
       this.guestRepo.create({
         name,
-        mealChoice: createRsvpDto.mealChoices[i] ?? RsvpMealChoice.FISH,
+        mealChoice: createRsvpDto.mealChoices[i] ?? RsvpMealChoice.FILET_MIGNON,
         partyId: savedParty.id,
       }),
     )
