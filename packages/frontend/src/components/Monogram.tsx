@@ -8,7 +8,7 @@ interface MonogramProps extends Omit<BoxProps, 'as' | 'src'> {
   glow?: boolean
 }
 
-const Monogram = ({ alt = 'FK monogram', glow = true, ...props }: MonogramProps) => {
+const Monogram = ({ alt = 'KF monogram', glow = true, ...props }: MonogramProps) => {
   return (
     <Image
       src={monogramUrl}
