@@ -12,9 +12,9 @@ interface TimelineItem {
 const TIMELINE: TimelineItem[] = [
   {
     year: 'February, 2020',
-    title: 'First Tequila Shot',
+    title: 'First Encounter',
     description:
-      'The spark started Lanea in Santa Monica at Superbowl party. We shared shots of Nosotros Tequila and wondered if it would be crazy for us to date',
+      'It all started at a Lanea Superbowl party in Santa Monica, where we shared political views, tequila shots, and a spark that lingered a bit longer than expected',
   },
   {
     year: 'July, 2020',
