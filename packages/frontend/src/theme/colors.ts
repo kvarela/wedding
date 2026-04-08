@@ -1,4 +1,5 @@
 export const weddingColors = {
+  logoHighlightGold: '#987146',
   primaryGold: '#B8964A',
   champagneGold: '#E8D3A2',
   darkAntiqueGold: '#7A612E',

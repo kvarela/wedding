@@ -103,10 +103,11 @@ const HeroSection = () => {
               _hover={{
                 bg: weddingColors.champagneGold,
                 color: weddingColors.charcoal,
-                boxShadow: '0 4px 24px rgba(184,150,74,0.5)',
+                boxShadow: '0 4px 24px rgba(184,150,74,0.55)',
                 fontWeight: '600',
               }}
               _active={{
+                bg: weddingColors.champagneGold,
                 fontWeight: '600',
               }}
             >

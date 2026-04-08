@@ -32,7 +32,7 @@ const SectionDivider = ({ py = { base: 10, md: 14 }, onLogoClick }: SectionDivid
             outline="none"
             _hover={{ bg: 'transparent' }}
             _active={{ bg: 'transparent' }}
-            _focusVisible={{ boxShadow: '0 0 0 3px rgba(232,211,162,0.35)' }}
+            _focusVisible={{ boxShadow: '0 0 0 3px rgba(184,150,74,0.35)' }}
           >
             {monogram}
           </Button>
