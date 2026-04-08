@@ -14,7 +14,7 @@ const TIMELINE: TimelineItem[] = [
     year: 'February, 2020',
     title: 'First Encounter',
     description:
-      'It all started at a Lanea Superbowl party in Santa Monica, where we shared political views, tequila shots, and a spark that lingered a bit longer than expected',
+      'It all started at the Lanea Superbowl Party in Santa Monica, where we shared political views, tequila shots, and a spark that lingered longer than expected',
   },
   {
     year: 'July, 2020',
