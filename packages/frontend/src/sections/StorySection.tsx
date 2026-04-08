@@ -20,23 +20,24 @@ const TIMELINE: TimelineItem[] = [
     year: 'July, 2020',
     title: 'First Date',
     description:
-      "There were no restaurants open, so Karim invited Felicia over for a salmon dinner with unicorns and etched a spot in Felicia's heart",
+      'At the start of lockdown, Karim invited Felicia over for dinner — and imaginitively turned unicorns and rainbows into a very convincing first date',
   },
   {
     year: 'April, 2022',
-    title: 'Moving In',
-    description: 'We decided to make a home together in Venice.',
+    title: 'First Big Step',
+    description: 'We decided to make a home together in Venice — and never looked back',
   },
   {
     year: 'March, 2023',
-    title: 'Luna Bean',
-    description: 'And then a miracle happened and Luna came to be.',
+    title: 'Enter Luna Bean',
+    description:
+      "And then the greatest chapter of our love story began — our miracle baby Luna was born — the best thing we've ever done",
   },
   {
     year: 'April, 2025',
     title: 'The Proposal',
     description:
-      "During a sunset cruise to the arches of Cabo San Lucas, Karim got down on one knee. Felicia said yes, and we knew this magical place would be where we'd start our forever.",
+      "At sunset beneath the arches in Cabo, Karim got down on one knee. Felicia said yes — and we knew we'd found the place where our forever would begin",
   },
 ]
 
