@@ -21,7 +21,7 @@ const DressCodeSection = () => {
             as="p"
             fontFamily="'Cormorant Garamond', serif"
             fontWeight="400"
-            color={weddingColors.primaryGold}
+            color="white"
             textAlign="center"
             fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
           >
