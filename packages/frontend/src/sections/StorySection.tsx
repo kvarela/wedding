@@ -11,30 +11,30 @@ interface TimelineItem {
 
 const TIMELINE: TimelineItem[] = [
   {
-    year: 'February, 2020',
+    year: 'February 2020',
     title: 'First Encounter',
     description:
       'It all started at the Lanea Superbowl Party in Santa Monica, where we shared political views, tequila shots, and a spark that lingered longer than expected',
   },
   {
-    year: 'July, 2020',
+    year: 'July 2020',
     title: 'First Date',
     description:
       'At the start of lockdown, Karim invited Felicia over for dinner — and imaginitively turned unicorns and rainbows into a very convincing first overture',
   },
   {
-    year: 'April, 2022',
+    year: 'April 2022',
     title: 'First Big Step',
     description: 'We decided to make a home together in Venice — and never looked back',
   },
   {
-    year: 'March, 2023',
+    year: 'March 2023',
     title: 'Enter Luna Bean',
     description:
       "Then the greatest chapter of our love story began — baby Luna was born — the best thing we've ever done",
   },
   {
-    year: 'April, 2025',
+    year: 'April 2025',
     title: 'The Proposal',
     description:
       "At sunset beneath the arches in Cabo, Karim got down on one knee. Felicia said yes — and we knew we'd found the place where our forever would begin",

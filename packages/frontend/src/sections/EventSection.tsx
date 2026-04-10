@@ -218,7 +218,7 @@ const EventSection = () => {
 
           <VStack gap={12} width="100%" align="stretch">
             <VStack gap={6} width="100%" align="stretch">
-              <Heading
+              <Text
                 as="h2"
                 fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
@@ -227,7 +227,7 @@ const EventSection = () => {
                 fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
                 Thursday, November 5th
-              </Heading>
+              </Text>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov5.map((event, index) => (
                   <EventCard
@@ -240,7 +240,7 @@ const EventSection = () => {
             </VStack>
 
             <VStack gap={6} width="100%" align="stretch">
-              <Heading
+              <Text
                 as="h2"
                 fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
@@ -249,7 +249,7 @@ const EventSection = () => {
                 fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
                 Friday, November 6th
-              </Heading>
+              </Text>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov6.map((event, index) => (
                   <EventCard key={index} event={event} />
@@ -258,7 +258,7 @@ const EventSection = () => {
             </VStack>
 
             <VStack gap={6} width="100%" align="stretch">
-              <Heading
+              <Text
                 as="h2"
                 fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
@@ -267,7 +267,7 @@ const EventSection = () => {
                 fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
                 Saturday, November 7th
-              </Heading>
+              </Text>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov7.map((event, index) => (
                   <EventCard key={index} event={event} />
