@@ -27,7 +27,7 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     icon: '🚗',
     title: 'Transportation',
     description:
-      'Complimentary shuttle service will be provided from the airport to the hotel for our guests. Details will be shared closer to the date.',
+      'Shuttle service will be provided from the airport to the hotel for our guests. Details will be shared closer to the date.',
   },
   {
     icon: '🌴',
