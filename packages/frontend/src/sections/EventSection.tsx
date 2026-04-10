@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Box, Container, Heading, Link, Text, VStack, Card, Dialog } from '@chakra-ui/react'
 
+import viceroyResortMapUrl from '@/assets/viceroy-resort-map.png'
 import { weddingColors } from '@/theme/colors'
 
 interface Event {
@@ -54,6 +55,7 @@ const events: Event[] = [
     title: 'Ceremony',
     description: 'We exchange our vows overlooking the beautiful Pacific Ocean.',
     location: 'Family Pool @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
     date: 'nov7',
   },
   {
@@ -62,6 +64,7 @@ const events: Event[] = [
     description:
       "Celebrate with signature cocktails, cigars, and hors d'oeuvres while the DJ warms up.",
     location: 'Cielomar Rooftop @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
     date: 'nov7',
   },
   {
@@ -70,6 +73,7 @@ const events: Event[] = [
     description:
       'Celebrate with us with dinner, dancing, and memorable toasts. If you want to make a speech, this is your chance!',
     location: 'Cielomar Rooftop @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
     date: 'nov7',
   },
   {
@@ -77,6 +81,7 @@ const events: Event[] = [
     title: 'After Party',
     description: 'Continue the celebration, if you dare.',
     location: 'Awacate Bar @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
     date: 'nov7',
   },
 ]
