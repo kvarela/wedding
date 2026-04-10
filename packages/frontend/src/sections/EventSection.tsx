@@ -120,11 +120,11 @@ const EventCard = ({
         >
           {event.time}
         </Text>
-        <VStack gap={2} align="start" flex={1}>
+        <VStack gap={1} align="start" flex={1}>
           <Heading fontSize="xl" fontWeight="500" color="white">
             {event.title}
           </Heading>
-          <Text fontSize="sm" color="gray.200" lineHeight="tall">
+          <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
             {event.description}
           </Text>
         </VStack>
@@ -291,7 +291,7 @@ const EventSection = () => {
                 <Dialog.CloseTrigger />
               </Dialog.Header>
               <Dialog.Body>
-                <Text color="gray.200" lineHeight="tall">
+                <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
                   {event.modalContent}
                 </Text>
               </Dialog.Body>

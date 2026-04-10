@@ -18,7 +18,8 @@ const DressCodeSection = () => {
           </Heading>
           <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
           <Text
-            fontSize={{ base: 'xs', md: 'sm' }}
+            fontSize={{ base: '0.975rem', md: '1.1375rem' }}
+            lineHeight={1.4}
             color="gray.200"
             maxW="xl"
             marginInline="auto"

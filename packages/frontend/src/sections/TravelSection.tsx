@@ -59,7 +59,12 @@ const TravelSection = () => {
               Travel & Stay
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
+            <Text
+              fontSize={{ base: '1.3rem', md: '1.4625rem' }}
+              lineHeight={1.4}
+              color="gray.200"
+              maxW="2xl"
+            >
               Everything you need to know for your trip to San Jose Del Cabo
             </Text>
           </VStack>
@@ -80,14 +85,14 @@ const TravelSection = () => {
                   borderColor: weddingColors.primaryGold,
                 }}
               >
-                <VStack gap={4} align="start">
+                <VStack gap={3} align="start">
                   <Text fontSize="4xl">{detail.icon}</Text>
 
                   <Heading fontSize="xl" fontWeight="500" color={weddingColors.primaryGold}>
                     {detail.title}
                   </Heading>
 
-                  <Text fontSize="sm" color="gray.200" lineHeight="tall">
+                  <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
                     {detail.description}
                   </Text>
 

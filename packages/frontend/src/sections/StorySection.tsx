@@ -20,7 +20,7 @@ const TIMELINE: TimelineItem[] = [
     year: 'July, 2020',
     title: 'First Date',
     description:
-      'At the start of lockdown, Karim invited Felicia over for dinner — and imaginitively turned unicorns and rainbows into a very convincing first date',
+      'At the start of lockdown, Karim invited Felicia over for dinner — and imaginitively turned unicorns and rainbows into a very convincing first overture',
   },
   {
     year: 'April, 2022',
@@ -31,7 +31,7 @@ const TIMELINE: TimelineItem[] = [
     year: 'March, 2023',
     title: 'Enter Luna Bean',
     description:
-      "And then the greatest chapter of our love story began — our miracle baby Luna was born — the best thing we've ever done",
+      "Then the greatest chapter of our love story began — baby Luna was born — the best thing we've ever done",
   },
   {
     year: 'April, 2025',
@@ -73,7 +73,12 @@ const StorySection = () => {
               Our Story
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
-            <Text fontSize={{ base: 'md', md: 'lg' }} color="gray.200" maxW="2xl">
+            <Text
+              fontSize={{ base: '1.3rem', md: '1.4625rem' }}
+              lineHeight={1.4}
+              color="gray.200"
+              maxW="2xl"
+            >
               Every love story is special, but ours is our favorite
             </Text>
           </VStack>
@@ -112,7 +117,7 @@ const StorySection = () => {
                 >
                   <VStack
                     flex={1}
-                    gap={3}
+                    gap={2}
                     textAlign={{ base: 'center', md: index % 2 === 0 ? 'right' : 'left' }}
                   >
                     <Text
@@ -126,7 +131,11 @@ const StorySection = () => {
                     <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color="white">
                       {item.title}
                     </Heading>
-                    <Text fontSize={{ base: 'sm', md: 'md' }} color="gray.200" lineHeight="tall">
+                    <Text
+                      fontSize={{ base: '1.3125rem', md: '1.5rem' }}
+                      lineHeight={1.4}
+                      color="gray.200"
+                    >
                       {item.description}
                     </Text>
                   </VStack>
