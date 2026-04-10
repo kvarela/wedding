@@ -6,7 +6,11 @@ import { CreateRsvpDto } from './create-rsvp.dto'
 import { Guest } from './guest.entity'
 import { Party } from './party.entity'
 import { RsvpAttendance } from './rsvp-attendance.enum'
-import { RsvpMealChoice } from './rsvp-meal-choice.enum'
+import {
+  DEFAULT_RSVP_MEAL_CHOICE,
+  RSVP_MEAL_CHOICE_VALUES,
+  type RsvpMealChoice,
+} from './rsvp-meal-choice'
 import { RsvpResponse } from './rsvp-response.interface'
 import { RsvpStatsResponse } from './rsvp-stats-response.interface'
 
@@ -36,7 +40,11 @@ export class RsvpService {
 
     party.name = `Party of ${trimmedNames[0]}`
     party.email = updateRsvpDto.email.trim()
-    party.phone = updateRsvpDto.phone?.trim() || null
+    const phoneTrimmed = (updateRsvpDto.phone ?? '').trim()
+    if (!phoneTrimmed) {
+      throw new BadRequestException('Phone is required')
+    }
+    party.phone = phoneTrimmed
     party.address = updateRsvpDto.address?.trim()
     party.message = updateRsvpDto.message
     party.attendance = updateRsvpDto.attendance
@@ -47,7 +55,7 @@ export class RsvpService {
     const guests = trimmedNames.map((name, i) =>
       this.guestRepo.create({
         name,
-        mealChoice: updateRsvpDto.mealChoices[i] ?? RsvpMealChoice.FILET_MIGNON,
+        mealChoice: updateRsvpDto.mealChoices[i] ?? DEFAULT_RSVP_MEAL_CHOICE,
         partyId: party.id,
       }),
     )
@@ -68,7 +76,11 @@ export class RsvpService {
     this.validateMealChoices(createRsvpDto.mealChoices, trimmedNames.length)
 
     const email = createRsvpDto.email.trim()
-    const phone = createRsvpDto.phone?.trim() || null
+    const phoneTrimmed = (createRsvpDto.phone ?? '').trim()
+    if (!phoneTrimmed) {
+      throw new BadRequestException('Phone is required')
+    }
+    const phone = phoneTrimmed
     const partyName = `Party of ${trimmedNames[0]}`
 
     const qb = this.partyRepo
@@ -98,7 +110,7 @@ export class RsvpService {
     const guests = trimmedNames.map((name, i) =>
       this.guestRepo.create({
         name,
-        mealChoice: createRsvpDto.mealChoices[i] ?? RsvpMealChoice.FILET_MIGNON,
+        mealChoice: createRsvpDto.mealChoices[i] ?? DEFAULT_RSVP_MEAL_CHOICE,
         partyId: savedParty.id,
       }),
     )
@@ -151,6 +163,13 @@ export class RsvpService {
     }
   }
 
+  private normalizeMealChoiceForResponse(stored: string): RsvpMealChoice {
+    if ((RSVP_MEAL_CHOICE_VALUES as readonly string[]).includes(stored)) {
+      return stored as RsvpMealChoice
+    }
+    return DEFAULT_RSVP_MEAL_CHOICE
+  }
+
   private toRsvpResponse(party: Party): RsvpResponse {
     return {
       id: party.id,
@@ -161,7 +180,7 @@ export class RsvpService {
       guests: (party.guests ?? []).map((g) => ({
         id: g.id,
         name: g.name,
-        mealChoice: g.mealChoice,
+        mealChoice: this.normalizeMealChoiceForResponse(String(g.mealChoice)),
         partyId: g.partyId,
       })),
       address: party.address,
@@ -172,17 +191,16 @@ export class RsvpService {
   }
 
   private validateMealChoices(mealChoices: RsvpMealChoice[], expectedCount: number): void {
-    const validChoices = Object.values(RsvpMealChoice)
+    const allowed = RSVP_MEAL_CHOICE_VALUES as readonly string[]
+    const allowedLabel = allowed.join(', ')
     if (mealChoices.length !== expectedCount) {
       throw new BadRequestException(
         `Meal choices (${mealChoices.length}) must match guest count (${expectedCount})`,
       )
     }
     for (const choice of mealChoices) {
-      if (!validChoices.includes(choice)) {
-        throw new BadRequestException(
-          `Meal choice must be one of: ${validChoices.join(', ')}`,
-        )
+      if (!allowed.includes(choice)) {
+        throw new BadRequestException(`Meal choice must be one of: ${allowedLabel}`)
       }
     }
   }

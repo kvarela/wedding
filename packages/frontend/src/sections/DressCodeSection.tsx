@@ -1,6 +1,6 @@
 import { Box, Container, Heading, Image, Text, VStack } from '@chakra-ui/react'
 
-import havanaNightsReception from '@/assets/havana-nights-reception.png'
+import dressCodeReception from '@/assets/dress-code-reception.png'
 import { weddingColors } from '@/theme/colors'
 
 const DressCodeSection = () => {
@@ -30,15 +30,20 @@ const DressCodeSection = () => {
           <Box
             width="100%"
             mt={8}
-            height={{ base: '40vh', md: '55vh' }}
+            mx="auto"
+            maxW={{ base: '100%', md: 'min(100%, 32rem)' }}
+            h={{ base: 'min(52vh, 36rem)', md: 'min(68vh, 40rem)' }}
             overflow="hidden"
           >
             <Image
-              src={havanaNightsReception}
-              alt="Havana Nights reception with candlelit tables and golden ambiance"
+              src={dressCodeReception}
+              alt="Sunset beach reception with candlelit tables, string lights, and live music"
               width="100%"
               height="100%"
               objectFit="cover"
+              objectPosition="center 35%"
+              loading="lazy"
+              decoding="async"
             />
           </Box>
         </VStack>

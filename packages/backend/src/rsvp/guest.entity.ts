@@ -7,7 +7,7 @@ import {
 } from 'typeorm'
 
 import { Party } from './party.entity'
-import { RsvpMealChoice } from './rsvp-meal-choice.enum'
+import { DEFAULT_RSVP_MEAL_CHOICE, RSVP_MEAL_CHOICE_VALUES, type RsvpMealChoice } from './rsvp-meal-choice'
 
 @Entity('guest')
 export class Guest {
@@ -17,7 +17,11 @@ export class Guest {
   @Column({ type: 'varchar', length: 255 })
   name: string
 
-  @Column({ type: 'enum', enum: RsvpMealChoice, default: RsvpMealChoice.FILET_MIGNON })
+  @Column({
+    type: 'enum',
+    enum: [...RSVP_MEAL_CHOICE_VALUES],
+    default: DEFAULT_RSVP_MEAL_CHOICE,
+  })
   mealChoice: RsvpMealChoice
 
   @Column({ type: 'uuid' })

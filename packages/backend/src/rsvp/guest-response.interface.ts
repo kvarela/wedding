@@ -1,4 +1,4 @@
-import { RsvpMealChoice } from './rsvp-meal-choice.enum'
+import type { RsvpMealChoice } from './rsvp-meal-choice'
 
 export interface GuestResponse {
   id: string

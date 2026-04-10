@@ -3,6 +3,16 @@ import { apiUrl } from './client'
 export type RsvpAttendance = 'YES' | 'NO' | 'MAYBE'
 export type RsvpMealChoice = 'Filet Mignon' | 'Grilled Seabass'
 
+export const RSVP_MEAL_OPTIONS = ['Filet Mignon', 'Grilled Seabass'] as const satisfies readonly RsvpMealChoice[]
+
+export const DEFAULT_MEAL_CHOICE: RsvpMealChoice = 'Filet Mignon'
+
+export function normalizeRsvpMealChoice(raw: string): RsvpMealChoice {
+  return (RSVP_MEAL_OPTIONS as readonly string[]).includes(raw)
+    ? (raw as RsvpMealChoice)
+    : DEFAULT_MEAL_CHOICE
+}
+
 export interface GuestResponse {
   id: string
   name: string
@@ -36,11 +46,23 @@ export interface RsvpResponse {
 
 const RSVP_STORAGE_KEY = 'wedding-rsvp'
 
+function normalizeRsvpResponse(data: RsvpResponse): RsvpResponse {
+  const guestsRaw = data.guests ?? []
+  const guests = guestsRaw.map((g) => ({
+    ...g,
+    mealChoice: normalizeRsvpMealChoice(String(g.mealChoice)),
+  }))
+  const guestNames =
+    data.guestNames?.length ? data.guestNames : guests.map((g) => g.name)
+  return { ...data, guests, guestNames }
+}
+
 export function getStoredRsvp(): RsvpResponse | null {
   try {
     const raw = localStorage.getItem(RSVP_STORAGE_KEY)
     if (!raw) return null
-    return JSON.parse(raw) as RsvpResponse
+    const parsed = JSON.parse(raw) as RsvpResponse
+    return normalizeRsvpResponse(parsed)
   } catch {
     return null
   }
@@ -60,11 +82,21 @@ async function rsvpFetch(
   })
 }
 
+function formatRsvpApiMessage(parsed: unknown, fallback: string): string {
+  if (typeof parsed !== 'object' || parsed === null || !('message' in parsed)) {
+    return fallback
+  }
+  const raw = (parsed as { message?: unknown }).message
+  if (typeof raw === 'string') return raw
+  if (Array.isArray(raw)) return raw.map(String).filter(Boolean).join('. ')
+  return fallback
+}
+
 function handleRsvpError(res: Response, body: string): never {
   let message = body
   try {
-    const parsed = JSON.parse(body) as { message?: string }
-    message = parsed.message ?? body
+    const parsed: unknown = JSON.parse(body)
+    message = formatRsvpApiMessage(parsed, body)
   } catch {
     // body is not JSON, use as-is
   }
@@ -84,7 +116,7 @@ function toRsvpResponse(party: {
   guests?: { id: string; name: string; mealChoice: string }[]
 }): RsvpResponse {
   const guests = party.guests ?? []
-  return {
+  return normalizeRsvpResponse({
     id: party.id,
     name: party.name,
     email: party.email,
@@ -94,13 +126,13 @@ function toRsvpResponse(party: {
     guests: guests.map((g) => ({
       id: g.id,
       name: g.name,
-      mealChoice: g.mealChoice as RsvpMealChoice,
+      mealChoice: normalizeRsvpMealChoice(String(g.mealChoice)),
     })),
     address: party.address,
     message: party.message,
     attendance: party.attendance as RsvpAttendance,
     createdAt: party.createdAt,
-  }
+  })
 }
 
 export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpResponse> {

@@ -4,13 +4,14 @@ import {
   IsArray,
   IsEmail,
   IsEnum,
+  IsIn,
   IsOptional,
   IsString,
   MaxLength,
   MinLength,
 } from 'class-validator'
 import { RsvpAttendance } from './rsvp-attendance.enum'
-import { RsvpMealChoice } from './rsvp-meal-choice.enum'
+import { RSVP_MEAL_CHOICE_VALUES, type RsvpMealChoice } from './rsvp-meal-choice'
 
 export class CreateRsvpDto {
   @IsString()
@@ -31,7 +32,7 @@ export class CreateRsvpDto {
   guestNames: string[]
 
   @IsArray()
-  @IsEnum(RsvpMealChoice, { each: true })
+  @IsIn([...RSVP_MEAL_CHOICE_VALUES], { each: true })
   @ArrayMinSize(1, { message: 'At least one meal choice is required' })
   @ArrayMaxSize(4, { message: 'At most 4 guests per party' })
   mealChoices: RsvpMealChoice[]

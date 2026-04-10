@@ -23,8 +23,8 @@ export class Party {
   @Column({ type: 'varchar', length: 255, unique: true })
   email: string
 
-  @Column({ type: 'varchar', length: 50, unique: true })
-  phone: string
+  @Column({ type: 'varchar', length: 50, unique: true, nullable: true })
+  phone: string | null
 
   @Column({ type: 'text' })
   address: string

@@ -13,23 +13,24 @@ import {
 } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
-import { createRsvp, getStoredRsvp, storeRsvp, updateRsvp } from '@/api/rsvp'
+import {
+  createRsvp,
+  DEFAULT_MEAL_CHOICE,
+  getStoredRsvp,
+  normalizeRsvpMealChoice,
+  RSVP_MEAL_OPTIONS,
+  storeRsvp,
+  updateRsvp,
+  type RsvpMealChoice,
+  type RsvpResponse,
+} from '@/api/rsvp'
 import { toaster } from '@/components/ui/toaster'
 import { weddingColors } from '@/theme/colors'
-import type { RsvpMealChoice, RsvpResponse } from '@/api/rsvp'
 
 const MIN_GUESTS = 1
 const MAX_GUESTS_PARTY = 4
 const TOAST_DURATION_MS = 10_000
 const INPUT_PADDING_LEFT = 2
-
-const RSVP_MEAL_OPTIONS = ['Filet Mignon', 'Grilled Seabass'] as const satisfies readonly RsvpMealChoice[]
-
-const DEFAULT_MEAL_CHOICE: RsvpMealChoice = 'Filet Mignon'
-
-function normalizeMealChoice(raw: string): RsvpMealChoice {
-  return (RSVP_MEAL_OPTIONS as readonly string[]).includes(raw) ? (raw as RsvpMealChoice) : DEFAULT_MEAL_CHOICE
-}
 
 interface RsvpFormData {
   email: string
@@ -74,7 +75,7 @@ const RSVPSection = () => {
     const names = rsvp.guestNames?.length ? rsvp.guestNames : rsvp.guests?.map((g) => g.name) ?? ['']
     setGuestNames(names.length ? names : [''])
     const choices =
-      rsvp.guests?.map((g) => normalizeMealChoice(g.mealChoice)) ??
+      rsvp.guests?.map((g) => normalizeRsvpMealChoice(g.mealChoice)) ??
       (rsvp.guestNames?.length
         ? rsvp.guestNames.map(() => DEFAULT_MEAL_CHOICE)
         : [DEFAULT_MEAL_CHOICE])
@@ -248,7 +249,7 @@ const RSVPSection = () => {
             {(rsvp.guests ??
               rsvp.guestNames?.map((name) => ({ name, mealChoice: DEFAULT_MEAL_CHOICE })) ??
               [])
-              .map((g) => `${g.name}: ${g.mealChoice}`)
+              .map((g) => `${g.name}: ${normalizeRsvpMealChoice(String(g.mealChoice))}`)
               .join(', ')}
           </Text>
 

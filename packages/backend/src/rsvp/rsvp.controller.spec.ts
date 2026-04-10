@@ -6,9 +6,9 @@ import { CreateRsvpDto } from './create-rsvp.dto'
 import { Guest } from './guest.entity'
 import { Party } from './party.entity'
 import { RsvpAttendance } from './rsvp-attendance.enum'
-import { RsvpMealChoice } from './rsvp-meal-choice.enum'
 import { RsvpResponse } from './rsvp-response.interface'
 import { RsvpStatsResponse } from './rsvp-stats-response.interface'
+import type { RsvpMealChoice } from './rsvp-meal-choice'
 import { clearRsvpTable, createTestApp } from '../test/test-utils'
 
 function buildPayload(overrides: Partial<CreateRsvpDto> = {}): CreateRsvpDto {
@@ -17,15 +17,15 @@ function buildPayload(overrides: Partial<CreateRsvpDto> = {}): CreateRsvpDto {
     email: 'karim@example.com',
     phone: '+15550000001',
     guestNames: ['Karim'],
-    mealChoices: [RsvpMealChoice.FILET_MIGNON],
+    mealChoices: ['Filet Mignon'] as RsvpMealChoice[],
     address: '123 Wedding Ave',
     message: 'Happy to celebrate',
     attendance: RsvpAttendance.YES,
     ...overrides,
-  }
+  } as CreateRsvpDto
   if (!('mealChoices' in overrides) && 'guestNames' in overrides) {
     const trimmedCount = base.guestNames.map((n) => n.trim()).filter(Boolean).length
-    base.mealChoices = Array(trimmedCount).fill(RsvpMealChoice.FILET_MIGNON)
+    base.mealChoices = Array.from({ length: trimmedCount }, (): RsvpMealChoice => 'Filet Mignon')
   }
   return base
 }
@@ -96,7 +96,7 @@ describe('RsvpController (e2e)', () => {
           email: 'dbcheck@example.com',
           phone: '+15550000010',
           guestNames: ['Alice', 'Bob'],
-          mealChoices: [RsvpMealChoice.FILET_MIGNON, RsvpMealChoice.GRILLED_SEABASS],
+          mealChoices: ['Filet Mignon', 'Grilled Seabass'],
           address: '456 Test St',
           attendance: RsvpAttendance.YES,
         }),
@@ -116,10 +116,7 @@ describe('RsvpController (e2e)', () => {
     const guestsInDb = await guestRepo.find({ where: { partyId: created.id } })
     expect(guestsInDb).toHaveLength(2)
     expect(guestsInDb.map((g) => g.name)).toEqual(['Alice', 'Bob'])
-    expect(guestsInDb.map((g) => g.mealChoice)).toEqual([
-      RsvpMealChoice.FILET_MIGNON,
-      RsvpMealChoice.GRILLED_SEABASS,
-    ])
+    expect(guestsInDb.map((g) => g.mealChoice)).toEqual(['Filet Mignon', 'Grilled Seabass'])
   })
 
   it('returns all RSVPs with GET /rsvp in descending createdAt order', async () => {
@@ -227,11 +224,26 @@ describe('RsvpController (e2e)', () => {
           email: 'invalid@example.com',
           phone: '+15550000007',
           guestNames: [' ', ''],
-          mealChoices: [RsvpMealChoice.FILET_MIGNON],
+          mealChoices: ['Filet Mignon'],
         }),
       )
       .expect(400)
 
     expect(response.body.message).toBe('At least one guest name is required')
+  })
+
+  it('rejects RSVP creation when phone is only whitespace', async () => {
+    const response = await request(app.getHttpServer())
+      .post('/rsvp')
+      .send(
+        buildPayload({
+          name: 'No Phone',
+          email: 'nophone@example.com',
+          phone: '   ',
+        }),
+      )
+      .expect(400)
+
+    expect(response.body.message).toBe('Phone is required')
   })
 })

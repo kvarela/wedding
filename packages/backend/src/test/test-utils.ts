@@ -1,6 +1,6 @@
 import 'reflect-metadata'
 
-import { INestApplication } from '@nestjs/common'
+import { INestApplication, ValidationPipe } from '@nestjs/common'
 import { Test, TestingModule } from '@nestjs/testing'
 import { getDataSourceToken, TypeOrmModule } from '@nestjs/typeorm'
 import { randomUUID } from 'crypto'
@@ -92,6 +92,13 @@ export async function createTestApp(): Promise<TestApp> {
   }).compile()
 
   const app = moduleFixture.createNestApplication()
+  app.useGlobalPipes(
+    new ValidationPipe({
+      whitelist: true,
+      forbidNonWhitelisted: true,
+      transform: true,
+    }),
+  )
   await app.init()
 
   return {
