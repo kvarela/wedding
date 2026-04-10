@@ -220,12 +220,13 @@ const EventSection = () => {
             <VStack gap={6} width="100%" align="stretch">
               <Heading
                 as="h2"
-                size="lg"
+                fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
+                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
-                Thursday, November 5th, 2026
+                Thursday, November 5th
               </Heading>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov5.map((event, index) => (
@@ -241,12 +242,13 @@ const EventSection = () => {
             <VStack gap={6} width="100%" align="stretch">
               <Heading
                 as="h2"
-                size="lg"
+                fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
+                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
-                Friday, November 6th, 2026
+                Friday, November 6th
               </Heading>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov6.map((event, index) => (
@@ -258,12 +260,13 @@ const EventSection = () => {
             <VStack gap={6} width="100%" align="stretch">
               <Heading
                 as="h2"
-                size="lg"
+                fontFamily="'Cormorant Garamond', serif"
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
+                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
               >
-                Saturday, November 7th, 2026
+                Saturday, November 7th
               </Heading>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov7.map((event, index) => (
