@@ -50,14 +50,14 @@ const events: Event[] = [
     date: 'nov6',
   },
   {
-    time: '5:30 PM',
+    time: '6:00 PM',
     title: 'Ceremony',
     description: 'We exchange our vows overlooking the beautiful Pacific Ocean.',
     location: 'Family Pool @ Viceroy Hotel',
     date: 'nov7',
   },
   {
-    time: '6:00 PM',
+    time: '6:30 PM',
     title: 'Cocktail Hour',
     description:
       "Celebrate with signature cocktails, cigars, and hors d'oeuvres while the DJ warms up.",
@@ -65,7 +65,7 @@ const events: Event[] = [
     date: 'nov7',
   },
   {
-    time: '7:00 PM',
+    time: '8:00 PM',
     title: 'Reception & Dinner',
     description:
       'Celebrate with us with dinner, dancing, and memorable toasts. If you want to make a speech, this is your chance!',
@@ -73,7 +73,7 @@ const events: Event[] = [
     date: 'nov7',
   },
   {
-    time: '10:00 PM',
+    time: '11:00 PM',
     title: 'After Party',
     description: 'Continue the celebration, if you dare.',
     location: 'Awacate Bar @ Viceroy Hotel',
