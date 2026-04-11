@@ -1,8 +1,14 @@
-const API_BASE =
-  (typeof import.meta !== 'undefined' && (import.meta as { env?: { VITE_API_URL?: string } }).env?.VITE_API_URL) ||
-  'http://localhost:3001'
+function apiBase(): string {
+  const env = import.meta.env
+  if (env.DEV) {
+    return ''
+  }
+  const fromEnv = (env as { VITE_API_URL?: string }).VITE_API_URL?.replace(/\/$/, '') ?? ''
+  return fromEnv || 'http://localhost:3001'
+}
 
 export function apiUrl(path: string): string {
   const normalized = path.startsWith('/') ? path : `/${path}`
-  return `${API_BASE.replace(/\/$/, '')}${normalized}`
+  const base = apiBase()
+  return base ? `${base}${normalized}` : normalized
 }

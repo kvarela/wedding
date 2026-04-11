@@ -41,6 +41,9 @@ jobs:
       - name: Type check
         run: yarn workspace @wedding/backend typecheck
 
+      - name: Build
+        run: yarn workspace @wedding/backend build
+
       - name: Test
         env:
           NODE_ENV: test
