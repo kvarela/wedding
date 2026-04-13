@@ -39,12 +39,7 @@ const events: Event[] = [
     title: 'Welcome Party',
     description:
       'Join us for welcome drinks and bites as we kick off the wedding festivities and gather with friends and family.',
-    location: 'Jardin Secreto, Jose Maria Morelos 103, Gallery District, Centro, 23400 San Jose del Cabo',
-    locationVenue: 'Jardin Secreto',
-    locationVenueUrl: 'https://www.facebook.com/urbancuisinegarden/',
-    locationAddress: 'Jose Maria Morelos 103, Gallery District, Centro, 23400 San Jose del Cabo',
-    locationAddressUrl:
-      'https://www.google.com/maps/search/?api=1&query=Jose+Maria+Morelos+103,+Gallery+District,+Centro,+23400+San+Jose+del+Cabo',
+    location: 'TBD',
     date: 'nov6',
   },
   {
