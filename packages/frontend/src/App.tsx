@@ -45,7 +45,7 @@ function App() {
       <ImageSplash
         imageUrl={santorini}
         backgroundSize="cover"
-        backgroundPosition={{ base: '40% 76%', md: '42% 72%', lg: '44% 70%' }}
+        backgroundPosition={{ base: '56% 94%', md: '42% 72%', lg: '44% 70%' }}
         splashHeight={{ base: 'min(78vh, 900px)', md: 'min(88vh, 1000px)', lg: 'min(94vh, 1120px)' }}
         fullBleed
       />
