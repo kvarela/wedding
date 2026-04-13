@@ -2,6 +2,7 @@ import { Box, Container, Heading, Image, Text, VStack } from '@chakra-ui/react'
 
 import dressCodeReception from '@/assets/dress-code-reception.png'
 import { weddingColors } from '@/theme/colors'
+import { itineraryDateHeadingFontSize } from '@/theme/typography'
 
 const DressCodeSection = () => {
   return (
@@ -23,9 +24,9 @@ const DressCodeSection = () => {
             fontWeight="400"
             color="white"
             textAlign="center"
-            fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
+            fontSize={itineraryDateHeadingFontSize}
           >
-            In the spirit of Havana Nights, we invite all our guests to wear black and gold.
+            In the spirit of Havana Nights, we invite all our guests to wear black and/or gold.
           </Text>
 
           <Box

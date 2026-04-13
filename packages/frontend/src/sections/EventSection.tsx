@@ -3,6 +3,7 @@ import { Box, Container, Heading, Link, Text, VStack, Card, Dialog } from '@chak
 
 import viceroyResortMapUrl from '@/assets/viceroy-resort-map.png'
 import { weddingColors } from '@/theme/colors'
+import { itineraryDateHeadingFontSize } from '@/theme/typography'
 
 interface Event {
   time: string
@@ -229,7 +230,7 @@ const EventSection = () => {
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
-                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
+                fontSize={itineraryDateHeadingFontSize}
               >
                 Thursday, November 5th
               </Text>
@@ -251,7 +252,7 @@ const EventSection = () => {
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
-                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
+                fontSize={itineraryDateHeadingFontSize}
               >
                 Friday, November 6th
               </Text>
@@ -269,7 +270,7 @@ const EventSection = () => {
                 fontWeight="400"
                 color={weddingColors.primaryGold}
                 textAlign="center"
-                fontSize={{ base: '1.65rem', lg: '2.0625rem' }}
+                fontSize={itineraryDateHeadingFontSize}
               >
                 Saturday, November 7th
               </Text>

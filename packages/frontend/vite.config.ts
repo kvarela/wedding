@@ -17,9 +17,10 @@ export default defineConfig({
   server: {
     port: 3000,
     proxy: {
-      '^/rsvp': {
+      '/__api': {
         target: 'http://localhost:3001',
         changeOrigin: true,
+        rewrite: (p) => p.replace(/^\/__api/, '') || '/',
       },
     },
   },

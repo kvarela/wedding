@@ -1,7 +1,7 @@
 function apiBase(): string {
   const env = import.meta.env
   if (env.DEV) {
-    return ''
+    return '/__api'
   }
   const fromEnv = (env as { VITE_API_URL?: string }).VITE_API_URL?.replace(/\/$/, '') ?? ''
   return fromEnv || 'http://localhost:3001'

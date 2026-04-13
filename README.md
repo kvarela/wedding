@@ -2,6 +2,8 @@
 
 A modern, elegant wedding website featuring a single-page application, built as a monorepo.
 
+**Live site:** [https://karimandfelicia.wedding](https://karimandfelicia.wedding)
+
 ## 🎨 Features
 
 - **Hero Section** - Elegant landing with wedding details
@@ -127,10 +129,10 @@ The website is built with a mobile-first approach, ensuring a beautiful experien
 ## 🔐 API Endpoints
 
 ### RSVP
-- `POST /api/rsvp` - Submit an RSVP
-- `GET /api/rsvp` - Get all RSVPs
-- `GET /api/rsvp/stats` - Get RSVP statistics
-- `GET /api/rsvp/:id` - Get specific RSVP
+- `POST /rsvp` - Submit an RSVP
+- `GET /rsvp` - Get all RSVPs
+- `GET /rsvp/stats` - Get RSVP statistics
+- `GET /rsvp/:id` - Get specific RSVP
 
 ## 🤝 Contributing
 
@@ -143,7 +145,7 @@ MIT License - See LICENSE file for details
 ## 💌 Contact
 
 For any questions about the wedding or website:
-- Email: contact@example.com
+- Email: hello@karimandfelicia.wedding
 
 ---
 
