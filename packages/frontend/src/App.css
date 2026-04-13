@@ -21,6 +21,18 @@ body {
   min-width: 0;
 }
 
+.hero-full-viewport {
+  min-height: 100vh;
+  height: 100vh;
+}
+
+@supports (height: 100dvh) {
+  .hero-full-viewport {
+    min-height: 100dvh;
+    height: 100dvh;
+  }
+}
+
 h1, h3, h4, h5, h6 {
   font-family: 'Cormorant Garamond', serif;
   font-weight: 400;

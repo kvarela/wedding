@@ -12,9 +12,9 @@ const HeroSection = () => {
   return (
     <Box
       id="home"
+      className="hero-full-viewport"
       width="100%"
       position="relative"
-      height="100vh"
       display="flex"
       alignItems="center"
       justifyContent="center"
@@ -28,7 +28,11 @@ const HeroSection = () => {
         zIndex={0}
         backgroundImage={`url(${heroImage})`}
         backgroundSize="cover"
-        backgroundPosition="center"
+        backgroundPosition={{
+          base: 'center center',
+          md: 'center 38%',
+          lg: 'center 34%',
+        }}
         filter="saturate(0.9)"
       />
       <Box

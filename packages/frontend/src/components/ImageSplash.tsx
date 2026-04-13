@@ -1,22 +1,34 @@
 import { Box } from '@chakra-ui/react'
+import type { ComponentProps } from 'react'
+
+type BoxBgProps = Pick<ComponentProps<typeof Box>, 'backgroundPosition' | 'backgroundSize' | 'height' | 'bg'>
 
 interface ImageSplashProps {
   imageUrl: string
-  backgroundPosition?: string
-  backgroundSize?: string
+  backgroundPosition?: BoxBgProps['backgroundPosition']
+  backgroundSize?: BoxBgProps['backgroundSize']
+  splashHeight?: BoxBgProps['height']
+  splashBg?: BoxBgProps['bg']
+  fullBleed?: boolean
 }
 
 const ImageSplash = ({
   imageUrl,
   backgroundPosition = 'center top',
   backgroundSize = 'cover',
+  splashHeight,
+  splashBg,
+  fullBleed = false,
 }: ImageSplashProps) => {
   return (
     <Box
-      width="100%"
       position="relative"
-      height={{ base: '40vh', md: '55vh' }}
+      height={splashHeight ?? { base: '40vh', md: '55vh' }}
       overflow="hidden"
+      bg={splashBg}
+      width={fullBleed ? '100vw' : '100%'}
+      maxW={fullBleed ? '100vw' : undefined}
+      marginInline={fullBleed ? 'calc(50% - 50vw)' : undefined}
     >
       <Box
         position="absolute"

@@ -34,12 +34,21 @@ function App() {
       />
       <EventSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
-      <ImageSplash imageUrl={familyBaby} backgroundPosition="center center" />
+      <ImageSplash
+        imageUrl={familyBaby}
+        backgroundPosition={{ base: 'center 46%', md: 'center 42%' }}
+      />
       <DressCodeSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <RSVPSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
-      <ImageSplash imageUrl={santorini} backgroundPosition="center 90%" />
+      <ImageSplash
+        imageUrl={santorini}
+        backgroundSize="cover"
+        backgroundPosition={{ base: '40% 76%', md: '42% 72%', lg: '44% 70%' }}
+        splashHeight={{ base: 'min(78vh, 900px)', md: 'min(88vh, 1000px)', lg: 'min(94vh, 1120px)' }}
+        fullBleed
+      />
       <TravelSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <FooterSection />
