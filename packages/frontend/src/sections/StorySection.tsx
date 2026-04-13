@@ -20,7 +20,7 @@ const TIMELINE: TimelineItem[] = [
     year: 'July 2020',
     title: 'First Date',
     description:
-      'At the start of lockdown, Karim invited Felicia over for dinner — and imaginitively turned unicorns and rainbows into a very convincing first overture',
+      'In the early days of lockdown, Karim invited Felicia over for dinner — and with a little creativity (and a lot of charm), turned unicorns and rainbows into a surprisingly magical beginning',
   },
   {
     year: 'April 2022',
