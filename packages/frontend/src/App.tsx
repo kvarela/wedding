@@ -34,7 +34,7 @@ function App() {
       />
       <EventSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
-      <ImageSplash imageUrl={familyBaby} />
+      <ImageSplash imageUrl={familyBaby} backgroundPosition="center center" />
       <DressCodeSection />
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <RSVPSection />
