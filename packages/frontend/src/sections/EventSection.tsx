@@ -23,20 +23,16 @@ const events: Event[] = [
   {
     time: 'TBD',
     title: 'Fishing Trip',
-    description: 'Click for details.',
+    description: 'Details coming soon.',
     location: 'TBD',
     date: 'nov5',
-    modalContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
   },
   {
     time: 'TBD',
     title: 'Yoga & Tequila Tasting',
-    description: 'Click for details.',
+    description: 'Details coming soon.',
     location: 'TBD',
     date: 'nov5',
-    modalContent:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper.',
   },
   {
     time: '6:00 PM',
@@ -111,11 +107,15 @@ const EventCard = ({
       transition="all 0.3s"
       cursor={isClickable ? 'pointer' : 'default'}
       onClick={isClickable ? onClick : undefined}
-      _hover={{
-        transform: 'translateY(-8px)',
-        shadow: 'xl',
-        borderColor: weddingColors.primaryGold,
-      }}
+      _hover={
+        isClickable
+          ? {
+              transform: 'translateY(-8px)',
+              shadow: 'xl',
+              borderColor: weddingColors.primaryGold,
+            }
+          : undefined
+      }
     >
       <VStack gap={4} align="start" height="100%">
         <Text
@@ -284,30 +284,32 @@ const EventSection = () => {
         </VStack>
       </Container>
 
-      {eventsByDate.nov5.map((event, index) => (
-        <Dialog.Root
-          key={index}
-          open={openModalEvent?.title === event.title}
-          onOpenChange={(details) => {
-            if (!details.open) setOpenModalEvent(null)
-          }}
-        >
-          <Dialog.Backdrop />
-          <Dialog.Positioner>
-            <Dialog.Content bg={weddingColors.charcoal} borderColor={weddingColors.primaryGold} borderWidth="1px">
-              <Dialog.Header>
-                <Dialog.Title color={weddingColors.primaryGold}>{event.title}</Dialog.Title>
-                <Dialog.CloseTrigger />
-              </Dialog.Header>
-              <Dialog.Body>
-                <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
-                  {event.modalContent}
-                </Text>
-              </Dialog.Body>
-            </Dialog.Content>
-          </Dialog.Positioner>
-        </Dialog.Root>
-      ))}
+      {eventsByDate.nov5
+        .filter((e) => e.modalContent)
+        .map((event, index) => (
+          <Dialog.Root
+            key={index}
+            open={openModalEvent?.title === event.title}
+            onOpenChange={(details) => {
+              if (!details.open) setOpenModalEvent(null)
+            }}
+          >
+            <Dialog.Backdrop />
+            <Dialog.Positioner>
+              <Dialog.Content bg={weddingColors.charcoal} borderColor={weddingColors.primaryGold} borderWidth="1px">
+                <Dialog.Header>
+                  <Dialog.Title color={weddingColors.primaryGold}>{event.title}</Dialog.Title>
+                  <Dialog.CloseTrigger />
+                </Dialog.Header>
+                <Dialog.Body>
+                  <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
+                    {event.modalContent}
+                  </Text>
+                </Dialog.Body>
+              </Dialog.Content>
+            </Dialog.Positioner>
+          </Dialog.Root>
+        ))}
     </Box>
   )
 }

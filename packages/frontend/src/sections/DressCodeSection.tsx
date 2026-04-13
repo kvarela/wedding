@@ -1,4 +1,4 @@
-import { Box, Container, Heading, Image, Text, VStack } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
 
 import dressCodeReception from '@/assets/dress-code-reception.png'
 import { weddingColors } from '@/theme/colors'
@@ -28,28 +28,31 @@ const DressCodeSection = () => {
           >
             In the spirit of Havana Nights, we invite all our guests to wear black and/or gold.
           </Text>
-
-          <Box
-            width="100%"
-            mt={8}
-            mx="auto"
-            maxW={{ base: '100%', md: 'min(100%, 32rem)' }}
-            h={{ base: 'min(52vh, 36rem)', md: 'min(68vh, 40rem)' }}
-            overflow="hidden"
-          >
-            <Image
-              src={dressCodeReception}
-              alt="Sunset beach reception with candlelit tables, string lights, and live music"
-              width="100%"
-              height="100%"
-              objectFit="cover"
-              objectPosition="center 35%"
-              loading="lazy"
-              decoding="async"
-            />
-          </Box>
         </VStack>
       </Container>
+
+      <Box
+        width="100vw"
+        maxW="100vw"
+        marginInline="calc(50% - 50vw)"
+        mt={{ base: 8, md: 10, lg: 12 }}
+        height={{ base: 'min(48vh, 22rem)', md: 'min(62vh, 560px)', lg: 'min(72vh, 640px)' }}
+        position="relative"
+        overflow="hidden"
+        role="img"
+        aria-label="Evening beach reception with candlelit tables, string lights, and live music"
+      >
+        <Box
+          position="absolute"
+          inset={0}
+          width="100%"
+          height="100%"
+          backgroundImage={`url(${dressCodeReception})`}
+          backgroundSize="cover"
+          backgroundPosition={{ base: 'center 40%', md: 'center 42%', lg: 'center 40%' }}
+          backgroundRepeat="no-repeat"
+        />
+      </Box>
     </Box>
   )
 }
