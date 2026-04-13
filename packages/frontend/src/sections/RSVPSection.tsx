@@ -287,6 +287,14 @@ const RSVPSection = () => {
               RSVP
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
+            <Text
+              fontSize={{ base: '1.3rem', md: '1.4625rem' }}
+              lineHeight={1.4}
+              color="gray.200"
+              maxW="2xl"
+            >
+              Please RSVP by June 12th
+            </Text>
           </VStack>
 
           {showForm ? (
