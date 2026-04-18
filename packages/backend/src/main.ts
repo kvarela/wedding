@@ -15,6 +15,8 @@ function corsOrigins(): string[] {
       'http://127.0.0.1:3000',
       'https://karimandfelicia.wedding',
       'https://www.karimandfelicia.wedding',
+      'https://karimandfelicia.com',
+      'https://www.karimandfelicia.com',
       ...fromEnv,
     ]),
   ]
