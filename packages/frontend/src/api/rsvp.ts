@@ -148,6 +148,14 @@ export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpRespon
   return toRsvpResponse(party)
 }
 
+export async function deleteRsvp(id: string): Promise<void> {
+  const res = await fetch(apiUrl(`rsvp/${id}`), { method: 'DELETE' })
+  if (!res.ok) {
+    const body = await res.text()
+    handleRsvpError(res, body)
+  }
+}
+
 export async function updateRsvp(id: string, payload: CreateRsvpPayload): Promise<RsvpResponse> {
   const res = await rsvpFetch(apiUrl(`rsvp/${id}`), {
     method: 'PATCH',

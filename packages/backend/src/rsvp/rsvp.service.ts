@@ -123,6 +123,14 @@ export class RsvpService {
     return this.toRsvpResponse(created)
   }
 
+  async delete(id: string): Promise<void> {
+    const party = await this.partyRepo.findOne({ where: { id } })
+    if (!party) {
+      throw new NotFoundException('RSVP not found')
+    }
+    await this.partyRepo.delete(id)
+  }
+
   async findAll(): Promise<RsvpResponse[]> {
     const parties = await this.partyRepo.find({
       relations: { guests: true },

@@ -1,19 +1,33 @@
 import { useState, useEffect, useCallback } from 'react'
 import {
   Box,
+  CloseButton,
   Container,
+  Dialog,
+  Field,
   Heading,
-  Text,
+  HStack,
   Input,
   Button,
-  VStack,
-  HStack,
-  Badge,
+  NativeSelect,
   Spinner,
+  Badge,
+  Text,
+  Textarea,
+  VStack,
 } from '@chakra-ui/react'
 import { verifyPassword } from '@/api/auth'
 import { apiUrl } from '@/api/client'
-import type { RsvpResponse, RsvpAttendance } from '@/api/rsvp'
+import {
+  deleteRsvp,
+  updateRsvp,
+  DEFAULT_MEAL_CHOICE,
+  RSVP_MEAL_OPTIONS,
+  type CreateRsvpPayload,
+  type RsvpAttendance,
+  type RsvpMealChoice,
+  type RsvpResponse,
+} from '@/api/rsvp'
 import { weddingColors } from '@/theme/colors'
 
 const SESSION_KEY = 'guest-list-auth'
@@ -109,10 +123,296 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
   )
 }
 
+function EditModal({
+  rsvp,
+  onClose,
+  onSave,
+}: {
+  rsvp: RsvpResponse
+  onClose: () => void
+  onSave: (updated: RsvpResponse) => void
+}) {
+  const [guestNames, setGuestNames] = useState<string[]>(rsvp.guests.map((g) => g.name))
+  const [mealChoices, setMealChoices] = useState<RsvpMealChoice[]>(rsvp.guests.map((g) => g.mealChoice))
+  const [email, setEmail] = useState(rsvp.email)
+  const [phone, setPhone] = useState(rsvp.phone ?? '')
+  const [address, setAddress] = useState(rsvp.address)
+  const [message, setMessage] = useState(rsvp.message ?? '')
+  const [attendance, setAttendance] = useState<RsvpAttendance>(rsvp.attendance)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  const updateGuestName = (i: number, value: string) => {
+    const next = [...guestNames]
+    next[i] = value
+    setGuestNames(next)
+  }
+
+  const updateMealChoice = (i: number, value: RsvpMealChoice) => {
+    const next = [...mealChoices]
+    next[i] = value
+    setMealChoices(next)
+  }
+
+  const addGuest = () => {
+    if (guestNames.length >= 4) return
+    setGuestNames([...guestNames, ''])
+    setMealChoices([...mealChoices, DEFAULT_MEAL_CHOICE])
+  }
+
+  const removeGuest = (i: number) => {
+    if (guestNames.length <= 1) return
+    setGuestNames(guestNames.filter((_, idx) => idx !== i))
+    setMealChoices(mealChoices.filter((_, idx) => idx !== i))
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setError('')
+    const trimmedNames = guestNames.map((n) => n.trim()).filter(Boolean)
+    if (!trimmedNames.length) {
+      setError('At least one guest name is required')
+      return
+    }
+    setLoading(true)
+    try {
+      const payload: CreateRsvpPayload = {
+        name: trimmedNames[0],
+        email: email.trim(),
+        phone: phone.trim(),
+        guestNames: trimmedNames,
+        mealChoices: mealChoices.slice(0, trimmedNames.length),
+        address: address.trim(),
+        message: message.trim() || undefined,
+        attendance,
+      }
+      const updated = await updateRsvp(rsvp.id, payload)
+      onSave(updated)
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Failed to save changes')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Dialog.Root open onOpenChange={(e) => { if (!e.open) onClose() }}>
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content maxW="lg">
+          <Dialog.Header>
+            <Dialog.Title fontFamily="'Cormorant Garamond', serif">Edit RSVP</Dialog.Title>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Header>
+          <Dialog.Body>
+            <Box as="form" id="edit-rsvp-form" onSubmit={handleSubmit}>
+              <VStack gap={4} align="stretch">
+                {/* Guests */}
+                <Box>
+                  <Text
+                    fontSize="xs"
+                    fontWeight="semibold"
+                    color={weddingColors.primaryGold}
+                    textTransform="uppercase"
+                    letterSpacing="0.1em"
+                    mb={2}
+                  >
+                    Guests
+                  </Text>
+                  <VStack gap={3} align="stretch">
+                    {guestNames.map((name, i) => (
+                      <HStack key={i} gap={2} align="flex-end">
+                        <VStack gap={2} flex={1} align="stretch">
+                          <Input
+                            placeholder={`Guest ${i + 1} name`}
+                            value={name}
+                            onChange={(e) => updateGuestName(i, e.target.value)}
+                            size="sm"
+                          />
+                          <NativeSelect.Root size="sm">
+                            <NativeSelect.Field
+                              value={mealChoices[i] ?? DEFAULT_MEAL_CHOICE}
+                              onChange={(e) => updateMealChoice(i, e.target.value as RsvpMealChoice)}
+                            >
+                              {RSVP_MEAL_OPTIONS.map((opt) => (
+                                <option key={opt} value={opt}>{opt}</option>
+                              ))}
+                            </NativeSelect.Field>
+                            <NativeSelect.Indicator />
+                          </NativeSelect.Root>
+                        </VStack>
+                        {guestNames.length > 1 && (
+                          <Button
+                            size="sm"
+                            variant="ghost"
+                            colorPalette="red"
+                            onClick={() => removeGuest(i)}
+                            aria-label="Remove guest"
+                            mb={1}
+                          >
+                            ×
+                          </Button>
+                        )}
+                      </HStack>
+                    ))}
+                    {guestNames.length < 4 && (
+                      <Button size="sm" variant="outline" onClick={addGuest}>
+                        + Add Guest
+                      </Button>
+                    )}
+                  </VStack>
+                </Box>
+
+                <Field.Root>
+                  <Field.Label fontSize="sm">Email</Field.Label>
+                  <Input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                    size="sm"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label fontSize="sm">Phone</Field.Label>
+                  <Input
+                    type="tel"
+                    value={phone}
+                    onChange={(e) => setPhone(e.target.value)}
+                    required
+                    size="sm"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label fontSize="sm">Address</Field.Label>
+                  <Textarea
+                    value={address}
+                    onChange={(e) => setAddress(e.target.value)}
+                    required
+                    rows={2}
+                    size="sm"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label fontSize="sm">Message</Field.Label>
+                  <Textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    rows={2}
+                    size="sm"
+                  />
+                </Field.Root>
+
+                <Field.Root>
+                  <Field.Label fontSize="sm">Attendance</Field.Label>
+                  <NativeSelect.Root size="sm">
+                    <NativeSelect.Field
+                      value={attendance}
+                      onChange={(e) => setAttendance(e.target.value as RsvpAttendance)}
+                    >
+                      <option value="YES">Yes</option>
+                      <option value="NO">No</option>
+                      <option value="MAYBE">Maybe</option>
+                    </NativeSelect.Field>
+                    <NativeSelect.Indicator />
+                  </NativeSelect.Root>
+                </Field.Root>
+
+                {error && (
+                  <Text color="red.500" fontSize="sm">
+                    {error}
+                  </Text>
+                )}
+              </VStack>
+            </Box>
+          </Dialog.Body>
+          <Dialog.Footer gap={2}>
+            <Button variant="outline" size="sm" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button
+              type="submit"
+              form="edit-rsvp-form"
+              size="sm"
+              bg={weddingColors.primaryGold}
+              color="white"
+              _hover={{ bg: weddingColors.darkAntiqueGold }}
+              loading={loading}
+            >
+              Save Changes
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
+  )
+}
+
+function DeleteConfirmModal({
+  rsvp,
+  onClose,
+  onConfirm,
+}: {
+  rsvp: RsvpResponse
+  onClose: () => void
+  onConfirm: () => Promise<void>
+}) {
+  const [loading, setLoading] = useState(false)
+
+  const handleConfirm = async () => {
+    setLoading(true)
+    try {
+      await onConfirm()
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <Dialog.Root open onOpenChange={(e) => { if (!e.open) onClose() }}>
+      <Dialog.Backdrop />
+      <Dialog.Positioner>
+        <Dialog.Content maxW="sm">
+          <Dialog.Header>
+            <Dialog.Title fontFamily="'Cormorant Garamond', serif">Delete RSVP</Dialog.Title>
+            <Dialog.CloseTrigger asChild>
+              <CloseButton size="sm" />
+            </Dialog.CloseTrigger>
+          </Dialog.Header>
+          <Dialog.Body>
+            <Text fontSize="sm">
+              Are you sure you want to delete the RSVP for{' '}
+              <Text as="span" fontWeight="semibold">
+                {rsvp.name}
+              </Text>
+              ? This cannot be undone.
+            </Text>
+          </Dialog.Body>
+          <Dialog.Footer gap={2}>
+            <Button variant="outline" size="sm" onClick={onClose}>
+              Cancel
+            </Button>
+            <Button colorPalette="red" size="sm" loading={loading} onClick={handleConfirm}>
+              Delete
+            </Button>
+          </Dialog.Footer>
+        </Dialog.Content>
+      </Dialog.Positioner>
+    </Dialog.Root>
+  )
+}
+
 function GuestListView() {
   const [rsvps, setRsvps] = useState<RsvpResponse[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState('')
+  const [editingRsvp, setEditingRsvp] = useState<RsvpResponse | null>(null)
+  const [deletingRsvp, setDeletingRsvp] = useState<RsvpResponse | null>(null)
 
   useEffect(() => {
     fetch(apiUrl('rsvp'))
@@ -124,6 +424,18 @@ function GuestListView() {
       .catch(() => setError('Failed to load guest list.'))
       .finally(() => setLoading(false))
   }, [])
+
+  const handleEditSave = (updated: RsvpResponse) => {
+    setRsvps((prev) => prev.map((r) => (r.id === updated.id ? updated : r)))
+    setEditingRsvp(null)
+  }
+
+  const handleDeleteConfirm = async () => {
+    if (!deletingRsvp) return
+    await deleteRsvp(deletingRsvp.id)
+    setRsvps((prev) => prev.filter((r) => r.id !== deletingRsvp.id))
+    setDeletingRsvp(null)
+  }
 
   const attending = rsvps.filter((r) => r.attendance === 'YES')
   const notAttending = rsvps.filter((r) => r.attendance === 'NO')
@@ -191,11 +503,32 @@ function GuestListView() {
           {/* RSVP cards */}
           <VStack gap={4} align="stretch">
             {rsvps.map((rsvp) => (
-              <RsvpCard key={rsvp.id} rsvp={rsvp} />
+              <RsvpCard
+                key={rsvp.id}
+                rsvp={rsvp}
+                onEdit={() => setEditingRsvp(rsvp)}
+                onDelete={() => setDeletingRsvp(rsvp)}
+              />
             ))}
           </VStack>
         </VStack>
       </Container>
+
+      {editingRsvp && (
+        <EditModal
+          rsvp={editingRsvp}
+          onClose={() => setEditingRsvp(null)}
+          onSave={handleEditSave}
+        />
+      )}
+
+      {deletingRsvp && (
+        <DeleteConfirmModal
+          rsvp={deletingRsvp}
+          onClose={() => setDeletingRsvp(null)}
+          onConfirm={handleDeleteConfirm}
+        />
+      )}
     </Box>
   )
 }
@@ -235,7 +568,15 @@ function StatCard({
   )
 }
 
-function RsvpCard({ rsvp }: { rsvp: RsvpResponse }) {
+function RsvpCard({
+  rsvp,
+  onEdit,
+  onDelete,
+}: {
+  rsvp: RsvpResponse
+  onEdit: () => void
+  onDelete: () => void
+}) {
   return (
     <Box
       bg="white"
@@ -259,13 +600,35 @@ function RsvpCard({ rsvp }: { rsvp: RsvpResponse }) {
               {rsvp.attendance}
             </Badge>
           </HStack>
-          <Text fontSize="xs" color="gray.400">
-            {new Date(rsvp.createdAt).toLocaleDateString('en-US', {
-              month: 'short',
-              day: 'numeric',
-              year: 'numeric',
-            })}
-          </Text>
+          <HStack gap={2}>
+            <Text fontSize="xs" color="gray.400">
+              {new Date(rsvp.createdAt).toLocaleDateString('en-US', {
+                month: 'short',
+                day: 'numeric',
+                year: 'numeric',
+              })}
+            </Text>
+            <Button
+              size="xs"
+              variant="outline"
+              borderColor={weddingColors.champagneGold}
+              color={weddingColors.charcoal}
+              _hover={{ bg: weddingColors.warmIvory }}
+              onClick={onEdit}
+            >
+              Edit
+            </Button>
+            <Button
+              size="xs"
+              variant="outline"
+              borderColor="red.200"
+              color="red.500"
+              _hover={{ bg: 'red.50' }}
+              onClick={onDelete}
+            >
+              Delete
+            </Button>
+          </HStack>
         </HStack>
 
         {/* Contact info */}
