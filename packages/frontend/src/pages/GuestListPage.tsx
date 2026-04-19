@@ -12,7 +12,7 @@ import {
   Spinner,
 } from '@chakra-ui/react'
 import { verifyPassword } from '@/api/auth'
-import { apiUrl, } from '@/api/client'
+import { apiUrl } from '@/api/client'
 import type { RsvpResponse, RsvpAttendance } from '@/api/rsvp'
 import { weddingColors } from '@/theme/colors'
 
@@ -67,9 +67,7 @@ function PasswordGate({ onUnlock }: { onUnlock: () => void }) {
             >
               Guest List
             </Heading>
-            <Text color={weddingColors.menuText} fontSize="sm">
-              This page is password protected
-            </Text>
+            <Text fontSize="sm">This page is password protected</Text>
           </VStack>
 
           <Box as="form" onSubmit={handleSubmit} width="100%">
@@ -134,7 +132,13 @@ function GuestListView() {
 
   if (loading) {
     return (
-      <Box minH="100vh" bg={weddingColors.warmIvory} display="flex" alignItems="center" justifyContent="center">
+      <Box
+        minH="100vh"
+        bg={weddingColors.warmIvory}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Spinner size="xl" color={weddingColors.primaryGold} />
       </Box>
     )
@@ -142,7 +146,13 @@ function GuestListView() {
 
   if (error) {
     return (
-      <Box minH="100vh" bg={weddingColors.warmIvory} display="flex" alignItems="center" justifyContent="center">
+      <Box
+        minH="100vh"
+        bg={weddingColors.warmIvory}
+        display="flex"
+        alignItems="center"
+        justifyContent="center"
+      >
         <Text color="red.500">{error}</Text>
       </Box>
     )
@@ -161,18 +171,19 @@ function GuestListView() {
             >
               Guest List
             </Heading>
-            <Text color={weddingColors.menuText} fontSize="sm">
+            <Text fontSize="sm">
               {rsvps.length} {rsvps.length === 1 ? 'party' : 'parties'} total
             </Text>
           </VStack>
 
           {/* Stats */}
-          <HStack
-            gap={4}
-            justify="center"
-            flexWrap="wrap"
-          >
-            <StatCard label="Attending" value={attending.length} sub={`${totalGuests} guests`} color="green.600" />
+          <HStack gap={4} justify="center" flexWrap="wrap">
+            <StatCard
+              label="Attending"
+              value={attending.length}
+              sub={`${totalGuests} guests`}
+              color="green.600"
+            />
             <StatCard label="Not Attending" value={notAttending.length} color="red.500" />
             <StatCard label="Maybe" value={maybe.length} color="yellow.600" />
           </HStack>
@@ -189,7 +200,17 @@ function GuestListView() {
   )
 }
 
-function StatCard({ label, value, sub, color }: { label: string; value: number; sub?: string; color: string }) {
+function StatCard({
+  label,
+  value,
+  sub,
+  color,
+}: {
+  label: string
+  value: number
+  sub?: string
+  color: string
+}) {
   return (
     <Box
       bg="white"
@@ -201,9 +222,15 @@ function StatCard({ label, value, sub, color }: { label: string; value: number; 
       textAlign="center"
       minW="120px"
     >
-      <Text fontSize="2xl" fontWeight="bold" color={color}>{value}</Text>
-      <Text fontSize="sm" color={weddingColors.menuText}>{label}</Text>
-      {sub && <Text fontSize="xs" color="gray.400">{sub}</Text>}
+      <Text fontSize="2xl" fontWeight="bold" color={color}>
+        {value}
+      </Text>
+      <Text fontSize="sm">{label}</Text>
+      {sub && (
+        <Text fontSize="xs" color="gray.400">
+          {sub}
+        </Text>
+      )}
     </Box>
   )
 }
@@ -234,31 +261,55 @@ function RsvpCard({ rsvp }: { rsvp: RsvpResponse }) {
           </HStack>
           <Text fontSize="xs" color="gray.400">
             {new Date(rsvp.createdAt).toLocaleDateString('en-US', {
-              month: 'short', day: 'numeric', year: 'numeric',
+              month: 'short',
+              day: 'numeric',
+              year: 'numeric',
             })}
           </Text>
         </HStack>
 
         {/* Contact info */}
-        <Box fontSize="sm" color={weddingColors.menuText}>
+        <Box fontSize="sm">
           <HStack gap={4} flexWrap="wrap">
-            <Text><strong>Email:</strong> {rsvp.email}</Text>
-            {rsvp.phone && <Text><strong>Phone:</strong> {rsvp.phone}</Text>}
+            <Text>
+              <strong>Email:</strong> {rsvp.email}
+            </Text>
+            {rsvp.phone && (
+              <Text>
+                <strong>Phone:</strong> {rsvp.phone}
+              </Text>
+            )}
           </HStack>
-          <Text mt={1}><strong>Address:</strong> {rsvp.address}</Text>
+          <Text mt={1}>
+            <strong>Address:</strong> {rsvp.address}
+          </Text>
         </Box>
 
         {/* Guests */}
         {rsvp.guests.length > 0 && (
           <Box>
-            <Text fontSize="xs" fontWeight="semibold" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="0.1em" mb={2}>
+            <Text
+              fontSize="xs"
+              fontWeight="semibold"
+              color={weddingColors.primaryGold}
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              mb={2}
+            >
               Guests ({rsvp.numGuests})
             </Text>
             <VStack align="stretch" gap={1}>
               {rsvp.guests.map((guest) => (
-                <HStack key={guest.id} justify="space-between" bg={weddingColors.warmIvory} px={3} py={1.5} borderRadius="sm">
-                  <Text fontSize="sm" color={weddingColors.charcoal}>{guest.name}</Text>
-                  <Text fontSize="xs" color={weddingColors.menuText}>{guest.mealChoice}</Text>
+                <HStack
+                  key={guest.id}
+                  justify="space-between"
+                  bg={weddingColors.warmIvory}
+                  px={3}
+                  py={1.5}
+                  borderRadius="sm"
+                >
+                  <Text fontSize="sm">{guest.name}</Text>
+                  <Text fontSize="xs">{guest.mealChoice}</Text>
                 </HStack>
               ))}
             </VStack>
@@ -268,11 +319,18 @@ function RsvpCard({ rsvp }: { rsvp: RsvpResponse }) {
         {/* Message */}
         {rsvp.message && (
           <Box>
-            <Text fontSize="xs" fontWeight="semibold" color={weddingColors.primaryGold} textTransform="uppercase" letterSpacing="0.1em" mb={1}>
+            <Text
+              fontSize="xs"
+              fontWeight="semibold"
+              color={weddingColors.primaryGold}
+              textTransform="uppercase"
+              letterSpacing="0.1em"
+              mb={1}
+            >
               Message
             </Text>
-            <Text fontSize="sm" color={weddingColors.menuText} fontStyle="italic">
-              "{rsvp.message}"
+            <Text fontSize="sm" fontStyle="italic">
+              &quot;{rsvp.message}&quot;
             </Text>
           </Box>
         )}
