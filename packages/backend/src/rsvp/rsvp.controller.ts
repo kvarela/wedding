@@ -1,4 +1,4 @@
-import { Controller, Get, Patch, Post, Body, Param, Inject } from '@nestjs/common'
+import { Controller, Delete, Get, Patch, Post, Body, Param, Inject } from '@nestjs/common'
 
 import { CreateRsvpDto } from './create-rsvp.dto'
 import { RsvpResponse } from './rsvp-response.interface'
@@ -22,6 +22,11 @@ export class RsvpController {
     @Body() updateRsvpDto: CreateRsvpDto,
   ): Promise<RsvpResponse> {
     return this.service.update(id, updateRsvpDto)
+  }
+
+  @Delete(':id')
+  delete(@Param('id') id: string): Promise<void> {
+    return this.service.delete(id)
   }
 
   @Get()
