@@ -1,5 +1,6 @@
 import { Box } from '@chakra-ui/react'
 import { useState } from 'react'
+import { Routes, Route } from 'react-router-dom'
 
 import NavigationHeader from '@/components/NavigationHeader'
 import SectionDivider from '@/components/SectionDivider'
@@ -15,14 +16,14 @@ import DressCodeSection from './sections/DressCodeSection'
 import RSVPSection from './sections/RSVPSection'
 import TravelSection from './sections/TravelSection'
 import FooterSection from './sections/FooterSection'
+import GuestListPage from './pages/GuestListPage'
 import './App.css'
 
-function App() {
+function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <Box width="100%">
-      <Toaster />
       <NavigationHeader menuOpen={menuOpen} onOpenMenu={() => setMenuOpen(true)} onCloseMenu={() => setMenuOpen(false)} />
       <HeroSection />
       <StorySection />
@@ -53,6 +54,18 @@ function App() {
       <SectionDivider onLogoClick={() => setMenuOpen(true)} />
       <FooterSection />
     </Box>
+  )
+}
+
+function App() {
+  return (
+    <>
+      <Toaster />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/guest-list" element={<GuestListPage />} />
+      </Routes>
+    </>
   )
 }
 
