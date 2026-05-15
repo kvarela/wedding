@@ -55,7 +55,11 @@ const TravelSection = () => {
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
+            <Heading
+              fontSize={{ base: '3xl', md: '5xl' }}
+              fontWeight="300"
+              color={weddingColors.primaryGold}
+            >
               Travel & Stay
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
@@ -134,7 +138,11 @@ const TravelSection = () => {
                 textDecoration="none"
                 _hover={{ color: weddingColors.champagneGold }}
               >
-                <Heading fontSize={{ base: 'xl', md: '2xl' }} fontWeight="400" color={weddingColors.primaryGold}>
+                <Heading
+                  fontSize={{ base: 'xl', md: '2xl' }}
+                  fontWeight="400"
+                  color={weddingColors.primaryGold}
+                >
                   Viceroy Hotel, San Jose Del Cabo
                 </Heading>
               </Link>
