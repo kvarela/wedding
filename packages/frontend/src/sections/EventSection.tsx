@@ -24,8 +24,8 @@ const events: Event[] = [
     time: 'TBD',
     title: 'Fishing Trip',
     description: 'Details coming soon.',
-    location: 'TBD',
-    date: 'nov5',
+    location: 'The waters off the coast of Cabo San Lucas',
+    date: 'nov6',
   },
   {
     time: 'TBD',
@@ -39,7 +39,7 @@ const events: Event[] = [
     title: 'Welcome Party',
     description:
       'Join us for welcome drinks and bites as we kick off the wedding festivities and gather with friends and family.',
-    location: 'TBD',
+    location: 'Cabo Arts District',
     date: 'nov6',
   },
   {
@@ -84,13 +84,7 @@ const eventsByDate = {
   nov7: events.filter((e) => e.date === 'nov7'),
 }
 
-const EventCard = ({
-  event,
-  onClick,
-}: {
-  event: Event
-  onClick?: () => void
-}) => {
+const EventCard = ({ event, onClick }: { event: Event; onClick?: () => void }) => {
   const isClickable = !!event.modalContent
   return (
     <Card.Root
@@ -142,9 +136,9 @@ const EventCard = ({
                 textDecoration="underline"
                 textUnderlineOffset="2px"
                 _hover={{
-                fontWeight: 'bold',
-                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
-              }}
+                  fontWeight: 'bold',
+                  textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+                }}
               >
                 📍 {event.locationVenue}
               </Link>
@@ -164,9 +158,9 @@ const EventCard = ({
                 textDecoration="underline"
                 textUnderlineOffset="2px"
                 _hover={{
-                fontWeight: 'bold',
-                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
-              }}
+                  fontWeight: 'bold',
+                  textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+                }}
               >
                 {event.locationAddress}
               </Link>
@@ -187,9 +181,9 @@ const EventCard = ({
             textDecoration="underline"
             textUnderlineOffset="2px"
             _hover={{
-                fontWeight: 'bold',
-                textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
-              }}
+              fontWeight: 'bold',
+              textShadow: `0 0 12px ${weddingColors.primaryGold}, 0 0 20px ${weddingColors.primaryGold}`,
+            }}
           >
             📍 {event.location}
           </Link>
@@ -207,11 +201,21 @@ const EventSection = () => {
   const [openModalEvent, setOpenModalEvent] = useState<Event | null>(null)
 
   return (
-    <Box id="itinerary" width="100%" py={{ base: 16, md: 24 }} bg={weddingColors.charcoal} position="relative">
+    <Box
+      id="itinerary"
+      width="100%"
+      py={{ base: 16, md: 24 }}
+      bg={weddingColors.charcoal}
+      position="relative"
+    >
       <Container maxW="container.xl" marginInline="auto" px={{ base: 4, md: 6 }}>
         <VStack gap={12}>
           <VStack gap={4} textAlign="center">
-            <Heading fontSize={{ base: '3xl', md: '5xl' }} fontWeight="300" color={weddingColors.primaryGold}>
+            <Heading
+              fontSize={{ base: '3xl', md: '5xl' }}
+              fontWeight="300"
+              color={weddingColors.primaryGold}
+            >
               Itinerary
             </Heading>
             <Box height="1px" width="100px" bg={weddingColors.primaryGold} />
@@ -231,11 +235,7 @@ const EventSection = () => {
               </Text>
               <VStack gap={4} width="100%" align="stretch">
                 {eventsByDate.nov5.map((event, index) => (
-                  <EventCard
-                    key={index}
-                    event={event}
-                    onClick={() => setOpenModalEvent(event)}
-                  />
+                  <EventCard key={index} event={event} onClick={() => setOpenModalEvent(event)} />
                 ))}
               </VStack>
             </VStack>
@@ -291,7 +291,11 @@ const EventSection = () => {
           >
             <Dialog.Backdrop />
             <Dialog.Positioner>
-              <Dialog.Content bg={weddingColors.charcoal} borderColor={weddingColors.primaryGold} borderWidth="1px">
+              <Dialog.Content
+                bg={weddingColors.charcoal}
+                borderColor={weddingColors.primaryGold}
+                borderWidth="1px"
+              >
                 <Dialog.Header>
                   <Dialog.Title color={weddingColors.primaryGold}>{event.title}</Dialog.Title>
                   <Dialog.CloseTrigger />
