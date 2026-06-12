@@ -9,6 +9,7 @@ interface TravelInfo {
   descriptionSuffix?: string
   email?: string
   link?: string
+  linkLabel?: string
 }
 
 const TRAVEL_DETAILS: TravelInfo[] = [
@@ -17,6 +18,8 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     title: 'Getting There',
     description:
       'Fly into Los Cabos International Airport (SJD). The airport is approximately 30 minutes from the Viceroy Hotel.',
+    link: 'https://maps.google.com/?q=Viceroy+Hotel+San+Jose+Del+Cabo',
+    linkLabel: 'View on Google Maps →',
   },
   {
     icon: '🏨',
@@ -127,7 +130,7 @@ const TravelSection = () => {
                       }}
                       target="_blank"
                     >
-                      Book Now →
+                      {detail.linkLabel ?? 'Book Now →'}
                     </Link>
                   )}
                 </VStack>
@@ -137,15 +140,15 @@ const TravelSection = () => {
 
           <Box
             mt={8}
-            p={8}
             bg={weddingColors.charcoal}
             borderRadius="lg"
             width="100%"
             textAlign="center"
             borderWidth="1px"
             borderColor={weddingColors.primaryGold}
+            overflow="hidden"
           >
-            <VStack gap={4}>
+            <VStack gap={4} p={8}>
               <Link
                 href="https://www.viceroyhotelsandresorts.com/los-cabos"
                 target="_blank"
@@ -165,20 +168,28 @@ const TravelSection = () => {
                 Camino Viejo a San Jose Km 2, San Jose Del Cabo, 23450, Mexico
               </Text>
               <Link
-                href="https://maps.google.com/?q=Viceroy+Hotel+San+Jose+Del+Cabo"
+                href="https://maps.google.com/?q=Viceroy+Los+Cabos"
                 color={weddingColors.primaryGold}
                 fontSize="sm"
                 fontWeight="500"
                 textDecoration="underline"
-                mt={2}
-                _hover={{
-                  color: weddingColors.champagneGold,
-                }}
+                _hover={{ color: weddingColors.champagneGold }}
                 target="_blank"
               >
                 View on Google Maps →
               </Link>
             </VStack>
+            <Box height={{ base: '300px', md: '450px' }} width="100%">
+              <iframe
+                src="https://maps.google.com/maps?q=Viceroy+Los+Cabos&z=11&output=embed"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                title="Viceroy Hotel Location"
+              />
+            </Box>
           </Box>
         </VStack>
       </Container>
