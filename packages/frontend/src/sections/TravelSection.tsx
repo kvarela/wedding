@@ -6,6 +6,8 @@ interface TravelInfo {
   icon: string
   title: string
   description: string
+  descriptionSuffix?: string
+  email?: string
   link?: string
 }
 
@@ -19,8 +21,9 @@ const TRAVEL_DETAILS: TravelInfo[] = [
   {
     icon: '🏨',
     title: 'Accommodations',
-    description:
-      'We have reserved a room block at the Viceroy Hotel with special rates. Use code "2612FEKAWD" when booking.',
+    description: `We have reserved a room block at the Viceroy Hotel with special rates. Use code "2612FEKAWD" when booking. If you want to book nights outside of the 6th and 7th, you must email `,
+    email: 'loscabos.groupreservations@viceroy.com',
+    descriptionSuffix: ` and indicate you're part of our wedding for the reduced rate. Also, if you want a king bed instead of 2 fulls, add a note to your reservation.`,
     link: `https://www.viceroyhotelsandresorts.com/los-cabos#/booking/step-2?data=('hBhd!'cabo-viceroy'~ae765dt785fBfr!'adultG2'H,('fr!'childG0'3rBat!2~cn!0~cg.9alCpo*co*gp!'2612FEKAWD'~rn.3ry*rk*re.9rr*ss.3ax!0~cy*ds!('pIls*as*st*hIee4)~myCsIcIne4)*4~.!%5B3H94!null5%2F2026'~7!'11%2F09%5D~Bs.('C!false~G'~os.'H%5D)Ie*%01IHGCB97543.*_`,
   },
   {
@@ -98,6 +101,18 @@ const TravelSection = () => {
 
                   <Text fontSize="1.3125rem" lineHeight={1.4} color="gray.200">
                     {detail.description}
+                    {detail.email && (
+                      <Link
+                        href={`mailto:${detail.email}`}
+                        color={weddingColors.primaryGold}
+                        fontWeight="500"
+                        textDecoration="underline"
+                        _hover={{ color: weddingColors.champagneGold }}
+                      >
+                        {detail.email}
+                      </Link>
+                    )}
+                    {detail.descriptionSuffix}
                   </Text>
 
                   {detail.link && (
