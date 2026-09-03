@@ -33,7 +33,7 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     icon: '🚗',
     title: 'Transportation',
     description:
-      'Shuttle service will be provided from the airport to the hotel for our guests. Details will be shared closer to the date.',
+      'We recommend you rent a car or use a taxi to get around. There are many car rental companies at the airport.',
   },
   {
     icon: '🌴',
