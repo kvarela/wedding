@@ -12,6 +12,7 @@ const MENU_ITEMS: { label: string; targetId: string }[] = [
   { label: 'Dress Code', targetId: 'dress-code' },
   { label: 'RSVP', targetId: 'rsvp' },
   { label: 'Travel & Stay', targetId: 'travel' },
+  { label: 'Gift Registry', targetId: 'registry' },
 ]
 
 const scrollToSection = (targetId: string) => {
