@@ -72,7 +72,7 @@ const events: Event[] = [
     time: '11:00 PM',
     title: 'After Party',
     description: 'Continue the celebration, if you dare.',
-    location: 'Awacate Bar @ Viceroy Hotel',
+    location: 'Archaea Speakeasy @ Viceroy Hotel',
     locationUrl: viceroyResortMapUrl,
     date: 'nov7',
   },
@@ -99,10 +99,10 @@ const EventCard = ({ event, onClick }: { event: Event; onClick?: () => void }) =
       _hover={
         isClickable
           ? {
-              transform: 'translateY(-8px)',
-              shadow: 'xl',
-              borderColor: weddingColors.primaryGold,
-            }
+            transform: 'translateY(-8px)',
+            shadow: 'xl',
+            borderColor: weddingColors.primaryGold,
+          }
           : undefined
       }
     >
