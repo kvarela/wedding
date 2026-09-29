@@ -40,6 +40,8 @@ const events: Event[] = [
     description:
       'Join us for welcome drinks and bites as we kick off the wedding festivities and gather with friends and family.',
     location: 'Agave @ Los Cabos Arts District',
+    locationUrl:
+      'https://maps.google.com/maps/place//data=!4m2!3m1!1s0x86af509d83942891:0xc76d9425fdb56d61',
     date: 'nov6',
   },
   {
