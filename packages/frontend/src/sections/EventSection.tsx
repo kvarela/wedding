@@ -35,11 +35,13 @@ const events: Event[] = [
     date: 'nov5',
   },
   {
-    time: '6:00 PM',
+    time: '6:00 PM - 8:00 PM',
     title: 'Welcome Party',
     description:
       'Join us for welcome drinks and bites as we kick off the wedding festivities and gather with friends and family.',
-    location: 'Cabo Arts District',
+    location: 'Agave @ Los Cabos Arts District',
+    locationUrl:
+      'https://maps.google.com/maps/place//data=!4m2!3m1!1s0x86af509d83942891:0xc76d9425fdb56d61',
     date: 'nov6',
   },
   {
