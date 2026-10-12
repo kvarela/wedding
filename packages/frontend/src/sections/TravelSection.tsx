@@ -33,7 +33,9 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     icon: '🚗',
     title: 'Transportation',
     description:
-      'We recommend you rent a car or use a taxi to get around. There are many car rental companies at the airport.',
+      'For getting to and from the airport, guests can select the shared round-trip shuttle for $34 per person ($17 each way) through Los Cabos Airport Shuttles. To get around during your stay, we recommend renting a car or using a taxi. There are many car rental companies at the airport.',
+    link: 'https://www.loscabosairportshuttles.com/cabo-airport-shuttle/viceroy-hotel-los-cabos/',
+    linkLabel: 'Book Airport Shuttle →',
   },
   {
     icon: '🌴',
