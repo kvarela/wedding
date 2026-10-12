@@ -2,6 +2,19 @@ import { Box, Container, Heading, Text, VStack, SimpleGrid, Card, Link } from '@
 
 import { weddingColors } from '@/theme/colors'
 
+interface Activity {
+  name: string
+  link: string
+  travelTime: string
+  note?: string
+}
+
+interface ActivityCategory {
+  icon: string
+  title: string
+  activities: Activity[]
+}
+
 interface TravelInfo {
   icon: string
   title: string
@@ -10,6 +23,7 @@ interface TravelInfo {
   email?: string
   link?: string
   linkLabel?: string
+  categories?: ActivityCategory[]
 }
 
 const TRAVEL_DETAILS: TravelInfo[] = [
@@ -41,7 +55,7 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     icon: '🌴',
     title: 'Weather',
     description:
-      'November in Cabo offers perfect weather - expect temperatures between 75-85°F with sunny skies and cool evenings.',
+      'November in Cabo offers perfect weather - expect temperatures between 75-91°F with sunny skies and cool evenings.',
   },
   {
     icon: '📋',
@@ -53,7 +67,58 @@ const TRAVEL_DETAILS: TravelInfo[] = [
     icon: '🗺️',
     title: 'Things to Do',
     description:
-      'Cabo offers amazing activities - snorkeling, whale watching, zip-lining, and world-class dining. Arrive a few days early to explore!',
+      'Arrive a few days early to explore! Drive times are from the Viceroy.',
+    categories: [
+      {
+        icon: '🏎️',
+        title: 'Adrenaline Adventures',
+        activities: [
+          {
+            name: 'Costa Azul Ziplines',
+            link: 'https://www.costaazulziplines.com',
+            travelTime: '15-25 min',
+          },
+          {
+            name: 'Wild Canyon',
+            link: 'https://wildcanyon.com.mx/',
+            travelTime: '20-30 min',
+          },
+        ],
+      },
+      {
+        icon: '🤿',
+        title: 'Ocean Adventures',
+        activities: [
+          {
+            name: 'Salty Cabo',
+            link: 'https://www.saltycabo.com/',
+            travelTime: '15-25 min',
+          },
+          {
+            name: 'Cabo Pulmo Snorkel Tour',
+            link: 'https://cabopulmoecoadventures.com/tour-de-snorkel-en-cabo-pulmo',
+            travelTime: '1.5-2 hrs',
+          },
+        ],
+      },
+      {
+        icon: '🎨',
+        title: 'Relaxed Sightseeing',
+        activities: [
+          {
+            name: 'San Jose Art Walk',
+            link: 'https://www.artcabo.com/san-jose-del-cabo-art-walk.html',
+            travelTime: '5-7 min',
+            note: 'Thursday evenings',
+          },
+          {
+            name: 'Cabo Adventures',
+            link: 'https://www.cabo-adventures.com/en',
+            travelTime: '40-50 min to Cabo San Lucas marina',
+          },
+        ],
+      },
+    ],
   },
 ]
 
@@ -119,6 +184,42 @@ const TravelSection = () => {
                     )}
                     {detail.descriptionSuffix}
                   </Text>
+
+                  {detail.categories && (
+                    <VStack gap={4} align="start" width="100%">
+                      {detail.categories.map((category) => (
+                        <Box key={category.title} width="100%">
+                          <Text
+                            fontSize="lg"
+                            fontWeight="500"
+                            color={weddingColors.champagneGold}
+                            mb={1}
+                          >
+                            {category.icon} {category.title}
+                          </Text>
+                          <VStack gap={1} align="start" pl={2}>
+                            {category.activities.map((activity) => (
+                              <Text key={activity.name} fontSize="md" color="gray.200">
+                                <Link
+                                  href={activity.link}
+                                  color={weddingColors.primaryGold}
+                                  fontWeight="500"
+                                  textDecoration="underline"
+                                  _hover={{ color: weddingColors.champagneGold }}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                >
+                                  {activity.name}
+                                </Link>
+                                {activity.note && ` (${activity.note})`}
+                                {` · ${activity.travelTime}`}
+                              </Text>
+                            ))}
+                          </VStack>
+                        </Box>
+                      ))}
+                    </VStack>
+                  )}
 
                   {detail.link && (
                     <Link
