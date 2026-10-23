@@ -9,7 +9,7 @@ interface Event {
   title: string
   description: string
   location: string
-  date: 'nov6' | 'nov7'
+  date: 'nov5' | 'nov6' | 'nov7'
   locationUrl?: string
   locationVenue?: string
   locationVenueUrl?: string
@@ -19,6 +19,15 @@ interface Event {
 }
 
 const events: Event[] = [
+  {
+    time: '5:00 PM - 9:00 PM',
+    title: 'San José del Cabo Art Walk',
+    description:
+      'Every Thursday evening the galleries of the historic Art District open their doors. Stroll, sip, and browse local art. Just 5-7 minutes from the Viceroy.',
+    location: 'Art District @ San José del Cabo',
+    locationUrl: 'https://www.artcabo.com/san-jose-del-cabo-art-walk.html',
+    date: 'nov5',
+  },
   {
     time: '10:00 AM - 3:00 PM',
     title: 'Fishing Trip',
@@ -30,6 +39,22 @@ const events: Event[] = [
     date: 'nov6',
   },
   {
+    time: '12:00 PM - 2:00 PM',
+    title: 'Pool Chill',
+    description: 'Soak up the sun and relax by the pool with everyone who is in town.',
+    location: 'Pool @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov6',
+  },
+  {
+    time: '4:30 PM',
+    title: 'Rehearsal',
+    description: 'Ceremony rehearsal for the bridal party and groomsmen.',
+    location: 'Family Pool @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov6',
+  },
+  {
     time: '6:00 PM - 8:00 PM',
     title: 'Welcome Party',
     description:
@@ -38,6 +63,30 @@ const events: Event[] = [
     locationUrl:
       'https://maps.google.com/maps/place//data=!4m2!3m1!1s0x86af509d83942891:0xc76d9425fdb56d61',
     date: 'nov6',
+  },
+  {
+    time: '10:00 AM',
+    title: 'Bride Getting Ready',
+    description: 'The bride begins getting ready in the bridal suite.',
+    location: 'Bridal Suite @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov7',
+  },
+  {
+    time: '12:00 PM',
+    title: 'Bridal Party Getting Ready',
+    description: 'Bridal party joins the bride in the bridal suite to get ready.',
+    location: 'Bridal Suite @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov7',
+  },
+  {
+    time: '3:00 PM',
+    title: 'Groomsmen Ready',
+    description: "Groomsmen dressed and ready at the groom's suite.",
+    location: "Groom's Suite @ Viceroy Hotel",
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov7',
   },
   {
     time: '5:30 PM on the dot',
@@ -76,6 +125,7 @@ const events: Event[] = [
 ]
 
 const eventsByDate = {
+  nov5: events.filter((e) => e.date === 'nov5'),
   nov6: events.filter((e) => e.date === 'nov6'),
   nov7: events.filter((e) => e.date === 'nov7'),
 }
@@ -222,6 +272,24 @@ const EventSection = () => {
           </VStack>
 
           <VStack gap={12} width="100%" align="stretch">
+            <VStack gap={6} width="100%" align="stretch">
+              <Text
+                as="h2"
+                fontFamily="'Cormorant Garamond', serif"
+                fontWeight="400"
+                color={weddingColors.primaryGold}
+                textAlign="center"
+                fontSize={itineraryDateHeadingFontSize}
+              >
+                Thursday, November 5th
+              </Text>
+              <VStack gap={4} width="100%" align="stretch">
+                {eventsByDate.nov5.map((event, index) => (
+                  <EventCard key={index} event={event} />
+                ))}
+              </VStack>
+            </VStack>
+
             <VStack gap={6} width="100%" align="stretch">
               <Text
                 as="h2"
