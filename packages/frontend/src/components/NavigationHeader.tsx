@@ -10,7 +10,6 @@ const MENU_ITEMS: { label: string; targetId: string }[] = [
   { label: 'Our Story', targetId: 'story' },
   { label: 'Itinerary', targetId: 'itinerary' },
   { label: 'Dress Code', targetId: 'dress-code' },
-  { label: 'RSVP', targetId: 'rsvp' },
   { label: 'Travel & Stay', targetId: 'travel' },
   { label: 'Gift Registry', targetId: 'registry' },
 ]

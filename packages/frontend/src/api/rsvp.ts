@@ -44,8 +44,6 @@ export interface RsvpResponse {
   createdAt: string
 }
 
-const RSVP_STORAGE_KEY = 'wedding-rsvp'
-
 function normalizeRsvpResponse(data: RsvpResponse): RsvpResponse {
   const guestsRaw = data.guests ?? []
   const guests = guestsRaw.map((g) => ({
@@ -55,21 +53,6 @@ function normalizeRsvpResponse(data: RsvpResponse): RsvpResponse {
   const guestNames =
     data.guestNames?.length ? data.guestNames : guests.map((g) => g.name)
   return { ...data, guests, guestNames }
-}
-
-export function getStoredRsvp(): RsvpResponse | null {
-  try {
-    const raw = localStorage.getItem(RSVP_STORAGE_KEY)
-    if (!raw) return null
-    const parsed = JSON.parse(raw) as RsvpResponse
-    return normalizeRsvpResponse(parsed)
-  } catch {
-    return null
-  }
-}
-
-export function storeRsvp(rsvp: RsvpResponse): void {
-  localStorage.setItem(RSVP_STORAGE_KEY, JSON.stringify(rsvp))
 }
 
 async function rsvpFetch(
@@ -133,19 +116,6 @@ function toRsvpResponse(party: {
     attendance: party.attendance as RsvpAttendance,
     createdAt: party.createdAt,
   })
-}
-
-export async function createRsvp(payload: CreateRsvpPayload): Promise<RsvpResponse> {
-  const res = await rsvpFetch(apiUrl('rsvp'), {
-    method: 'POST',
-    body: JSON.stringify(payload),
-  })
-  if (!res.ok) {
-    const body = await res.text()
-    handleRsvpError(res, body)
-  }
-  const party = await res.json()
-  return toRsvpResponse(party)
 }
 
 export async function deleteRsvp(id: string): Promise<void> {

@@ -9,7 +9,7 @@ A modern, elegant wedding website featuring a single-page application, built as 
 - **Hero Section** - Elegant landing with wedding details
 - **Story Timeline** - Animated timeline of the couple's journey
 - **Event Schedule** - Detailed schedule of wedding day events
-- **RSVP Form** - Guest registration with backend integration
+- **Guest List** - Admin view of RSVPs collected before RSVPs closed
 - **Travel Information** - Comprehensive travel and accommodation details
 - **Photo Gallery** - Beautiful image gallery with modal view
 
