@@ -9,7 +9,7 @@ interface Event {
   title: string
   description: string
   location: string
-  date: 'nov6' | 'nov7'
+  date: 'nov5' | 'nov6' | 'nov7'
   locationUrl?: string
   locationVenue?: string
   locationVenueUrl?: string
@@ -20,6 +20,15 @@ interface Event {
 
 const events: Event[] = [
   {
+    time: 'Evening',
+    title: 'San José del Cabo Art Walk',
+    description:
+      'Arriving early? Every Thursday evening the galleries of the historic Arts District open their doors for art, music, and street food. Just a 5-7 minute drive from the Viceroy.',
+    location: 'Historic Arts District, San José del Cabo',
+    locationUrl: 'https://www.artcabo.com/san-jose-del-cabo-art-walk.html',
+    date: 'nov5',
+  },
+  {
     time: '10:00 AM - 3:00 PM',
     title: 'Fishing Trip',
     description:
@@ -27,6 +36,22 @@ const events: Event[] = [
     location: 'Dock I @ IGY Marina',
     locationUrl: 'https://maps.app.goo.gl/7s3xcLaUJ5zD2jEd9',
     rsvpUrl: 'https://partiful.com/e/KJPKQFABDV1BUQRrrX0K?c=sqrFVukc',
+    date: 'nov6',
+  },
+  {
+    time: '12:00 PM - 2:00 PM',
+    title: 'Pool Chill',
+    description: 'Lounge by the pool, soak up the sun, and say hello before the weekend gets going.',
+    location: 'Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
+    date: 'nov6',
+  },
+  {
+    time: '4:30 PM',
+    title: 'Rehearsal',
+    description: 'Ceremony rehearsal for the bridal party and groomsmen.',
+    location: 'Family Pool @ Viceroy Hotel',
+    locationUrl: viceroyResortMapUrl,
     date: 'nov6',
   },
   {
@@ -75,10 +100,11 @@ const events: Event[] = [
   },
 ]
 
-const eventsByDate = {
-  nov6: events.filter((e) => e.date === 'nov6'),
-  nov7: events.filter((e) => e.date === 'nov7'),
-}
+const days: { date: Event['date']; label: string }[] = [
+  { date: 'nov5', label: 'Thursday, November 5th' },
+  { date: 'nov6', label: 'Friday, November 6th' },
+  { date: 'nov7', label: 'Saturday, November 7th' },
+]
 
 const EventCard = ({ event }: { event: Event }) => {
   return (
@@ -222,41 +248,27 @@ const EventSection = () => {
           </VStack>
 
           <VStack gap={12} width="100%" align="stretch">
-            <VStack gap={6} width="100%" align="stretch">
-              <Text
-                as="h2"
-                fontFamily="'Cormorant Garamond', serif"
-                fontWeight="400"
-                color={weddingColors.primaryGold}
-                textAlign="center"
-                fontSize={itineraryDateHeadingFontSize}
-              >
-                Friday, November 6th
-              </Text>
-              <VStack gap={4} width="100%" align="stretch">
-                {eventsByDate.nov6.map((event, index) => (
-                  <EventCard key={index} event={event} />
-                ))}
+            {days.map((day) => (
+              <VStack key={day.date} gap={6} width="100%" align="stretch">
+                <Text
+                  as="h2"
+                  fontFamily="'Cormorant Garamond', serif"
+                  fontWeight="400"
+                  color={weddingColors.primaryGold}
+                  textAlign="center"
+                  fontSize={itineraryDateHeadingFontSize}
+                >
+                  {day.label}
+                </Text>
+                <VStack gap={4} width="100%" align="stretch">
+                  {events
+                    .filter((event) => event.date === day.date)
+                    .map((event, index) => (
+                      <EventCard key={index} event={event} />
+                    ))}
+                </VStack>
               </VStack>
-            </VStack>
-
-            <VStack gap={6} width="100%" align="stretch">
-              <Text
-                as="h2"
-                fontFamily="'Cormorant Garamond', serif"
-                fontWeight="400"
-                color={weddingColors.primaryGold}
-                textAlign="center"
-                fontSize={itineraryDateHeadingFontSize}
-              >
-                Saturday, November 7th
-              </Text>
-              <VStack gap={4} width="100%" align="stretch">
-                {eventsByDate.nov7.map((event, index) => (
-                  <EventCard key={index} event={event} />
-                ))}
-              </VStack>
-            </VStack>
+            ))}
           </VStack>
         </VStack>
       </Container>
