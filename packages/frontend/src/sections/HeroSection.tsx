@@ -1,12 +1,8 @@
-import { Box, Button, Container, Heading, Text, VStack } from '@chakra-ui/react'
+import { Box, Container, Heading, Text, VStack } from '@chakra-ui/react'
 
 import heroImage from '@/assets/hero.png'
 import { HEADER_HEIGHT_PX } from '@/components/NavigationHeader'
 import { weddingColors } from '@/theme/colors'
-
-const scrollToRsvp = () => {
-  document.getElementById('rsvp')?.scrollIntoView({ behavior: 'smooth', block: 'start' })
-}
 
 const HeroSection = () => {
   return (
@@ -87,36 +83,6 @@ const HeroSection = () => {
             >
               Viceroy Los Cabos
             </Text>
-
-            <Button
-              onClick={scrollToRsvp}
-              mt={6}
-              size="lg"
-              px={8}
-              py="20px"
-              minWidth="130px"
-              borderRadius={0}
-              fontSize="xl"
-              fontFamily="'Cormorant Garamond', serif"
-              letterSpacing="0.15em"
-              fontWeight="300"
-              bg={weddingColors.primaryGold}
-              color={weddingColors.charcoal}
-              boxShadow="0 4px 20px rgba(0,0,0,0.5)"
-              textShadow="0 1px 2px rgba(0,0,0,0.3)"
-              _hover={{
-                bg: weddingColors.champagneGold,
-                color: weddingColors.charcoal,
-                boxShadow: '0 4px 24px rgba(184,150,74,0.55)',
-                fontWeight: '600',
-              }}
-              _active={{
-                bg: weddingColors.champagneGold,
-                fontWeight: '600',
-              }}
-            >
-              RSVP
-            </Button>
           </VStack>
         </VStack>
       </Container>
