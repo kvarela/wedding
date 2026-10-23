@@ -40,7 +40,7 @@ const events: Event[] = [
     date: 'nov6',
   },
   {
-    time: '6:00 PM',
+    time: '5:30 PM on the dot',
     title: 'Ceremony',
     description: 'We exchange our vows overlooking the beautiful Pacific Ocean.',
     location: 'Family Pool @ Viceroy Hotel',
@@ -260,7 +260,6 @@ const EventSection = () => {
           </VStack>
         </VStack>
       </Container>
-
     </Box>
   )
 }
