@@ -97,7 +97,7 @@ const events: Event[] = [
     date: 'nov7',
   },
   {
-    time: '6:30 PM',
+    time: '6:00 PM',
     title: 'Cocktail Hour',
     description:
       "Celebrate with signature cocktails, cigars, and hors d'oeuvres while the DJ warms up.",
@@ -106,7 +106,7 @@ const events: Event[] = [
     date: 'nov7',
   },
   {
-    time: '8:00 PM',
+    time: '7:30 PM',
     title: 'Reception & Dinner',
     description:
       'Celebrate with us with dinner, dancing, and memorable toasts. If you want to make a speech, this is your chance!',
