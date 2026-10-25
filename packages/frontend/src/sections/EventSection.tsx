@@ -39,7 +39,7 @@ const events: Event[] = [
     date: 'nov6',
   },
   {
-    time: '12:00 PM - 2:00 PM',
+    time: '11:00 PM - 3:00 PM',
     title: 'Pool Chill',
     description: 'Soak up the sun and relax by the pool with everyone who is in town.',
     location: 'Pool @ Viceroy Hotel',
